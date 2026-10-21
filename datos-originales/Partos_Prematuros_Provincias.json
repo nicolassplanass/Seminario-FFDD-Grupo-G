@@ -1,0 +1,595 @@
+[{"COD":"MNP79966824", "Nombre":"Total Nacional. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":16473, "T3_Variable":"Total Nacional", "Nombre":"Total Nacional", "Codigo":"00"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":19058.0}
+]
+}
+,{"COD":"MNP80007683", "Nombre":"Albacete. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":3, "T3_Variable":"Provincias", "Nombre":"Albacete", "Codigo":"02"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":175.0}
+]
+}
+,{"COD":"MNP80007593", "Nombre":"Alicante/Alacant. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":4, "T3_Variable":"Provincias", "Nombre":"Alicante/Alacant", "Codigo":"03"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":794.0}
+]
+}
+,{"COD":"MNP80007503", "Nombre":"Almería. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":5, "T3_Variable":"Provincias", "Nombre":"Almería", "Codigo":"04"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":386.0}
+]
+}
+,{"COD":"MNP80007413", "Nombre":"Araba/Álava. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":2, "T3_Variable":"Provincias", "Nombre":"Araba/Álava", "Codigo":"01"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":137.0}
+]
+}
+,{"COD":"MNP80007323", "Nombre":"Asturias. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":33, "T3_Variable":"Provincias", "Nombre":"Asturias", "Codigo":"33"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":276.0}
+]
+}
+,{"COD":"MNP80007233", "Nombre":"Ávila. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":6, "T3_Variable":"Provincias", "Nombre":"Ávila", "Codigo":"05"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":32.0}
+]
+}
+,{"COD":"MNP80007143", "Nombre":"Badajoz. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":7, "T3_Variable":"Provincias", "Nombre":"Badajoz", "Codigo":"06"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":275.0}
+]
+}
+,{"COD":"MNP80007053", "Nombre":"Balears, Illes. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":8, "T3_Variable":"Provincias", "Nombre":"Balears, Illes", "Codigo":"07"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":520.0}
+]
+}
+,{"COD":"MNP80006963", "Nombre":"Barcelona. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":9, "T3_Variable":"Provincias", "Nombre":"Barcelona", "Codigo":"08"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":2233.0}
+]
+}
+,{"COD":"MNP80006873", "Nombre":"Bizkaia. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":48, "T3_Variable":"Provincias", "Nombre":"Bizkaia", "Codigo":"48"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":351.0}
+]
+}
+,{"COD":"MNP80006783", "Nombre":"Burgos. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":10, "T3_Variable":"Provincias", "Nombre":"Burgos", "Codigo":"09"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":109.0}
+]
+}
+,{"COD":"MNP80006693", "Nombre":"Cáceres. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":11, "T3_Variable":"Provincias", "Nombre":"Cáceres", "Codigo":"10"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":131.0}
+]
+}
+,{"COD":"MNP80006603", "Nombre":"Cádiz. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":12, "T3_Variable":"Provincias", "Nombre":"Cádiz", "Codigo":"11"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":467.0}
+]
+}
+,{"COD":"MNP80006513", "Nombre":"Cantabria. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":39, "T3_Variable":"Provincias", "Nombre":"Cantabria", "Codigo":"39"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":169.0}
+]
+}
+,{"COD":"MNP80006423", "Nombre":"Castellón/Castelló. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":13, "T3_Variable":"Provincias", "Nombre":"Castellón/Castelló", "Codigo":"12"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":258.0}
+]
+}
+,{"COD":"MNP80006333", "Nombre":"Ciudad Real. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":14, "T3_Variable":"Provincias", "Nombre":"Ciudad Real", "Codigo":"13"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":180.0}
+]
+}
+,{"COD":"MNP80006243", "Nombre":"Córdoba. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":15, "T3_Variable":"Provincias", "Nombre":"Córdoba", "Codigo":"14"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":347.0}
+]
+}
+,{"COD":"MNP80006153", "Nombre":"Coruña, A. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":16, "T3_Variable":"Provincias", "Nombre":"Coruña, A", "Codigo":"15"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":311.0}
+]
+}
+,{"COD":"MNP80006063", "Nombre":"Cuenca. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":17, "T3_Variable":"Provincias", "Nombre":"Cuenca", "Codigo":"16"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":81.0}
+]
+}
+,{"COD":"MNP80005973", "Nombre":"Gipuzkoa. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":21, "T3_Variable":"Provincias", "Nombre":"Gipuzkoa", "Codigo":"20"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":243.0}
+]
+}
+,{"COD":"MNP80005883", "Nombre":"Girona. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":18, "T3_Variable":"Provincias", "Nombre":"Girona", "Codigo":"17"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":363.0}
+]
+}
+,{"COD":"MNP80005793", "Nombre":"Granada. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":19, "T3_Variable":"Provincias", "Nombre":"Granada", "Codigo":"18"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":423.0}
+]
+}
+,{"COD":"MNP80005703", "Nombre":"Guadalajara. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":20, "T3_Variable":"Provincias", "Nombre":"Guadalajara", "Codigo":"19"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":100.0}
+]
+}
+,{"COD":"MNP80005613", "Nombre":"Huelva. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":22, "T3_Variable":"Provincias", "Nombre":"Huelva", "Codigo":"21"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":250.0}
+]
+}
+,{"COD":"MNP80005523", "Nombre":"Huesca. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":23, "T3_Variable":"Provincias", "Nombre":"Huesca", "Codigo":"22"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":78.0}
+]
+}
+,{"COD":"MNP80005433", "Nombre":"Jaén. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":24, "T3_Variable":"Provincias", "Nombre":"Jaén", "Codigo":"23"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":244.0}
+]
+}
+,{"COD":"MNP80005343", "Nombre":"León. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":25, "T3_Variable":"Provincias", "Nombre":"León", "Codigo":"24"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":129.0}
+]
+}
+,{"COD":"MNP80005253", "Nombre":"Lleida. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":26, "T3_Variable":"Provincias", "Nombre":"Lleida", "Codigo":"25"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":203.0}
+]
+}
+,{"COD":"MNP80005163", "Nombre":"Lugo. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":28, "T3_Variable":"Provincias", "Nombre":"Lugo", "Codigo":"27"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":85.0}
+]
+}
+,{"COD":"MNP80005073", "Nombre":"Madrid. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":29, "T3_Variable":"Provincias", "Nombre":"Madrid", "Codigo":"28"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":2877.0}
+]
+}
+,{"COD":"MNP80004983", "Nombre":"Málaga. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":30, "T3_Variable":"Provincias", "Nombre":"Málaga", "Codigo":"29"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":721.0}
+]
+}
+,{"COD":"MNP80004893", "Nombre":"Murcia. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":31, "T3_Variable":"Provincias", "Nombre":"Murcia", "Codigo":"30"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":752.0}
+]
+}
+,{"COD":"MNP80004803", "Nombre":"Navarra. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":32, "T3_Variable":"Provincias", "Nombre":"Navarra", "Codigo":"31"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":303.0}
+]
+}
+,{"COD":"MNP80004713", "Nombre":"Ourense. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":53, "T3_Variable":"Provincias", "Nombre":"Ourense", "Codigo":"32"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":72.0}
+]
+}
+,{"COD":"MNP80004623", "Nombre":"Palencia. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":34, "T3_Variable":"Provincias", "Nombre":"Palencia", "Codigo":"34"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":40.0}
+]
+}
+,{"COD":"MNP80004533", "Nombre":"Palmas, Las. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":35, "T3_Variable":"Provincias", "Nombre":"Palmas, Las", "Codigo":"35"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":394.0}
+]
+}
+,{"COD":"MNP80004443", "Nombre":"Pontevedra. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":36, "T3_Variable":"Provincias", "Nombre":"Pontevedra", "Codigo":"36"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":285.0}
+]
+}
+,{"COD":"MNP80004353", "Nombre":"Rioja, La. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":27, "T3_Variable":"Provincias", "Nombre":"Rioja, La", "Codigo":"26"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":114.0}
+]
+}
+,{"COD":"MNP80004263", "Nombre":"Salamanca. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":37, "T3_Variable":"Provincias", "Nombre":"Salamanca", "Codigo":"37"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":95.0}
+]
+}
+,{"COD":"MNP80004173", "Nombre":"Santa Cruz de Tenerife. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":38, "T3_Variable":"Provincias", "Nombre":"Santa Cruz de Tenerife", "Codigo":"38"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":391.0}
+]
+}
+,{"COD":"MNP80004083", "Nombre":"Segovia. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":40, "T3_Variable":"Provincias", "Nombre":"Segovia", "Codigo":"40"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":52.0}
+]
+}
+,{"COD":"MNP80003993", "Nombre":"Sevilla. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":41, "T3_Variable":"Provincias", "Nombre":"Sevilla", "Codigo":"41"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":887.0}
+]
+}
+,{"COD":"MNP80003903", "Nombre":"Soria. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":42, "T3_Variable":"Provincias", "Nombre":"Soria", "Codigo":"42"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":24.0}
+]
+}
+,{"COD":"MNP80003813", "Nombre":"Tarragona. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":43, "T3_Variable":"Provincias", "Nombre":"Tarragona", "Codigo":"43"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":383.0}
+]
+}
+,{"COD":"MNP80003723", "Nombre":"Teruel. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":44, "T3_Variable":"Provincias", "Nombre":"Teruel", "Codigo":"44"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":54.0}
+]
+}
+,{"COD":"MNP80003633", "Nombre":"Toledo. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":45, "T3_Variable":"Provincias", "Nombre":"Toledo", "Codigo":"45"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":298.0}
+]
+}
+,{"COD":"MNP80003543", "Nombre":"Valencia/València. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":46, "T3_Variable":"Provincias", "Nombre":"Valencia/València", "Codigo":"46"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":1205.0}
+]
+}
+,{"COD":"MNP80003453", "Nombre":"Valladolid. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":47, "T3_Variable":"Provincias", "Nombre":"Valladolid", "Codigo":"47"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":168.0}
+]
+}
+,{"COD":"MNP80003363", "Nombre":"Zamora. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":49, "T3_Variable":"Provincias", "Nombre":"Zamora", "Codigo":"49"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":47.0}
+]
+}
+,{"COD":"MNP80003273", "Nombre":"Zaragoza. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":50, "T3_Variable":"Provincias", "Nombre":"Zaragoza", "Codigo":"50"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":354.0}
+]
+}
+,{"COD":"MNP80003183", "Nombre":"Ceuta. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":51, "T3_Variable":"Provincias", "Nombre":"Ceuta", "Codigo":"51"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":45.0}
+]
+}
+,{"COD":"MNP80003093", "Nombre":"Melilla. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":52, "T3_Variable":"Provincias", "Nombre":"Melilla", "Codigo":"52"}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":50.0}
+]
+}
+,{"COD":"MNP79966491", "Nombre":"No residente. Todas las edades. Prematuros. Parto. Total partos. Dato base. Lugar de residencia de la madre. ", "T3_Unidad":"Partos", "T3_Escala":" ", "MetaData":[{"Id":68, "T3_Variable":"Total Nacional", "Nombre":"No residente", "Codigo":""}
+,{"Id":15668, "T3_Variable":"Edad de la madre", "Nombre":"Todas las edades", "Codigo":""}
+,{"Id":303897, "T3_Variable":"Maturidad", "Nombre":"Prematuros", "Codigo":""}
+,{"Id":303891, "T3_Variable":"Conceptos demógraficos", "Nombre":"Parto", "Codigo":""}
+,{"Id":303892, "T3_Variable":"Tipo de parto", "Nombre":"Total partos", "Codigo":""}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":14950, "T3_Variable":"Lugar de referencia del fenómeno demográfico", "Nombre":"Lugar de residencia de la madre", "Codigo":""}
+]
+, "Data":[{"Fecha":"2024-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2024, "Valor":97.0}
+]
+}
+]
