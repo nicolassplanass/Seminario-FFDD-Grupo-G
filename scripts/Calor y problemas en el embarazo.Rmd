@@ -8,20 +8,47 @@ output:
     toc_depth: 3
     toc_float: true
 ---
-
+<style> body { text-align: justify} </style>
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# 1. Introducción
+El constante de las temperaturas globales se ha convertido en una de las amenazas más relevantes para la salud pública. Si bien los efectos del calor extremo suelen analizarse frecuentemente en poblaciones vulnerables como los adultos mayores o personas con patologías crónicas, el impacto sobre la salud materno-infantil representa un área crítica y, a menudo, menos visibilizada. El organismo materno experimenta adaptaciones fisiológicas complejas para mantener la termorregulación; sin embargo, cuando las temperaturas ambientales superan los umbrales de tolerancia (como evidencian los registros térmicos recientes), se desencadenan respuestas de estrés térmico que pueden comprometer gravemente la homeostasis del embarazo.
 
-## R Markdown
+En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, problemas congénitos en el parto, mortalidad fetal tardía, mortalidad perinatal y limitaciones en el desarrollo temprano de niños de 2 a 5 años. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
+# 2. Objetivo General
+Evaluar la asociación entre la exposición a temperaturas extremas y la incidencia de complicaciones obstétricas, mortalidad perinatal y secuelas en el desarrollo infantil a nivel provincial, mediante el cruce de registros climáticos históricos y recientes con indicadores de salud materno-infantil.
+# 3. Objetivos Específicos
+Aquí tienes el texto completo estructurado y diferenciado por secciones, listo para copiar y pegar en tu documento o diapositivas:
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+---
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## 1. Introducción
 
-```{r cars}
-summary(cars)
-```
+En el contexto actual del cambio climático, el aumento sostenido de las temperaturas globales y la frecuencia de olas de calor se han consolidado como una de las principales amenazas para la salud pública. Aunque gran parte de la investigación sobre estrés térmico se focaliza en adultos mayores o pacientes con patologías crónicas, el impacto sobre la salud materno-infantil representa un área de creciente preocupación epidemiológica y clínica. Durante la gestación, el organismo materno experimenta adaptaciones vasculares y metabólicas continuas para garantizar la homeostasis fetal. Sin embargo, cuando las temperaturas ambientales superan los umbrales de termorregulación, el estrés calórico puede alterar el flujo sanguíneo placentario y desencadenar respuestas inflamatorias o endocrinas adversas.
+
+Este seminario analiza la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de **partos prematuros**, **problemas congénitos en el parto**, **mortalidad fetal tardía**, **mortalidad perinatal** y **limitaciones en el desarrollo temprano de niños de 2 a 5 años**. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
+
+---
+
+## 2. Objetivo General
+
+* Evaluar la asociación entre la exposición a temperaturas extremas y la incidencia de complicaciones obstétricas, mortalidad perinatal y secuelas en el desarrollo infantil a nivel provincial, mediante el cruce de registros climáticos históricos y recientes con indicadores de salud materno-infantil.
+
+---
+
+## 3. Objetivos Específicos
+
+* **Caracterizar la exposición térmica provincial:** Procesar y analizar los registros de temperatura máxima (`TMAX_2024_Provincias`), media (`TMED_2024_Provincias`) y mínima (`TMIN_2024_Provincias`), calculando sus anomalías respecto a la serie histórica de referencia (`TMED_1991_2020_Provincias`).
+
+
+* **Evaluar el impacto en el parto y la prematuridad:** Analizar la relación entre los episodios de estrés térmico y la frecuencia registrada de partos prematuros (`Partos_Prematuros_Provincias.json`) y anomalías congénitas observadas durante el parto (`Problemas_Congenitos_Partos`).
+
+
+* **Cuantificar el efecto sobre la mortalidad fetal y perinatal:** Estudiar la correlación entre la intensidad de las temperaturas extremas y los eventos de mortalidad fetal tardía (`Mortalidad_Fetal_Tardia.json`) y mortalidad perinatal (`Mortalidad_Perinatal.json`).
+
+
+* **Explorar consecuencias en el desarrollo infantil temprano:** Identificar posibles asociaciones entre la exposición intrauterina a temperaturas elevadas y la prevalencia de limitaciones en el desarrollo de niños entre 2 y 5 años (`Limitaciones_Niños_2_5_Anyos`).
 
 ## Including Plots
 
