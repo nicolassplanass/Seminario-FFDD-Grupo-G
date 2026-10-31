@@ -38,7 +38,7 @@ En este seminario queremos analizar la relación directa entre la exposición al
 
 
 ## 4. Ejecuciones
-### 4.1 Importación datos JSON 
+### 4.1 Importación datos JSON
 
 
 ```{r}
@@ -107,6 +107,142 @@ Mortalidad_Perinatal_2024 <- Mortalidad_Perinatal_tabla %>%
 # Mostrar la tabla de 2024
 View(Mortalidad_Perinatal_2024)
 
+```
+
+```{r}
+Mortalidad_Perinatal_2024_Total <- Mortalidad_Perinatal_tabla %>%
+  filter(Anyo == 2024) %>%
+  slice(seq(1, n(), by = 3))
+
+View(Mortalidad_Perinatal_2024_Total)
+```
+
+
+```{r}
+# ==========================
+# IMPORTACIÓN DE DATOS JSON
+# ==========================
+
+library(jsonlite)
+
+# Cargar mortalidad fetal tardía
+Mortalidad_Fetal_Tardia <- fromJSON(
+  "../input/Mortalidad_Fetal_Tardia.json",
+  simplifyVector = FALSE
+)
+
+```
+
+```{r}
+# ==========================
+# CONVERSIÓN A TABLA
+# MORTALIDAD FETAL TARDÍA
+# ==========================
+
+library(tidyverse)
+
+Mortalidad_Fetal_Tardia_tabla <- map_dfr(
+  Mortalidad_Fetal_Tardia,
+  function(serie) {
+
+    datos <- map_dfr(
+      serie$Data,
+      function(fila) {
+        tibble(
+          Fecha = fila$Fecha,
+          T3_TipoDato = fila$T3_TipoDato,
+          T3_Periodo = fila$T3_Periodo,
+          Anyo = fila$Anyo,
+          Valor = fila$Valor
+        )
+      }
+    )
+
+    datos$COD <- serie$COD
+    datos$Nombre <- serie$Nombre
+    datos$T3_Unidad <- serie$T3_Unidad
+
+    datos
+  }
+)
+
+# Mostrar la tabla
+View(Mortalidad_Fetal_Tardia_tabla)
+```
+
+
+```{r}
+# ==========================
+# FILTRAR AÑO 2024
+# MORTALIDAD FETAL TARDÍA
+# ==========================
+
+Mortalidad_Fetal_Tardia_2024 <- Mortalidad_Fetal_Tardia_tabla %>%
+  filter(Anyo == 2024)
+
+# Mostrar la tabla de 2024
+View(Mortalidad_Fetal_Tardia_2024)
+```
+
+
+```{r}
+# ==========================
+# FILTRAR POSICIONES 1, 4, 7...
+# MORTALIDAD FETAL TARDÍA 2024
+# ==========================
+
+Mortalidad_Fetal_Tardia_2024_total <- Mortalidad_Fetal_Tardia_2024 %>%
+  slice(seq(1, n(), by = 3))
+
+# Mostrar la tabla
+View(Mortalidad_Fetal_Tardia_2024_total)
+
+```
+
+```{r}
+# Cargar partos prematuros por provincias
+Partos_Prematuros_Provincias <- fromJSON(
+  "../input/Partos_Prematuros_Provincias.json",
+  simplifyVector = FALSE
+)
+str(Mortalidad_Fetal_Tardia)
+head(Partos_Prematuros_Provincias)
+```
+```{r}
+# ==========================
+# CONVERSIÓN A TABLA
+# PARTOS PREMATUROS
+# ==========================
+
+library(tidyverse)
+
+Partos_Prematuros_Provincias_tabla <- map_dfr(
+  Partos_Prematuros_Provincias,
+  function(serie) {
+
+    datos <- map_dfr(
+      serie$Data,
+      function(fila) {
+        tibble(
+          Fecha = fila$Fecha,
+          T3_TipoDato = fila$T3_TipoDato,
+          T3_Periodo = fila$T3_Periodo,
+          Anyo = fila$Anyo,
+          Valor = fila$Valor
+        )
+      }
+    )
+
+    datos$COD <- serie$COD
+    datos$Nombre <- serie$Nombre
+    datos$T3_Unidad <- serie$T3_Unidad
+
+    datos
+  }
+)
+
+# Mostrar la tabla
+View(Partos_Prematuros_Provincias_tabla)
 ```
 
 
