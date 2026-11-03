@@ -245,5 +245,42 @@ Partos_Prematuros_Provincias_tabla <- map_dfr(
 View(Partos_Prematuros_Provincias_tabla)
 ```
 
+### 4.2 Importación datos CSV
+
+Problemas congenitos y problemas de parto
+
+```{r}
+library(readr)
+
+Problemas_Congenitos_Partos <- read_delim(
+  "../INPUT/Problemas_Congenitos_Partos.csv",
+  delim = "\t",
+  escape_double = FALSE,
+  trim_ws = TRUE,
+  locale = locale(decimal_mark = ",")
+)
+
+Problemas_Congenitos_Partos
+str(Problemas_Congenitos_Partos)
+summary(Problemas_Congenitos_Partos)
+```
+
+Limitaciones en niños de 2 a 5 años
+
+```{r}
+Limitaciones_Ninos <- read_delim(
+  "../INPUT/Limitaciones_Niños_2_5_Anyos.csv",
+  delim = "\t",
+  escape_double = FALSE,
+  trim_ws = TRUE,
+  locale = locale(decimal_mark = ",")
+)
+
+Limitaciones_Ninos
+str(Limitaciones_Ninos)
+summary(Limitaciones_Ninos)
+```
+
+
 
 
