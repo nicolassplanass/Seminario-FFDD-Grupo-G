@@ -42,9 +42,8 @@ En este seminario queremos analizar la relación directa entre la exposición al
 
 
 ```{r}
-# ==========================
-# IMPORTACIÓN DE DATOS JSON
-# ==========================
+#IMPORTACIÓN DE DATOS JSON
+
 
 library(jsonlite)
 
@@ -119,9 +118,7 @@ View(Mortalidad_Perinatal_2024_Total)
 
 
 ```{r}
-# ==========================
-# IMPORTACIÓN DE DATOS JSON
-# ==========================
+#IMPORTACIÓN DE DATOS JSON
 
 library(jsonlite)
 
@@ -134,10 +131,10 @@ Mortalidad_Fetal_Tardia <- fromJSON(
 ```
 
 ```{r}
-# ==========================
-# CONVERSIÓN A TABLA
-# MORTALIDAD FETAL TARDÍA
-# ==========================
+
+#CONVERSIÓN A TABLA
+#MORTALIDAD FETAL TARDÍA
+
 
 library(tidyverse)
 
@@ -186,10 +183,8 @@ View(Mortalidad_Fetal_Tardia_2024)
 
 
 ```{r}
-# ==========================
-# FILTRAR POSICIONES 1, 4, 7...
-# MORTALIDAD FETAL TARDÍA 2024
-# ==========================
+#FILTRAR POSICIONES 1, 4, 7...
+#MORTALIDAD FETAL TARDÍA 2024
 
 Mortalidad_Fetal_Tardia_2024_total <- Mortalidad_Fetal_Tardia_2024 %>%
   slice(seq(1, n(), by = 3))
@@ -208,11 +203,11 @@ Partos_Prematuros_Provincias <- fromJSON(
 str(Mortalidad_Fetal_Tardia)
 head(Partos_Prematuros_Provincias)
 ```
+
 ```{r}
-# ==========================
-# CONVERSIÓN A TABLA
-# PARTOS PREMATUROS
-# ==========================
+
+#CONVERSIÓN A TABLA
+#PARTOS PREMATUROS
 
 library(tidyverse)
 
@@ -350,4 +345,158 @@ TMED_1991_2020
 str(TMED_1991_2020)
 summary(TMED_1991_2020)
 ```
+
+## 5. Análisisdescriptivo de las Temperaturas
+En este apartado representaremos las temperaturas máximas, mínimas y medias registradas durante 2024. Utilizaremos histogramas para estudiar su distribución y diagramas de caja para observar la dispersión y detectar posibles valores extremos.
+
+### 5.1. Distribución de las temperaturas
+
+```{r}
+#DISTRIBUCIÓN TEMPERATURA MÁXIMA
+
+
+library(ggplot2)
+library(tidyverse)
+
+TMAX_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Temperatura)) +
+  geom_histogram(
+    bins = 20,
+    fill = "tomato",
+    color = "black"
+  ) +
+  facet_wrap(~Variable, scales = "free") +
+  labs(
+    title = "Distribución de las temperaturas máximas en 2024",
+    x = "Temperatura (°C)",
+    y = "Frecuencia"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+#DISTRIBUCIÓN TEMPERATURA MÍNIMA
+
+
+TMIN_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Temperatura)) +
+  geom_histogram(
+    bins = 20,
+    fill = "skyblue",
+    color = "black"
+  ) +
+  facet_wrap(~Variable, scales = "free") +
+  labs(
+    title = "Distribución de las temperaturas mínimas en 2024",
+    x = "Temperatura (°C)",
+    y = "Frecuencia"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+#DISTRIBUCIÓN TEMPERATURA MEDIA
+
+TMED_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Temperatura)) +
+  geom_histogram(
+    bins = 20,
+    fill = "orange",
+    color = "black"
+  ) +
+  facet_wrap(~Variable, scales = "free") +
+  labs(
+    title = "Distribución de las temperaturas medias en 2024",
+    x = "Temperatura (°C)",
+    y = "Frecuencia"
+  ) +
+  theme_minimal()
+
+```
+
+### 5.2. Diagramas de Cajas
+Estos gráficos nos permitirán comparar la dispersión de las temperaturas y detectar posibles valores atípicos.
+```{r}
+#DIAGRAMA DE CAJA TMAX
+
+TMAX_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Variable, y = Temperatura)) +
+  geom_boxplot(fill = "tomato") +
+  labs(
+    title = "Temperaturas máximas por variable en 2024",
+    x = "Variable",
+    y = "Temperatura (°C)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#DIAGRAMA DE CAJA TMIN
+
+TMIN_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Variable, y = Temperatura)) +
+  geom_boxplot(fill = "skyblue") +
+  labs(
+    title = "Temperaturas mínimas por variable en 2024",
+    x = "Variable",
+    y = "Temperatura (°C)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#DIAGRAMA DE CAJA TMED
+TMED_2024 %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Temperatura"
+  ) %>%
+  ggplot(aes(x = Variable, y = Temperatura)) +
+  geom_boxplot(fill = "orange") +
+  labs(
+    title = "Temperaturas medias por variable en 2024",
+    x = "Variable",
+    y = "Temperatura (°C)"
+  ) +
+  theme_minimal()
+```
+
+### 5.3. Comparación entre provinvias
+En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provincias. La idea es comprobar qué provincias han registrado temperaturas más altas y cuáles más bajas durante 2024.
+5.3. Comparación de temperaturas entre provincias
+Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
 
