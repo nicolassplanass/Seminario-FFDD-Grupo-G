@@ -500,3 +500,67 @@ En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provi
 5.3. Comparación de temperaturas entre provincias
 Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
 
+```{r}
+library(tidyverse)
+
+# Seleccionamos las 5 provincias con temperaturas más bajas
+TMAX_bajas <- TMAX_2024 %>%
+  arrange(anual) %>%
+  slice_head(n = 5)
+
+# Seleccionamos las 5 provincias con temperaturas más altas
+TMAX_altas <- TMAX_2024 %>%
+  arrange(desc(anual)) %>%
+  slice_head(n = 5)
+
+# Unimos ambas tablas
+TMAX_extremos <- bind_rows(TMAX_bajas, TMAX_altas)
+
+# Comprobamos el resultado
+TMAX_extremos
+nrow(TMAX_extremos)
+```
+
+
+```{r, fig.width=10, fig.height=6}
+TMAX_extremos %>%
+  ggplot(aes(x = reorder(región, anual), y = anual)) +
+  geom_bar(stat = "identity", fill = "tomato", color = "black") +
+  geom_text(aes(label = round(anual, 1)), hjust = -0.2, size = 3.5) +
+  coord_flip() +
+  labs(
+    title = "Provincias con temperaturas máximas más altas y más bajas en 2024",
+    x = "Provincia",
+    y = "Temperatura máxima media anual (°C)"
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  theme_classic()
+```
+
+```{r}
+TMIN_2024 %>%
+  ggplot(aes(x = reorder(región, anual), y = anual)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  coord_flip() +
+  labs(
+    title = "Temperaturas mínimas por provincia en 2024",
+    x = "Provincia",
+    y = "Temperatura (°C)"
+  ) +
+  theme_classic()
+```
+
+
+```{r}
+TMED_2024 %>%
+  ggplot(aes(x = reorder(región, anual), y = anual)) +
+  geom_bar(stat = "identity", fill = "seagreen3", color = "black") +
+  coord_flip() +
+  labs(
+    title = "Temperaturas medias por provincia en 2024",
+    x = "Provincia",
+    y = "Temperatura (°C)"
+  ) +
+  theme_classic()
+```
+
