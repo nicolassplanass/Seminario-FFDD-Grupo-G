@@ -44,201 +44,241 @@ En este seminario queremos analizar la relación directa entre la exposición al
 ```{r}
 #IMPORTACIÓN DE DATOS JSON
 
-
+library(tidyverse)
 library(jsonlite)
 
-# Cargar el JSON desde la carpeta input
-Mortalidad_Perinatal <- fromJSON(
-  "../input/Mortalidad_Perinatal.json",
-  simplifyVector = FALSE
-)
+# Comprobar si existe el RDS o si ha cambiado el JSON
+if (!file.exists("../INPUT/Mortalidad_Perinatal.rds") ||
+    file.info("../INPUT/Mortalidad_Perinatal.json")$mtime >
+    file.info("../INPUT/Mortalidad_Perinatal.rds")$mtime) {
 
-# Comprobar estructura
-str(Mortalidad_Perinatal)
+  # Importar el JSON original
+  Mortalidad_Perinatal <- fromJSON(
+    "../INPUT/Mortalidad_Perinatal.json",
+    simplifyVector = FALSE
+  )
 
-# Ver primeros elementos
-head(Mortalidad_Perinatal)
-```
+  # Convertir el JSON en una tabla
+  Mortalidad_Perinatal_tabla <- map_dfr(
+    Mortalidad_Perinatal,
+    function(serie) {
 
+      datos <- map_dfr(
+        serie$Data,
+        function(fila) {
+          tibble(
+            Fecha = fila$Fecha,
+            T3_TipoDato = fila$T3_TipoDato,
+            T3_Periodo = fila$T3_Periodo,
+            Anyo = fila$Anyo,
+            Valor = fila$Valor
+          )
+        }
+      )
 
-```{r}
-library(tidyverse)
+      datos$COD <- serie$COD
+      datos$Nombre <- serie$Nombre
+      datos$T3_Unidad <- serie$T3_Unidad
 
-# Convertir el JSON en una tabla
-Mortalidad_Perinatal_tabla <- map_dfr(
-  Mortalidad_Perinatal,
-  function(serie) {
+      datos
+    }
+  )
 
-    datos <- map_dfr(
-      serie$Data,
-      function(fila) {
-        tibble(
-          Fecha = fila$Fecha,
-          T3_TipoDato = fila$T3_TipoDato,
-          T3_Periodo = fila$T3_Periodo,
-          Anyo = fila$Anyo,
-          Valor = fila$Valor
-        )
-      }
-    )
+  # Filtrar mortalidad perinatal del año 2024
+  Mortalidad_Perinatal_2024 <- Mortalidad_Perinatal_tabla %>%
+    filter(Anyo == 2024)
 
-    datos$COD <- serie$COD
-    datos$Nombre <- serie$Nombre
-    datos$T3_Unidad <- serie$T3_Unidad
+  # Seleccionar el total de 2024
+  Mortalidad_Perinatal_2024_Total <- Mortalidad_Perinatal_tabla %>%
+    filter(Anyo == 2024) %>%
+    slice(seq(1, n(), by = 3))
 
-    datos
-  }
-)
+  # Guardar los resultados en formato RDS
+  saveRDS(
+    list(
+      tabla = Mortalidad_Perinatal_tabla,
+      datos_2024 = Mortalidad_Perinatal_2024,
+      total_2024 = Mortalidad_Perinatal_2024_Total
+    ),
+    "../INPUT/Mortalidad_Perinatal.rds"
+  )
 
-# Mostrar la tabla
+} else {
+
+  # Cargar los datos directamente desde el RDS
+  datos_guardados <- readRDS("../INPUT/Mortalidad_Perinatal.rds")
+
+  Mortalidad_Perinatal_tabla <- datos_guardados$tabla
+  Mortalidad_Perinatal_2024 <- datos_guardados$datos_2024
+  Mortalidad_Perinatal_2024_Total <- datos_guardados$total_2024
+
+}
+
+# Mostrar las tablas
 View(Mortalidad_Perinatal_tabla)
-```
-
-
-
-
-```{r}
-
-# Filtrar mortalidad perinatal del año 2024
-Mortalidad_Perinatal_2024 <- Mortalidad_Perinatal_tabla %>%
-  filter(Anyo == 2024)
-
-# Mostrar la tabla de 2024
 View(Mortalidad_Perinatal_2024)
-
-```
-
-```{r}
-Mortalidad_Perinatal_2024_Total <- Mortalidad_Perinatal_tabla %>%
-  filter(Anyo == 2024) %>%
-  slice(seq(1, n(), by = 3))
-
 View(Mortalidad_Perinatal_2024_Total)
+
+
+
 ```
 
 
 ```{r}
 #IMPORTACIÓN DE DATOS JSON
 
+library(tidyverse)
 library(jsonlite)
 
-# Cargar mortalidad fetal tardía
-Mortalidad_Fetal_Tardia <- fromJSON(
-  "../input/Mortalidad_Fetal_Tardia.json",
-  simplifyVector = FALSE
-)
+# Comprobar si existe el RDS o si ha cambiado el JSON
+if (!file.exists("../INPUT/Mortalidad_Fetal_Tardia.rds") ||
+    file.info("../INPUT/Mortalidad_Fetal_Tardia.json")$mtime >
+    file.info("../INPUT/Mortalidad_Fetal_Tardia.rds")$mtime) {
 
-```
+  # Cargar mortalidad fetal tardía
+  Mortalidad_Fetal_Tardia <- fromJSON(
+    "../INPUT/Mortalidad_Fetal_Tardia.json",
+    simplifyVector = FALSE
+  )
 
-```{r}
+  # CONVERSIÓN A TABLA
+  # MORTALIDAD FETAL TARDÍA
 
-#CONVERSIÓN A TABLA
-#MORTALIDAD FETAL TARDÍA
+  Mortalidad_Fetal_Tardia_tabla <- map_dfr(
+    Mortalidad_Fetal_Tardia,
+    function(serie) {
 
+      datos <- map_dfr(
+        serie$Data,
+        function(fila) {
+          tibble(
+            Fecha = fila$Fecha,
+            T3_TipoDato = fila$T3_TipoDato,
+            T3_Periodo = fila$T3_Periodo,
+            Anyo = fila$Anyo,
+            Valor = fila$Valor
+          )
+        }
+      )
 
-library(tidyverse)
+      datos$COD <- serie$COD
+      datos$Nombre <- serie$Nombre
+      datos$T3_Unidad <- serie$T3_Unidad
 
-Mortalidad_Fetal_Tardia_tabla <- map_dfr(
-  Mortalidad_Fetal_Tardia,
-  function(serie) {
+      datos
+    }
+  )
 
-    datos <- map_dfr(
-      serie$Data,
-      function(fila) {
-        tibble(
-          Fecha = fila$Fecha,
-          T3_TipoDato = fila$T3_TipoDato,
-          T3_Periodo = fila$T3_Periodo,
-          Anyo = fila$Anyo,
-          Valor = fila$Valor
-        )
-      }
-    )
+  # FILTRAR AÑO 2024
+  Mortalidad_Fetal_Tardia_2024 <- Mortalidad_Fetal_Tardia_tabla %>%
+    filter(Anyo == 2024)
 
-    datos$COD <- serie$COD
-    datos$Nombre <- serie$Nombre
-    datos$T3_Unidad <- serie$T3_Unidad
+  # FILTRAR POSICIONES 1, 4, 7...
+  Mortalidad_Fetal_Tardia_2024_total <- Mortalidad_Fetal_Tardia_2024 %>%
+    slice(seq(1, n(), by = 3))
 
-    datos
-  }
-)
+  # Guardar los resultados en formato RDS
+  saveRDS(
+    list(
+      tabla = Mortalidad_Fetal_Tardia_tabla,
+      datos_2024 = Mortalidad_Fetal_Tardia_2024,
+      total_2024 = Mortalidad_Fetal_Tardia_2024_total
+    ),
+    "../INPUT/Mortalidad_Fetal_Tardia.rds"
+  )
 
-# Mostrar la tabla
+} else {
+
+  # Cargar los datos directamente desde el RDS
+  datos_guardados <- readRDS("../INPUT/Mortalidad_Fetal_Tardia.rds")
+
+  Mortalidad_Fetal_Tardia_tabla <- datos_guardados$tabla
+  Mortalidad_Fetal_Tardia_2024 <- datos_guardados$datos_2024
+  Mortalidad_Fetal_Tardia_2024_total <- datos_guardados$total_2024
+
+}
+
+# Mostrar las tablas
 View(Mortalidad_Fetal_Tardia_tabla)
-```
-
-
-```{r}
-# ==========================
-# FILTRAR AÑO 2024
-# MORTALIDAD FETAL TARDÍA
-# ==========================
-
-Mortalidad_Fetal_Tardia_2024 <- Mortalidad_Fetal_Tardia_tabla %>%
-  filter(Anyo == 2024)
-
-# Mostrar la tabla de 2024
 View(Mortalidad_Fetal_Tardia_2024)
-```
-
-
-```{r}
-#FILTRAR POSICIONES 1, 4, 7...
-#MORTALIDAD FETAL TARDÍA 2024
-
-Mortalidad_Fetal_Tardia_2024_total <- Mortalidad_Fetal_Tardia_2024 %>%
-  slice(seq(1, n(), by = 3))
-
-# Mostrar la tabla
 View(Mortalidad_Fetal_Tardia_2024_total)
 
+
+
 ```
 
 ```{r}
+# IMPORTACIÓN DE DATOS JSON
 # Cargar partos prematuros por provincias
-Partos_Prematuros_Provincias <- fromJSON(
-  "../input/Partos_Prematuros_Provincias.json",
-  simplifyVector = FALSE
-)
-str(Mortalidad_Fetal_Tardia)
-head(Partos_Prematuros_Provincias)
-```
-
-```{r}
-
-#CONVERSIÓN A TABLA
-#PARTOS PREMATUROS
 
 library(tidyverse)
+library(jsonlite)
 
-Partos_Prematuros_Provincias_tabla <- map_dfr(
-  Partos_Prematuros_Provincias,
-  function(serie) {
+# Comprobar si existe el RDS o si ha cambiado el JSON
+if (!file.exists("../INPUT/Partos_Prematuros_Provincias.rds") ||
+    file.info("../INPUT/Partos_Prematuros_Provincias.json")$mtime >
+    file.info("../INPUT/Partos_Prematuros_Provincias.rds")$mtime) {
 
-    datos <- map_dfr(
-      serie$Data,
-      function(fila) {
-        tibble(
-          Fecha = fila$Fecha,
-          T3_TipoDato = fila$T3_TipoDato,
-          T3_Periodo = fila$T3_Periodo,
-          Anyo = fila$Anyo,
-          Valor = fila$Valor
-        )
-      }
-    )
+  # IMPORTACIÓN DE DATOS JSON
+  # Cargar partos prematuros por provincias
+  Partos_Prematuros_Provincias <- fromJSON(
+    "../INPUT/Partos_Prematuros_Provincias.json",
+    simplifyVector = FALSE
+  )
 
-    datos$COD <- serie$COD
-    datos$Nombre <- serie$Nombre
-    datos$T3_Unidad <- serie$T3_Unidad
+  # CONVERSIÓN A TABLA
+  # PARTOS PREMATUROS
 
-    datos
-  }
-)
+  Partos_Prematuros_Provincias_tabla <- map_dfr(
+    Partos_Prematuros_Provincias,
+    function(serie) {
+
+      datos <- map_dfr(
+        serie$Data,
+        function(fila) {
+          tibble(
+            Fecha = fila$Fecha,
+            T3_TipoDato = fila$T3_TipoDato,
+            T3_Periodo = fila$T3_Periodo,
+            Anyo = fila$Anyo,
+            Valor = fila$Valor
+          )
+        }
+      )
+
+      datos$COD <- serie$COD
+      datos$Nombre <- serie$Nombre
+      datos$T3_Unidad <- serie$T3_Unidad
+
+      datos
+    }
+  )
+
+  # Guardar los resultados en formato RDS
+  saveRDS(
+    Partos_Prematuros_Provincias_tabla,
+    "../INPUT/Partos_Prematuros_Provincias.rds"
+  )
+
+} else {
+
+  # Cargar los datos directamente desde el RDS
+  Partos_Prematuros_Provincias_tabla <- readRDS(
+    "../INPUT/Partos_Prematuros_Provincias.rds"
+  )
+
+}
+
+# Mostrar la estructura y los primeros registros
+str(Partos_Prematuros_Provincias_tabla)
+head(Partos_Prematuros_Provincias_tabla)
 
 # Mostrar la tabla
 View(Partos_Prematuros_Provincias_tabla)
+
+
 ```
+
 
 ### 4.2 Importación datos CSV
 
@@ -258,6 +298,7 @@ Problemas_Congenitos_Partos <- read_delim(
 Problemas_Congenitos_Partos
 str(Problemas_Congenitos_Partos)
 summary(Problemas_Congenitos_Partos)
+
 ```
 
 Limitaciones en niños de 2 a 5 años
