@@ -536,6 +536,7 @@ TMED_2024 %>%
   theme_minimal()
 ```
 
+
 ### 5.3. Comparación entre provinvias
 En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provincias. La idea es comprobar qué provincias han registrado temperaturas más altas y cuáles más bajas durante 2024.
 5.3. Comparación de temperaturas entre provincias
@@ -560,10 +561,12 @@ TMAX_extremos <- bind_rows(TMAX_bajas, TMAX_altas)
 # Comprobamos el resultado
 TMAX_extremos
 nrow(TMAX_extremos)
+
+
 ```
 
 
-```{r, fig.width=10, fig.height=6}
+```{r, fig.width=10, fig.height=3}
 TMAX_extremos %>%
   ggplot(aes(x = reorder(región, anual), y = anual)) +
   geom_bar(stat = "identity", fill = "tomato", color = "black") +
@@ -577,31 +580,145 @@ TMAX_extremos %>%
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   theme_classic()
 ```
-
 ```{r}
-TMIN_2024 %>%
+# Seleccionamos las 5 provincias con temperaturas medias más bajas
+TMED_bajas <- TMED_2024 %>%
+  arrange(anual) %>%
+  slice_head(n = 5)
+
+# Seleccionamos las 5 provincias con temperaturas medias más altas
+TMED_altas <- TMED_2024 %>%
+  arrange(desc(anual)) %>%
+  slice_head(n = 5)
+
+# Unimos las dos tablas
+TMED_extremos <- bind_rows(TMED_bajas, TMED_altas)
+
+# Comprobamos el número de provincias
+nrow(TMED_extremos)
+```
+
+```{r, fig.width=10, fig.height=3}
+TMED_extremos %>%
   ggplot(aes(x = reorder(región, anual), y = anual)) +
-  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  geom_bar(stat = "identity", fill = "orange", color = "black") +
+  geom_text(aes(label = round(anual, 1)), hjust = -0.2, size = 3.5) +
   coord_flip() +
   labs(
-    title = "Temperaturas mínimas por provincia en 2024",
+    title = "Provincias con temperaturas medias más altas y más bajas en 2024",
     x = "Provincia",
-    y = "Temperatura (°C)"
+    y = "Temperatura media anual (°C)"
   ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   theme_classic()
+
 ```
 
 
 ```{r}
-TMED_2024 %>%
-  ggplot(aes(x = reorder(región, anual), y = anual)) +
-  geom_bar(stat = "identity", fill = "seagreen3", color = "black") +
+names(TMED_2024)
+names(TMED_1991_2020)
+
+head(TMED_2024)
+head(TMED_1991_2020)
+```
+
+
+### 5.4. Comparacion de temperaturas de 2024 con el periodo 1991-2020
+
+En este apartado se comparan las temperaturas medias de 2024 con las del periodo de referencia 1991-2020 para calcular las anomalías térmicas de cada territorio. Esto permite identificar dónde se han registrado temperaturas superiores o inferiores a los valores históricos habituales.
+
+```{r}
+# Comprobamos el número de territorios
+nrow(TMED_2024)
+nrow(TMED_1991_2020)
+
+# Comprobamos si hay nombres diferentes
+setdiff(TMED_2024$región, TMED_1991_2020$región)
+setdiff(TMED_1991_2020$región, TMED_2024$región)
+
+# Comprobamos si hay territorios repetidos
+sum(duplicated(TMED_2024$región))
+sum(duplicated(TMED_1991_2020$región))
+
+```
+```{r}
+# Seleccionamos las columnas necesarias de cada tabla
+TMED_actual <- TMED_2024 %>%
+  select(región, anual)
+
+TMED_historica <- TMED_1991_2020 %>%
+  select(región, anual)
+
+# Unimos las tablas por territorio
+TMED_comparacion <- left_join(
+  TMED_actual,
+  TMED_historica,
+  by = "región",
+  suffix = c("_2024", "_historica")
+)
+
+# Comprobamos el resultado
+head(TMED_comparacion)
+
+# Calculamos la diferencia entre 2024 y el periodo histórico
+TMED_comparacion <- TMED_comparacion %>%
+  mutate(anomalia = anual_2024 - anual_historica)
+
+# Mostramos las primeras filas
+head(TMED_comparacion)
+
+# Resumen de las anomalías
+summary(TMED_comparacion$anomalia)
+
+```
+
+```{r}
+# Seleccionamos los 5 territorios con menores anomalías
+anomalias_bajas <- TMED_comparacion %>%
+  arrange(anomalia) %>%
+  slice_head(n = 5)
+
+# Seleccionamos los 5 territorios con mayores anomalías
+anomalias_altas <- TMED_comparacion %>%
+  arrange(desc(anomalia)) %>%
+  slice_head(n = 5)
+
+# Unimos ambas tablas
+anomalias_extremos <- bind_rows(anomalias_bajas, anomalias_altas)
+
+# Comprobamos el resultado
+nrow(anomalias_extremos)
+
+```
+
+```{r, fig.width=10, fig.height=3}
+anomalias_extremos %>%
+  ggplot(aes(x = reorder(región, anomalia), y = anomalia)) +
+  geom_bar(stat = "identity", fill = "steelblue", color = "black") +
+  geom_text(aes(label = round(anomalia, 1)), hjust = -0.2, size = 3.5) +
   coord_flip() +
   labs(
-    title = "Temperaturas medias por provincia en 2024",
-    x = "Provincia",
-    y = "Temperatura (°C)"
+    title = "Territorios con mayores y menores anomalías térmicas en 2024",
+    x = "Territorio",
+    y = "Anomalía térmica (°C)"
   ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   theme_classic()
+
+```
+Los resultados muestran que todos los territorios analizados registraron temperaturas medias anuales superiores a las del periodo de referencia 1991-2020. Las anomalías térmicas oscilaron entre +0,6 °C y +1,6 °C, con una media territorial de aproximadamente +1,15 °C.
+
+Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida registró la menor (+0,6 °C). Estos resultados permiten identificar los territorios donde las temperaturas de 2024 se desviaron más de sus valores históricos habituales.
+
+
+## 6. Análisis de indicadores sanitarios
+### 6.1. Partos prematuros
+
+```{r}
+names(Partos_Prematuros_Provincias)
+head(Partos_Prematuros_Provincias)
+str(Partos_Prematuros_Provincias)
+
 ```
 
