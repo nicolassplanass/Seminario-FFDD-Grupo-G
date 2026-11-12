@@ -712,13 +712,178 @@ Los resultados muestran que todos los territorios analizados registraron tempera
 Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida registró la menor (+0,6 °C). Estos resultados permiten identificar los territorios donde las temperaturas de 2024 se desviaron más de sus valores históricos habituales.
 
 
-## 6. Análisis de indicadores sanitarios
-### 6.1. Partos prematuros
+
+## 6. Union de los datos climáticos y sanitarios
+
+El objetivo es unir la información climática y sanitaria de las distintas provincias españolas para poder estudiar posteriormente si existe alguna relación entre las temperaturas registradas durante 2024 y los indicadores relacionados con el embarazo.
+
+Para ello, se utilizan las tablas climáticas previamente preparadas y las tablas sanitarias de partos prematuros, mortalidad perinatal y mortalidad fetal tardía. Antes de realizar las uniones, es necesario comprobar que los nombres de las provincias tienen el mismo formato en todas las tablas.
+
+### 6.1 Preparación de los datos climáticos
+
+En primer lugar, se seleccionan las temperaturas medias, máximas y mínimas anuales de 2024 de cada provincia. También se incorpora la temperatura media del periodo de referencia 1991-2020, para calcular la anomalía térmica de 2024.
 
 ```{r}
-names(Partos_Prematuros_Provincias)
-head(Partos_Prematuros_Provincias)
-str(Partos_Prematuros_Provincias)
+
+
+clima <- TMED_2024 %>%
+  select(región, anual) %>%
+  rename(
+    provincia = región,
+    tmed_2024 = anual
+  ) %>%
+  left_join(
+    TMAX_2024 %>%
+      select(región, anual) %>%
+      rename(tmax_2024 = anual),
+    by = c("provincia" = "región")
+  ) %>%
+  left_join(
+    TMIN_2024 %>%
+      select(región, anual) %>%
+      rename(tmin_2024 = anual),
+    by = c("provincia" = "región")
+  ) %>%
+  left_join(
+    TMED_1991_2020 %>%
+      select(región, anual) %>%
+      rename(tmed_referencia = anual),
+    by = c("provincia" = "región")
+  ) %>%
+  mutate(
+    anomalia = tmed_2024 - tmed_referencia
+  )
+
+View(clima)
+head(clima)
 
 ```
+
+
+
+### 6.2 Preparación de los indicadores sanitarios
+A continuación, se preparan los indicadores sanitarios para seleccionar únicamente los registros correspondientes a 2024. En el caso de los indicadores de mortalidad, se utilizarán los datos de ambos sexos para obtener un único valor por provincia.
+```{r}
+#corrregimos tabla partos prematuros
+
+prematuros <- Partos_Prematuros_Provincias_tabla %>%
+  filter(Anyo == 2024) %>%
+  mutate(
+    provincia = trimws(sub("\\..*$", "", Nombre))
+  ) %>%
+  filter(provincia != "Total Nacional") %>%
+  select(provincia, partos_prematuros = Valor)
+
+#corregimos tabla de mortalidad
+mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
+  filter(Anyo == 2024) %>%
+  filter(grepl(", Total,", Nombre)) %>%
+  mutate(
+    provincia = sub(",.*$", "", Nombre)
+  ) %>%
+  select(provincia, mortalidad_fetal = Valor)
+mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
+  filter(Anyo == 2024) %>%
+  filter(grepl(", Total,", Nombre)) %>%
+  mutate(
+    provincia = sub(",.*$", "", Nombre)
+  ) %>%
+  select(provincia, mortalidad_perinatal = Valor)
+
+#corrregimos
+```
+
+
+```{r}
+View(prematuros)
+View(mortalidad_fetal)
+View(mortalidad_perinatal)
+```
+
+### 6.3 Normalización nombres de las provincias
+
+Antes de unir las tablas, se comprueba que los nombres de las provincias tengan el mismo formato. Esto es necesario porque algunas aparecen en mayúsculas, otras incluyen tildes y algunas presentan diferencias en el orden de las palabras.
+
+Para solucionar estas diferencias, se crea una función que elimina las tildes, convierte los nombres a mayúsculas y corrige algunas denominaciones:
+
+
+
+
+```{r}
+normalizar <- function(x) {
+  x <- iconv(x, from = "", to = "ASCII//TRANSLIT")
+  x <- toupper(trimws(x))
+
+  x <- case_when(
+    x == "BALEARS, ILLES" ~ "ILLES BALEARS",
+    x == "CORUNA, A" ~ "A CORUNA",
+    x == "RIOJA, LA" ~ "LA RIOJA",
+    x == "PALMAS, LAS" ~ "LAS PALMAS",
+    TRUE ~ x
+  )
+
+  x
+}
+```
+
+```{r}
+clima <- clima %>%
+  mutate(provincia = normalizar(provincia))
+
+prematuros <- prematuros %>%
+  mutate(provincia = normalizar(provincia))
+```
+
+
+
+```{r}
+mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
+  filter(Anyo == 2024) %>%
+  filter(grepl(", Total,", Nombre)) %>%
+  mutate(
+    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
+  ) %>%
+  filter(provincia != "Total Nacional") %>%
+  select(provincia, mortalidad_perinatal = Valor) %>%
+  mutate(provincia = normalizar(provincia))
+
+mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
+  filter(Anyo == 2024) %>%
+  filter(grepl(", Total,", Nombre)) %>%
+  mutate(
+    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
+  ) %>%
+  filter(provincia != "Total Nacional") %>%
+  select(provincia, mortalidad_fetal = Valor) %>%
+  mutate(provincia = normalizar(provincia))
+```
+
+###  6.4 Union tablas climáticas y sanitarias
+
+Una vez preparadas las tablas climáticas y sanitarias, se realiza su unión mediante la función left_join() de la librería dplyr. Se utiliza el nombre de la provincia como variable común, incorporando los indicadores sanitarios a la tabla climática. De esta manera, se obtiene una única tabla que reúne la información de temperatura y los indicadores sanitarios correspondientes a cada territorio.
+```{r}
+datos_completos <- clima %>%
+  left_join(prematuros, by = "provincia") %>%
+  left_join(mortalidad_fetal, by = "provincia") %>%
+  left_join(mortalidad_perinatal, by = "provincia")
+```
+Por último, se visualiza la tabla resultante para comprobar que la unión se ha realizado correctamente:
+
+```{r}
+View(datos_completos)
+
+head(datos_completos)
+```
+
+También comprobamos la presencia de valores faltantes:
+```{r}
+colSums(is.na(datos_completos))
+```
+Al comprobar los valores ausentes de la tabla final mediante colSums(is.na(datos_completos)), se observa que las variables climáticas y el indicador de partos prematuros no presentan valores ausentes. Sin embargo, los indicadores de mortalidad fetal tardía y mortalidad perinatal presentan 7 valores NA cada uno. Estos valores indican que no se ha encontrado información disponible para todas las provincias en dichos indicadores, por lo que se tendrán en cuenta en los análisis posteriores.
+```{r}
+
+anti_join(clima, mortalidad_perinatal, by = "provincia")$provincia
+anti_join(clima, mortalidad_fetal, by = "provincia")$provincia
+```
+Tras comprobar las provincias sin correspondencia mediante anti_join(), se identifican A Coruña, Araba/Álava, Illes Balears, Bizkaia, Gipuzkoa, La Rioja y Las Palmas. Por tanto, estos valores ausentes se mantienen como NA, ya que no se dispone de información para dichas provincias en las tablas utilizadas.
 
