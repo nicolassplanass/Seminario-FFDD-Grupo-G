@@ -780,30 +780,36 @@ prematuros <- Partos_Prematuros_Provincias_tabla %>%
   ) %>%
   filter(provincia != "Total Nacional") %>%
   select(provincia, partos_prematuros = Valor)
+prematuros <- prematuros %>%
+  filter(provincia != "NO RESIDENTE")
 ```
 
 
 ```{r}
 #corregimos tabla de mortalidad
-mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
+mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
   filter(Anyo == 2024) %>%
-  filter(grepl(", Total,", Nombre)) %>%
+  filter(grepl(", Total, Todas las edades,", Nombre)) %>%
   mutate(
-    provincia = sub(",.*$", "", Nombre)
+    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
   ) %>%
-  select(provincia, mortalidad_fetal = Valor)
+  filter(provincia != "Total Nacional") %>%
+  select(provincia, mortalidad_perinatal = Valor) %>%
+  mutate(provincia = normalizar(provincia))
 ```
 
 
 ```{r}
 #corregimos mortalidad perinatal
-mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
+mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
   filter(Anyo == 2024) %>%
-  filter(grepl(", Total,", Nombre)) %>%
+  filter(grepl(", Total, Todas las edades,", Nombre)) %>%
   mutate(
-    provincia = sub(",.*$", "", Nombre)
+    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
   ) %>%
-  select(provincia, mortalidad_perinatal = Valor)
+  filter(provincia != "Total Nacional") %>%
+  select(provincia, mortalidad_fetal = Valor) %>%
+  mutate(provincia = normalizar(provincia))
 
 ```
 
@@ -844,6 +850,7 @@ normalizar <- function(x) {
 
 Una vez creada la función, se aplica a la columna provincia de las cuatro tablas:
 
+
 ```{r}
 clima <- clima %>%
   mutate(provincia = normalizar(provincia))
@@ -859,6 +866,8 @@ mortalidad_perinatal <- mortalidad_perinatal %>%
 ```
 
 Para comprobrar que los nombres coinciden, aplicamos la función intersect() y verificamos que los nombres de las provincias están preparados para unirlo posteriormente.
+
+
 
 ```{r}
 intersect(clima$provincia, prematuros$provincia)
@@ -885,6 +894,7 @@ El resultado es una única tabla denominada datos_completos, que reúne la infor
 
 
 Por último, se visualiza la tabla resultante para comprobar que la unión se ha realizado correctamente:
+
 
 ```{r}
 View(datos_completos)
@@ -992,3 +1002,81 @@ ggplot(datos_completos,
 Este gráfico permite observar una tendencia positiva entre la anomalía termica y la mortalidad perinatal, sugiere una posible asociación que comprobaremos mas adelante mediante análisis de correlación.
 
 
+### 7.2 Correlaciones
+
+
+Procedemos a comprobar estadísticamente las relaciones que hemos podido observar en los gráficos anteriores.
+
+Para ello, utilizaremos dos métodos:
+
+ - Pearson:comprueba si existe una relación lineal entre dos variables                numéricas.
+ 
+ - Spearman: mide si hay una relación monotónica entre dos variables
+ 
+ 
+### 7.2.1 Temperatura media y partos prematuros
+ 
+```{r}
+#  Temperatura media y partos prematuros
+cor.test(datos_completos$tmed_2024,
+         datos_completos$partos_prematuros,
+         method = "pearson")
+```
+
+Pearson: presenta una correlación de 0.232 y un p-value de 0.09836, superior a 0.05 por lo que no podemos segurar que exista una relación entre ambas
+
+
+```{r}
+
+cor.test(datos_completos$tmed_2024,
+         datos_completos$partos_prematuros,
+         method = "spearman")
+```
+
+Spearman: aparece una correlación de 0.578 y un p-value < 0.05 por lo que las temperaturas máximas si tienen relación con el mayor número de partos prematuros.
+
+
+### 7.2.2 Temperatura máxima y mortalidad fetal
+
+```{r}
+# 2. Temperatura máxima y mortalidad fetal
+cor.test(datos_completos$tmax_2024,
+         datos_completos$mortalidad_fetal,
+         method = "pearson",
+         use = "complete.obs")
+```
+Pearson: La correlación es prácticamente cero y ligeramente negativa. Además, el p-valor es muy superior a 0,05, por lo que no existe evidencia estadística de una relación lineal entre la temperatura máxima y la mortalidad fetal tardía.
+
+
+```{r}
+cor.test(
+  datos_completos$tmax_2024,
+  datos_completos$mortalidad_fetal,
+  method = "spearman"
+)
+```
+
+Spearman: se obtiene un coeficiente de -0,0180 y un p-valor de 0,9022. El coeficiente es muy próximo  y p-value superior a 0.05 por lo que no hay evidencia significativa entre las dos variables.
+
+
+### 7.2.3. Anomalía térmica y mortalidad perinatal
+
+```{r}
+cor.test(
+  datos_completos$anomalia,
+  datos_completos$mortalidad_perinatal,
+  method = "pearson"
+)
+```
+
+Pearson: se obtiene un coeficiente de correlación de 0,0897 y un p-valor de 0,5397. El coeficiente indica una relación positiva muy débil entre ambas variables. Sin embargo, el p-valor es superior a 0,05, por lo que esta relación no es estadísticamente significativa.
+
+
+```{r}
+cor.test(
+  datos_completos$anomalia,
+  datos_completos$mortalidad_perinatal,
+  method = "spearman"
+)
+```
+Spearman: coeficiente de correlación de 0,0371 y un p-valor de 0,8002. presenta una asociación positiva muy débil. Por ello, no se encuentra evidencia estadísticamente significativa de una relación lineal ni monotónica entre la anomalía térmica y la mortalidad perinatal en las provincias analizadas.
