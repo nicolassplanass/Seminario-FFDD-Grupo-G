@@ -947,3 +947,48 @@ En el gráfico resultante aparece una ligera tendencia positiva entre la tempera
 
 
 ###  7.1.2 Temperatura máxima y mortalidad fetal tardía
+
+
+A continuación, estudiamos la relación entre la temperatura máxima de 2024 y la mortalidad fetal tardía.
+
+
+
+```{r}
+ggplot(datos_completos,
+       aes(x = tmax_2024, y = mortalidad_fetal)) +
+  geom_point(na.rm = TRUE) +
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  labs(
+    title = "Temperatura máxima y mortalidad fetal tardía",
+    x = "Temperatura máxima de 2024 (ºC)",
+    y = "Mortalidad fetal tardía"
+  ) +
+  theme_minimal()
+```
+
+Observamos que la línea azul es prácticamente horizontal por lo que no presenta una relación evidente de ambas variables. También vemos que los puntos se encuentran dispersos.
+
+
+### 7.1.3 Temperatura máxima 2024 y mortalidad perinatal
+
+
+Por último, vamos a comprobar si la temeratura se asocia con la última variable que es mortalidad perinatal.
+
+
+```{r}
+ggplot(datos_completos,
+       aes(x = anomalia, y = mortalidad_perinatal)) +
+  geom_point(na.rm = TRUE) +
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  labs(
+    title = "Anomalía térmica y mortalidad perinatal",
+    x = "Anomalía térmica (ºC)",
+    y = "Mortalidad perinatal"
+  ) +
+  theme_minimal()
+```
+
+
+Este gráfico permite observar una tendencia positiva entre la anomalía termica y la mortalidad perinatal, sugiere una posible asociación que comprobaremos mas adelante mediante análisis de correlación.
+
+
