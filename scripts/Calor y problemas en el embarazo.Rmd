@@ -717,11 +717,15 @@ Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida reg
 
 El objetivo es unir la información climática y sanitaria de las distintas provincias españolas para poder estudiar posteriormente si existe alguna relación entre las temperaturas registradas durante 2024 y los indicadores relacionados con el embarazo.
 
-Para ello, se utilizan las tablas climáticas previamente preparadas y las tablas sanitarias de partos prematuros, mortalidad perinatal y mortalidad fetal tardía. Antes de realizar las uniones, es necesario comprobar que los nombres de las provincias tienen el mismo formato en todas las tablas.
+Para ello, se utilizan las tablas climáticas previamente preparadas y las tablas sanitarias de partos prematuros, mortalidad perinatal y mortalidad fetal tardía.
+
+Antes de realizar las uniones, es necesario comprobar que los nombres de las provincias tienen el mismo formato en todas las tablas. De esta manera, se evita que la unión genere errores o que algunos datos no se incorporen correctamente.
 
 ### 6.1 Preparación de los datos climáticos
 
-En primer lugar, se seleccionan las temperaturas medias, máximas y mínimas anuales de 2024 de cada provincia. También se incorpora la temperatura media del periodo de referencia 1991-2020, para calcular la anomalía térmica de 2024.
+En primer lugar, se prepara una única tabla que reúne la información de temperatura de cada provincia.
+
+Para ello, se parte de las tablas climáticas previamente obtenidas: temperatura media, máxima y mínima de 2024, además de la temperatura media del periodo de referencia 1991-2020.
 
 ```{r}
 
@@ -754,15 +758,18 @@ clima <- TMED_2024 %>%
     anomalia = tmed_2024 - tmed_referencia
   )
 
-View(clima)
-head(clima)
+
 
 ```
 
-
+El resultado es una tabla llamada clima, que contiene una fila por provincia y las variables necesarias para describir su comportamiento térmico durante 2024.
 
 ### 6.2 Preparación de los indicadores sanitarios
-A continuación, se preparan los indicadores sanitarios para seleccionar únicamente los registros correspondientes a 2024. En el caso de los indicadores de mortalidad, se utilizarán los datos de ambos sexos para obtener un único valor por provincia.
+
+
+A continuación, se preparan los indicadores sanitarios. En este caso, se trabaja con tres tablas diferentes: partos prematuros, mortalidad fetal tardía y mortalidad perinatal. Para las tres se seleccionan los registros correspondientes al año 2024.
+
+
 ```{r}
 #corrregimos tabla partos prematuros
 
@@ -773,7 +780,10 @@ prematuros <- Partos_Prematuros_Provincias_tabla %>%
   ) %>%
   filter(provincia != "Total Nacional") %>%
   select(provincia, partos_prematuros = Valor)
+```
 
+
+```{r}
 #corregimos tabla de mortalidad
 mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
   filter(Anyo == 2024) %>%
@@ -782,6 +792,11 @@ mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
     provincia = sub(",.*$", "", Nombre)
   ) %>%
   select(provincia, mortalidad_fetal = Valor)
+```
+
+
+```{r}
+#corregimos mortalidad perinatal
 mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
   filter(Anyo == 2024) %>%
   filter(grepl(", Total,", Nombre)) %>%
@@ -790,7 +805,6 @@ mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
   ) %>%
   select(provincia, mortalidad_perinatal = Valor)
 
-#corrregimos
 ```
 
 
@@ -800,13 +814,15 @@ View(mortalidad_fetal)
 View(mortalidad_perinatal)
 ```
 
+
 ### 6.3 Normalización nombres de las provincias
+
 
 Antes de unir las tablas, se comprueba que los nombres de las provincias tengan el mismo formato. Esto es necesario porque algunas aparecen en mayúsculas, otras incluyen tildes y algunas presentan diferencias en el orden de las palabras.
 
 Para solucionar estas diferencias, se crea una función que elimina las tildes, convierte los nombres a mayúsculas y corrige algunas denominaciones:
 
-
+Estas diferencias pueden impedir que left_join() reconozca que dos nombres hacen referencia a la misma provincia.
 
 
 ```{r}
@@ -826,47 +842,48 @@ normalizar <- function(x) {
 }
 ```
 
+Una vez creada la función, se aplica a la columna provincia de las cuatro tablas:
+
 ```{r}
 clima <- clima %>%
   mutate(provincia = normalizar(provincia))
 
 prematuros <- prematuros %>%
   mutate(provincia = normalizar(provincia))
+
+mortalidad_fetal <- mortalidad_fetal %>%
+  mutate(provincia = normalizar(provincia))
+
+mortalidad_perinatal <- mortalidad_perinatal %>%
+  mutate(provincia = normalizar(provincia))
 ```
 
-
+Para comprobrar que los nombres coinciden, aplicamos la función intersect() y verificamos que los nombres de las provincias están preparados para unirlo posteriormente.
 
 ```{r}
-mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
-  filter(Anyo == 2024) %>%
-  filter(grepl(", Total,", Nombre)) %>%
-  mutate(
-    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
-  ) %>%
-  filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_perinatal = Valor) %>%
-  mutate(provincia = normalizar(provincia))
-
-mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
-  filter(Anyo == 2024) %>%
-  filter(grepl(", Total,", Nombre)) %>%
-  mutate(
-    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
-  ) %>%
-  filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_fetal = Valor) %>%
-  mutate(provincia = normalizar(provincia))
+intersect(clima$provincia, prematuros$provincia)
 ```
+
+
 
 ###  6.4 Union tablas climáticas y sanitarias
 
+
 Una vez preparadas las tablas climáticas y sanitarias, se realiza su unión mediante la función left_join() de la librería dplyr. Se utiliza el nombre de la provincia como variable común, incorporando los indicadores sanitarios a la tabla climática. De esta manera, se obtiene una única tabla que reúne la información de temperatura y los indicadores sanitarios correspondientes a cada territorio.
+
+
 ```{r}
 datos_completos <- clima %>%
   left_join(prematuros, by = "provincia") %>%
   left_join(mortalidad_fetal, by = "provincia") %>%
   left_join(mortalidad_perinatal, by = "provincia")
 ```
+
+El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
+
+###   6.5 Comprobación de la tabla final
+
+
 Por último, se visualiza la tabla resultante para comprobar que la unión se ha realizado correctamente:
 
 ```{r}
@@ -875,15 +892,18 @@ View(datos_completos)
 head(datos_completos)
 ```
 
+El número de filas correspondientes a las 52 provincias:
+
+```{r}
+nrow(datos_completos)
+```
+
 También comprobamos la presencia de valores faltantes:
+
 ```{r}
 colSums(is.na(datos_completos))
 ```
-Al comprobar los valores ausentes de la tabla final mediante colSums(is.na(datos_completos)), se observa que las variables climáticas y el indicador de partos prematuros no presentan valores ausentes. Sin embargo, los indicadores de mortalidad fetal tardía y mortalidad perinatal presentan 7 valores NA cada uno. Estos valores indican que no se ha encontrado información disponible para todas las provincias en dichos indicadores, por lo que se tendrán en cuenta en los análisis posteriores.
-```{r}
 
-anti_join(clima, mortalidad_perinatal, by = "provincia")$provincia
-anti_join(clima, mortalidad_fetal, by = "provincia")$provincia
-```
-Tras comprobar las provincias sin correspondencia mediante anti_join(), se identifican A Coruña, Araba/Álava, Illes Balears, Bizkaia, Gipuzkoa, La Rioja y Las Palmas. Por tanto, estos valores ausentes se mantienen como NA, ya que no se dispone de información para dichas provincias en las tablas utilizadas.
+Al comprobar los valores ausentes de la tabla final, se observa que las variables climáticas y el indicador de partos prematuros no presentan valores ausentes. Sin embargo, los indicadores de mortalidad fetal tardía y mortalidad perinatal presentan 3 valores NA cada uno. Estos valores indican que no se ha encontrado información disponible para todas las provincias en dichos indicadores.
+
 
