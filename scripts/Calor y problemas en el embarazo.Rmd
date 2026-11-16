@@ -907,3 +907,43 @@ colSums(is.na(datos_completos))
 Al comprobar los valores ausentes de la tabla final, se observa que las variables climáticas y el indicador de partos prematuros no presentan valores ausentes. Sin embargo, los indicadores de mortalidad fetal tardía y mortalidad perinatal presentan 3 valores NA cada uno. Estos valores indican que no se ha encontrado información disponible para todas las provincias en dichos indicadores.
 
 
+
+
+### 7. Estudio de las posibles asociaciones entre temperatura y salud
+
+
+Vamos a estudiar 3 posibles asociaciones:
+
+    1. Temperatura media de 2024 y partos prematuros.
+    2. Temperatura máxima de 2024 y mortalidad fetal tardía.
+    3. Anomalía térmica y mortalidad perinatal.
+    
+Para ello, utilizamos gráficos de dispersión y correlaciones estadísticas como Pearson y Spearman.
+
+
+### 7.1 Diagramas de dispersión 
+
+Empezamos representando la relación entre la temperatura media registrada en 2024 y el número de partos prematuros de cada provincia. Se representa mediante un diagrama de diseprsión en el cual cada punto representa una provincia.
+
+###  7.1.1 Temperatura máxima y partos prematuros
+
+```{r}
+library(ggplot2)
+
+ggplot(datos_completos,
+       aes(x = tmed_2024, y = partos_prematuros)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Temperatura media y partos prematuros",
+    x = "Temperatura media de 2024 (ºC)",
+    y = "Número de partos prematuros"
+  ) +
+  theme_minimal()
+```
+
+
+En el gráfico resultante aparece una ligera tendencia positiva entre la temperatura media y el número de partos prematuros.Sin embargo, los puntos se encuentran bastante dispersos por lo que no se aprecia una relacion muy marcada. Además, se observa que hay algunas provincias con un número alto de partos prematuros.
+
+
+###  7.1.2 Temperatura máxima y mortalidad fetal tardía
