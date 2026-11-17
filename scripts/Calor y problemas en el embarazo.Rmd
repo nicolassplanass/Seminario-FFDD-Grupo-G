@@ -40,6 +40,30 @@ En este seminario queremos analizar la relación directa entre la exposición al
 ## 4. Ejecuciones
 ### 4.1 Importación datos JSON
 
+```{r,echo=FALSE}
+library(jsonlite)
+
+#Carga inicial de la importación de datos (antes de la mejora de tiempo con el RDS)
+#MORTALIDAD PERINATAL
+Mortalidad_Perinatal <- fromJSON(
+  "../INPUT/Mortalidad_Perinatal.json",
+  simplifyVector = FALSE
+)
+
+#MORTALIDAD FETAL TARDÍA
+Mortalidad_Fetal_Tardia <- fromJSON(
+  "../INPUT/Mortalidad_Fetal_Tardia.json",
+  simplifyVector = FALSE
+)
+#PARTOS PREMATUROS POR PROVINCIA
+Partos_Prematuros_Provincias <- fromJSON(
+  "../INPUT/Partos_Prematuros_Provincias.json",
+  simplifyVector = FALSE
+)
+
+```
+
+
 
 ```{r}
 #IMPORTACIÓN DE DATOS JSON
