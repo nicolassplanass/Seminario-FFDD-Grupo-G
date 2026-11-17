@@ -411,159 +411,231 @@ str(TMED_1991_2020)
 summary(TMED_1991_2020)
 ```
 
-## 5. Análisisdescriptivo de las Temperaturas
+## 5. Análisis descriptivo de las Temperaturas
 En este apartado representaremos las temperaturas máximas, mínimas y medias registradas durante 2024. Utilizaremos histogramas para estudiar su distribución y diagramas de caja para observar la dispersión y detectar posibles valores extremos.
 
 ### 5.1. Distribución de las temperaturas
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
 
 ```{r}
 #DISTRIBUCIÓN TEMPERATURA MÁXIMA
+#Preparamos los datos: todas las columnas numéricas en una sola columna
+TMAX_largo <- pivot_longer(
+  data = select(TMAX_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
+#Ordenamos los meses (y "anual" al final)
+TMAX_largo$Variable <- factor(
+  TMAX_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
 
-
-library(ggplot2)
-library(tidyverse)
-
-TMAX_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Temperatura)) +
-  geom_histogram(
-    bins = 20,
-    fill = "tomato",
-    color = "black"
-  ) +
-  facet_wrap(~Variable, scales = "free") +
+#Gráfico: un histograma por cada mes
+Final_plot <-
+  ggplot(data = TMAX_largo, aes(x = Temperatura)) +
+  geom_histogram(bins = 20, fill = "tomato", colour = "black") +
+  facet_wrap(facets = vars(Variable), scales = "free") +
   labs(
-    title = "Distribución de las temperaturas máximas en 2024",
     x = "Temperatura (°C)",
-    y = "Frecuencia"
+    y = "Frecuencia",
+    title = "Distribución de las temperaturas máximas",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+#Al imprimir el objeto se dibuja el gráfico
+Final_plot
 
 ```
 
 ```{r}
 #DISTRIBUCIÓN TEMPERATURA MÍNIMA
+#Preparamos los datos: todas las columnas numéricas en una sola columna
+TMIN_largo <- pivot_longer(
+  data = select(TMIN_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
 
+#Ordenamos los meses (y "anual" al final)
+TMIN_largo$Variable <- factor(
+  TMIN_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
 
-TMIN_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Temperatura)) +
-  geom_histogram(
-    bins = 20,
-    fill = "skyblue",
-    color = "black"
-  ) +
-  facet_wrap(~Variable, scales = "free") +
+#Gráfico: un histograma por cada mes
+Final_plot_min <-
+  ggplot(data = TMIN_largo, aes(x = Temperatura)) +
+  geom_histogram(bins = 20, fill = "skyblue", colour = "black") +
+  facet_wrap(facets = vars(Variable), scales = "free") +
   labs(
-    title = "Distribución de las temperaturas mínimas en 2024",
     x = "Temperatura (°C)",
-    y = "Frecuencia"
+    y = "Frecuencia",
+    title = "Distribución de las temperaturas mínimas",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+#Al imprimir el objeto se dibuja el gráfico
+Final_plot_min
+
 
 ```
 
 ```{r}
 #DISTRIBUCIÓN TEMPERATURA MEDIA
+#Preparamos los datos: todas las columnas numéricas en una sola columna
+TMED_largo <- pivot_longer(
+  data = select(TMED_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
 
-TMED_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Temperatura)) +
-  geom_histogram(
-    bins = 20,
-    fill = "orange",
-    color = "black"
-  ) +
-  facet_wrap(~Variable, scales = "free") +
+#Ordenamos los meses (y "anual" al final)
+TMED_largo$Variable <- factor(
+  TMED_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
+
+#Gráfico: un histograma por cada mes
+Final_plot_med <-
+  ggplot(data = TMED_largo, aes(x = Temperatura)) +
+  geom_histogram(bins = 20, fill = "orange", colour = "black") +
+  facet_wrap(facets = vars(Variable), scales = "free") +
   labs(
-    title = "Distribución de las temperaturas medias en 2024",
     x = "Temperatura (°C)",
-    y = "Frecuencia"
+    y = "Frecuencia",
+    title = "Distribución de las temperaturas medias",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+#Al imprimir el objeto se dibuja el gráfico
+Final_plot_med
+
 
 ```
 
 ### 5.2. Diagramas de Cajas
 Estos gráficos nos permitirán comparar la dispersión de las temperaturas y detectar posibles valores atípicos.
 ```{r}
-#DIAGRAMA DE CAJA TMAX
+# Preparamos los datos: todas las columnas numéricas en una sola columna
+TMAX_largo <- pivot_longer(
+  data = select(TMAX_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
 
-TMAX_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Variable, y = Temperatura)) +
+# Ordenamos los meses (y "anual" al final)
+TMAX_largo$Variable <- factor(
+  TMAX_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
+
+# Gráfico: una caja por cada mes
+Box_plot_max <-
+  ggplot(data = TMAX_largo, aes(x = Variable, y = Temperatura)) +
   geom_boxplot(fill = "tomato") +
   labs(
-    title = "Temperaturas máximas por variable en 2024",
-    x = "Variable",
-    y = "Temperatura (°C)"
+    x = "Mes",
+    y = "Temperatura (°C)",
+    title = "Temperaturas máximas por mes",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+# Al imprimir el objeto se dibuja el gráfico
+Box_plot_max
 ```
 
 ```{r}
 #DIAGRAMA DE CAJA TMIN
+TMIN_largo <- pivot_longer(
+  data = select(TMIN_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
 
-TMIN_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Variable, y = Temperatura)) +
+# Ordenamos los meses (y "anual" al final)
+TMIN_largo$Variable <- factor(
+  TMIN_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
+
+# Gráfico: una caja por cada mes
+Box_plot_min <-
+  ggplot(data = TMIN_largo, aes(x = Variable, y = Temperatura)) +
   geom_boxplot(fill = "skyblue") +
   labs(
-    title = "Temperaturas mínimas por variable en 2024",
-    x = "Variable",
-    y = "Temperatura (°C)"
+    x = "Mes",
+    y = "Temperatura (°C)",
+    title = "Temperaturas mínimas por mes",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+# Al imprimir el objeto se dibuja el gráfico
+Box_plot_min
+
 ```
 
 ```{r}
 #DIAGRAMA DE CAJA TMED
-TMED_2024 %>%
-  select(where(is.numeric)) %>%
-  pivot_longer(
-    cols = everything(),
-    names_to = "Variable",
-    values_to = "Temperatura"
-  ) %>%
-  ggplot(aes(x = Variable, y = Temperatura)) +
+# Preparamos los datos: todas las columnas numéricas en una sola columna
+TMED_largo <- pivot_longer(
+  data = select(TMED_2024, where(is.numeric)),
+  cols = everything(),
+  names_to = "Variable",
+  values_to = "Temperatura"
+)
+
+# Ordenamos los meses (y "anual" al final)
+TMED_largo$Variable <- factor(
+  TMED_largo$Variable,
+  levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
+             "julio", "agosto", "septiembre", "octubre", "noviembre",
+             "diciembre", "anual")
+)
+
+# Gráfico: una caja por cada mes
+Box_plot_med <-
+  ggplot(data = TMED_largo, aes(x = Variable, y = Temperatura)) +
   geom_boxplot(fill = "orange") +
   labs(
-    title = "Temperaturas medias por variable en 2024",
-    x = "Variable",
-    y = "Temperatura (°C)"
+    x = "Mes",
+    y = "Temperatura (°C)",
+    title = "Temperaturas medias por mes",
+    subtitle = "Año 2024"
   ) +
   theme_minimal()
+
+# Al imprimir el objeto se dibuja el gráfico
+Box_plot_med
 ```
 
 
 ### 5.3. Comparación entre provinvias
 En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provincias. La idea es comprobar qué provincias han registrado temperaturas más altas y cuáles más bajas durante 2024.
-5.3. Comparación de temperaturas entre provincias
+
 Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
 
 ```{r}
@@ -603,6 +675,7 @@ TMAX_extremos %>%
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   theme_classic()
+TMAX_extremos
 ```
 ```{r}
 # Seleccionamos las 5 provincias con temperaturas medias más bajas
@@ -753,7 +826,6 @@ Para ello, se parte de las tablas climáticas previamente obtenidas: temperatura
 
 ```{r}
 
-
 clima <- TMED_2024 %>%
   select(región, anual) %>%
   rename(
@@ -782,8 +854,7 @@ clima <- TMED_2024 %>%
     anomalia = tmed_2024 - tmed_referencia
   )
 
-
-
+clima
 ```
 
 El resultado es una tabla llamada clima, que contiene una fila por provincia y las variables necesarias para describir su comportamiento térmico durante 2024.
@@ -806,6 +877,7 @@ prematuros <- Partos_Prematuros_Provincias_tabla %>%
   select(provincia, partos_prematuros = Valor)
 prematuros <- prematuros %>%
   filter(provincia != "NO RESIDENTE")
+prematuros
 ```
 
 
@@ -818,8 +890,9 @@ mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
     provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
   ) %>%
   filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_perinatal = Valor) %>%
-  mutate(provincia = normalizar(provincia))
+  select(provincia, mortalidad_perinatal = Valor)
+mortalidad_perinatal
+
 ```
 
 
@@ -832,8 +905,8 @@ mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
     provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
   ) %>%
   filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_fetal = Valor) %>%
-  mutate(provincia = normalizar(provincia))
+  select(provincia, mortalidad_fetal = Valor)
+mortalidad_fetal
 
 ```
 
