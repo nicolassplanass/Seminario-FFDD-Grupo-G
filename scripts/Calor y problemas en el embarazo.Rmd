@@ -907,7 +907,7 @@ Al comprobar los valores ausentes de la tabla final, se observa que ninguna vari
 ### 7. Estudio de las posibles asociaciones entre temperatura y salud
 
 
-Se estudian 3 posibles asociaciones:
+Se estudian las asociaciones de los tres indicadores sanitarios (partos prematuros, mortalidad fetal tardía y mortalidad perinatal) con tres variables térmicas:
 
     1. Temperatura media de 2024 y partos prematuros.
     2. Temperatura máxima de 2024 y mortalidad fetal tardía.
@@ -924,7 +924,6 @@ Empezamos representando la relación entre la temperatura media registrada en 20
 etiquetas_temp <- c(
   tmed_2024 = "Temperatura media 2024 (°C)",
   tmax_2024 = "Temperatura máxima 2024 (°C)",
-  tmin_2024 = "Temperatura mínima 2024 (°C)",
   anomalia  = "Anomalía térmica (°C)"
 )
 
@@ -952,6 +951,8 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 grafico_dispersion("partos_prematuros", "Número de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
 ```
+Se observa una tendencia positiva entre el número de partos prematuros y las tres variables climáticas analizadas. Sin embargo, los puntos presentan bastante dispersión, por lo que la asociación no parece muy marcada. Además, hay que tener en cuenta que se analiza el número absoluto de partos y no una tasa ajustada al número de nacimientos.
+
 
 
 ### 7.1.2 Mortalidad fetal tardía
@@ -961,6 +962,7 @@ grafico_dispersion("partos_prematuros", "Número de partos prematuros",
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
 ```
+Los gráficos muestran una distribución dispersa de los datos y líneas de tendencia prácticamente horizontales. Se aprecia una ligera tendencia positiva con la temperatura media y negativa con la temperatura máxima y la anomalía térmica, pero no se observa una asociación visual clara.
 
 
 ### 7.1.3 Mortalidad perinatal
@@ -970,7 +972,7 @@ grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad perinatal por provincia")
 ```
 
-
+Se observa una tendencia positiva entre la mortalidad perinatal y las tres variables climáticas. No obstante, los puntos presentan bastante dispersión, por lo que la relación no parece muy marcada y será necesario comprobarla mediante los análisis de correlación.
 
 
 
@@ -984,69 +986,98 @@ Se utilizan dos métodos:
 Una correlación positiva indica que los valores altos de una variable tienden a acompañarse de valores altos de la otra, pero **no demuestra que una cause la otra**. Cada correlación se calcula con las provincias que tienen datos en ambas variables.
  
  
-### 7.2.1 Temperatura media 2024 y partos prematuros
+### 7.2.1 Partos prematuros
+
+**Temperatura media**
  
 ```{r}
-#  Temperatura media y partos prematuros
 cor.test(datos_completos$tmed_2024,
          datos_completos$partos_prematuros,
          method = "pearson")
 ```
 
-Pearson: presenta una correlación de 0.232 y un p-value de 0.09836, superior a 0.05 por lo que no podemos segurar que exista una relación entre ambas
-
 
 ```{r}
-
 cor.test(datos_completos$tmed_2024,
          datos_completos$partos_prematuros,
          method = "spearman")
 ```
 
-Spearman: aparece una correlación de 0.578 y un p-value < 0.05 por lo que las temperaturas máximas si tienen relación con el mayor número de partos prematuros.
 
+Mediante Pearson se obtiene una correlación positiva débil (0,232), aunque no estadísticamente significativa (p = 0,09836). Por otro lado, Spearman muestra una correlación positiva moderada (0,578) y estadísticamente significativa (p = 7,224 · 10⁻⁶).
 
-### 7.2.2 Temperatura máxima 2024 y mortalidad fetal
+Ambos métodos muestran una tendencia positiva, aunque difieren en la intensidad de la asociación y en su significación estadística. Los resultados de Spearman sugieren que las provincias con temperaturas medias más elevadas tienden a presentar un mayor número de partos prematuros.
+
+**Temperatura máxima**
 
 ```{r}
-# 2. Temperatura máxima y mortalidad fetal
 cor.test(datos_completos$tmax_2024,
-         datos_completos$mortalidad_fetal,
-         method = "pearson",
-         use = "complete.obs")
+         datos_completos$partos_prematuros,
+         method = "pearson")
 ```
-Pearson: La correlación es prácticamente cero y ligeramente negativa. Además, el p-valor es muy superior a 0,05, por lo que no existe evidencia estadística de una relación lineal entre la temperatura máxima y la mortalidad fetal tardía.
 
 
 ```{r}
-cor.test(
-  datos_completos$tmax_2024,
-  datos_completos$mortalidad_fetal,
-  method = "spearman"
-)
+cor.test(datos_completos$tmax_2024,
+         datos_completos$partos_prematuros,
+         method = "spearman")
 ```
 
-Spearman: se obtiene un coeficiente de -0,0180 y un p-valor de 0,9022. El coeficiente es muy próximo  y p-value superior a 0.05 por lo que no hay evidencia significativa entre las dos variables.
 
 
-### 7.2.3. Temperatura máxima 2024 y mortalidad perinatal
+**Anomalía térmica**
 
 ```{r}
-cor.test(
-  datos_completos$anomalia,
-  datos_completos$mortalidad_perinatal,
-  method = "pearson"
-)
+cor.test(datos_completos$anomalia,
+         datos_completos$partos_prematuros,
+         method = "pearson")
 ```
-
-Pearson: se obtiene un coeficiente de correlación de 0,0897 y un p-valor de 0,5397. El coeficiente indica una relación positiva muy débil entre ambas variables. Sin embargo, el p-valor es superior a 0,05, por lo que esta relación no es estadísticamente significativa.
 
 
 ```{r}
-cor.test(
-  datos_completos$anomalia,
-  datos_completos$mortalidad_perinatal,
-  method = "spearman"
-)
+cor.test(datos_completos$anomalia,
+         datos_completos$partos_prematuros,
+         method = "spearman")
 ```
-Spearman: coeficiente de correlación de 0,0371 y un p-valor de 0,8002. presenta una asociación positiva muy débil. Por ello, no se encuentra evidencia estadísticamente significativa de una relación lineal ni monotónica entre la anomalía térmica y la mortalidad perinatal en las provincias analizadas.
+
+
+
+
+
+### 7.2.2 Mortalidad fetal
+
+**Temperatura media**
+
+
+**Temperatura máxima**
+
+
+**Anomalía térmica**
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+
+### 7.2.3. Mortalidad perinatal
+
+```{r}
+
+```
+
+
+
+
+```{r}
+
+```
