@@ -13,7 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # 1. Introducción
-El constante de las temperaturas globales se ha convertido en una de las amenazas más relevantes para la salud pública. Si bien los efectos del calor extremo suelen analizarse frecuentemente en poblaciones vulnerables como los adultos mayores o personas con patologías crónicas, el impacto sobre la salud materno-infantil representa un área crítica y, a menudo, menos visibilizada. El organismo materno experimenta adaptaciones fisiológicas complejas para mantener la termorregulación; sin embargo, cuando las temperaturas ambientales superan los umbrales de tolerancia (como evidencian los registros térmicos recientes), se desencadenan respuestas de estrés térmico que pueden comprometer gravemente la homeostasis del embarazo.
+El aumento constante de las temperaturas globales se ha convertido en una de las amenazas más relevantes para la salud pública. Si bien los efectos del calor extremo suelen analizarse frecuentemente en poblaciones vulnerables como los adultos mayores o personas con patologías crónicas, el impacto sobre la salud materno-infantil representa un área crítica y, a menudo, menos visibilizada. El organismo materno experimenta adaptaciones fisiológicas complejas para mantener la termorregulación; sin embargo, cuando las temperaturas ambientales superan los umbrales de tolerancia (como evidencian los registros térmicos recientes), se desencadenan respuestas de estrés térmico que pueden comprometer gravemente la homeostasis del embarazo.
 
 En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, problemas congénitos en el parto, mortalidad fetal tardía, mortalidad perinatal y limitaciones en el desarrollo temprano de niños de 2 a 5 años. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
 
@@ -306,7 +306,7 @@ View(Partos_Prematuros_Provincias_tabla)
 
 ### 4.2 Importación datos CSV
 
-Problemas congenitos y problemas de parto
+**Problemas congenitos y problemas de parto**
 
 ```{r}
 library(readr)
@@ -325,7 +325,7 @@ summary(Problemas_Congenitos_Partos)
 
 ```
 
-Limitaciones en niños de 2 a 5 años
+**Limitaciones en niños de 2 a 5 años**
 
 ```{r}
 Limitaciones_Ninos <- read_delim(
@@ -341,7 +341,7 @@ str(Limitaciones_Ninos)
 summary(Limitaciones_Ninos)
 ```
 
-IMPORTACIÓN DE DATOS METEOROLÓGICOS
+**Datos metereológicos**
 
 Temperaturas máximas de 2024
 ```{r}
@@ -411,7 +411,104 @@ str(TMED_1991_2020)
 summary(TMED_1991_2020)
 ```
 
+### 4.4 Normalización de los nombres de las provincias
+```{r}
+normalizar <- function(x) {
+  x <- stringi::stri_trans_general(x, "Latin-ASCII")
+  x <- toupper(trimws(x))
+
+  case_when(
+    x == "BALEARS, ILLES" ~ "ILLES BALEARS",
+    x == "CORUNA, A"      ~ "A CORUNA",
+    x == "RIOJA, LA"      ~ "LA RIOJA",
+    x == "PALMAS, LAS"    ~ "LAS PALMAS",
+    x == "ALAVA"          ~ "ARABA/ALAVA",
+    x == "VIZCAYA"        ~ "BIZKAIA",
+    x == "GUIPUZCOA"      ~ "GIPUZKOA",
+    TRUE                  ~ x
+  )
+}
+```
+
+### 4.5 Preparación de los datos climáticos 
+
+Se reúne en una única tabla, con una fila por provincia, la temperatura media, máxima y mínima de 2024, la temperatura media de referencia y la anomalía térmica (diferencia entre la temperatura media de 2024 y la de referencia).
+```{r}
+clima <- TMED_2024 %>%
+  select(nombre = región, tmed_2024 = anual) %>%
+  left_join(
+    TMAX_2024 %>% select(región, tmax_2024 = anual),
+    by = c("nombre" = "región")
+  ) %>%
+  left_join(
+    TMIN_2024 %>% select(región, tmin_2024 = anual),
+    by = c("nombre" = "región")
+  ) %>%
+  left_join(
+    TMED_1991_2020 %>% select(región, tmed_referencia = anual),
+    by = c("nombre" = "región")
+  ) %>%
+  mutate(
+    anomalia  = tmed_2024 - tmed_referencia,
+    provincia = normalizar(nombre)
+  )
+
+clima
+```
+
+
+### 4.6 Preparación de los indicadores sanitarios
+
+Para los tres indicadores se seleccionan los registros de 2024 y se extrae el nombre de la provincia del texto de la columna `Nombre`. Se descartan las filas de «Total Nacional» y «No residente».
+
+```{r}
+# Partos prematuros (recuento de partos)
+prematuros <- Partos_Prematuros_Provincias_tabla %>%
+  filter(Anyo == 2024) %>%
+  mutate(provincia = normalizar(sub("\\..*$", "", Nombre))) %>%
+  filter(!provincia %in% c("TOTAL NACIONAL", "NO RESIDENTE")) %>%
+  select(provincia, partos_prematuros = Valor)
+
+prematuros
+```
+
+```{r}
+# Mortalidad fetal tardía (defunciones por mil nacidos), total de ambos sexos
+mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
+  filter(Anyo == 2024, grepl(", Total, Todas las edades,", Nombre)) %>%
+  mutate(provincia = normalizar(sub(", Mortalidad.*$", "", Nombre))) %>%
+  filter(provincia != "TOTAL NACIONAL") %>%
+  select(provincia, mortalidad_fetal = Valor)
+
+# Mortalidad perinatal (defunciones por mil nacidos), total de ambos sexos
+mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
+  filter(Anyo == 2024, grepl(", Total, Todas las edades,", Nombre)) %>%
+  mutate(provincia = normalizar(sub(", Mortalidad.*$", "", Nombre))) %>%
+  filter(provincia != "TOTAL NACIONAL") %>%
+  select(provincia, mortalidad_perinatal = Valor)
+
+mortalidad_fetal
+mortalidad_perinatal
+```
+
+### 4.7 Comprobación de los nombres
+
+Antes de continuar se comprueba que ninguna provincia del clima se queda sin pareja en las tablas sanitarias, y que no hay duplicados. Si la normalización es correcta, todos los resultados deben ser `character(0)` o `0`.
+
+```{r}
+
+list(
+  "Clima sin partos prematuros"        = setdiff(clima$provincia, prematuros$provincia),
+  "Clima sin mortalidad fetal tardía"  = setdiff(clima$provincia, mortalidad_fetal$provincia),
+  "Clima sin mortalidad perinatal"     = setdiff(clima$provincia, mortalidad_perinatal$provincia),
+  "Provincias duplicadas en el clima"  = sum(duplicated(clima$provincia)),
+  "Provincias duplicadas en prematuros" = sum(duplicated(prematuros$provincia))
+)
+```
+
+
 ## 5. Análisis descriptivo de las Temperaturas
+
 En este apartado representaremos las temperaturas máximas, mínimas y medias registradas durante 2024. Utilizaremos histogramas para estudiar su distribución y diagramas de caja para observar la dispersión y detectar posibles valores extremos.
 
 ### 5.1. Distribución de las temperaturas
@@ -634,6 +731,7 @@ Box_plot_med
 
 
 ### 5.3. Comparación entre provinvias
+
 En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provincias. La idea es comprobar qué provincias han registrado temperaturas más altas y cuáles más bajas durante 2024.
 
 Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
@@ -812,206 +910,33 @@ Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida reg
 
 ## 6. Union de los datos climáticos y sanitarios
 
-El objetivo es unir la información climática y sanitaria de las distintas provincias españolas para poder estudiar posteriormente si existe alguna relación entre las temperaturas registradas durante 2024 y los indicadores relacionados con el embarazo.
 
-Para ello, se utilizan las tablas climáticas previamente preparadas y las tablas sanitarias de partos prematuros, mortalidad perinatal y mortalidad fetal tardía.
+###   6.1 Tabla resultante
 
-Antes de realizar las uniones, es necesario comprobar que los nombres de las provincias tienen el mismo formato en todas las tablas. De esta manera, se evita que la unión genere errores o que algunos datos no se incorporen correctamente.
-
-### 6.1 Preparación de los datos climáticos
-
-En primer lugar, se prepara una única tabla que reúne la información de temperatura de cada provincia.
-
-Para ello, se parte de las tablas climáticas previamente obtenidas: temperatura media, máxima y mínima de 2024, además de la temperatura media del periodo de referencia 1991-2020.
-
-```{r}
-
-clima <- TMED_2024 %>%
-  select(región, anual) %>%
-  rename(
-    provincia = región,
-    tmed_2024 = anual
-  ) %>%
-  left_join(
-    TMAX_2024 %>%
-      select(región, anual) %>%
-      rename(tmax_2024 = anual),
-    by = c("provincia" = "región")
-  ) %>%
-  left_join(
-    TMIN_2024 %>%
-      select(región, anual) %>%
-      rename(tmin_2024 = anual),
-    by = c("provincia" = "región")
-  ) %>%
-  left_join(
-    TMED_1991_2020 %>%
-      select(región, anual) %>%
-      rename(tmed_referencia = anual),
-    by = c("provincia" = "región")
-  ) %>%
-  mutate(
-    anomalia = tmed_2024 - tmed_referencia
-  )
-
-clima
-```
-
-El resultado es una tabla llamada clima, que contiene una fila por provincia y las variables necesarias para describir su comportamiento térmico durante 2024.
-
-### 6.2 Preparación de los indicadores sanitarios
-
-
-A continuación, se preparan los indicadores sanitarios. En este caso, se trabaja con tres tablas diferentes: partos prematuros, mortalidad fetal tardía y mortalidad perinatal. Para las tres se seleccionan los registros correspondientes al año 2024.
-
-
-```{r}
-#corrregimos tabla partos prematuros
-
-prematuros <- Partos_Prematuros_Provincias_tabla %>%
-  filter(Anyo == 2024) %>%
-  mutate(
-    provincia = trimws(sub("\\..*$", "", Nombre))
-  ) %>%
-  filter(provincia != "Total Nacional") %>%
-  select(provincia, partos_prematuros = Valor)
-prematuros <- prematuros %>%
-  filter(provincia != "NO RESIDENTE")
-prematuros
-```
-
-
-```{r}
-#corregimos tabla de mortalidad
-mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
-  filter(Anyo == 2024) %>%
-  filter(grepl(", Total, Todas las edades,", Nombre)) %>%
-  mutate(
-    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
-  ) %>%
-  filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_perinatal = Valor)
-mortalidad_perinatal
-
-```
-
-
-```{r}
-#corregimos mortalidad perinatal
-mortalidad_fetal <- Mortalidad_Fetal_Tardia_tabla %>%
-  filter(Anyo == 2024) %>%
-  filter(grepl(", Total, Todas las edades,", Nombre)) %>%
-  mutate(
-    provincia = trimws(sub(", Mortalidad.*$", "", Nombre))
-  ) %>%
-  filter(provincia != "Total Nacional") %>%
-  select(provincia, mortalidad_fetal = Valor)
-mortalidad_fetal
-
-```
-
-
-```{r}
-View(prematuros)
-View(mortalidad_fetal)
-View(mortalidad_perinatal)
-```
-
-
-### 6.3 Normalización nombres de las provincias
-
-
-Antes de unir las tablas, se comprueba que los nombres de las provincias tengan el mismo formato. Esto es necesario porque algunas aparecen en mayúsculas, otras incluyen tildes y algunas presentan diferencias en el orden de las palabras.
-
-Para solucionar estas diferencias, se crea una función que elimina las tildes, convierte los nombres a mayúsculas y corrige algunas denominaciones:
-
-Estas diferencias pueden impedir que left_join() reconozca que dos nombres hacen referencia a la misma provincia.
-
-
-```{r}
-normalizar <- function(x) {
-  x <- iconv(x, from = "", to = "ASCII//TRANSLIT")
-  x <- toupper(trimws(x))
-
-  x <- case_when(
-    x == "BALEARS, ILLES" ~ "ILLES BALEARS",
-    x == "CORUNA, A" ~ "A CORUNA",
-    x == "RIOJA, LA" ~ "LA RIOJA",
-    x == "PALMAS, LAS" ~ "LAS PALMAS",
-    TRUE ~ x
-  )
-
-  x
-}
-```
-
-Una vez creada la función, se aplica a la columna provincia de las cuatro tablas:
-
-
-```{r}
-clima <- clima %>%
-  mutate(provincia = normalizar(provincia))
-
-prematuros <- prematuros %>%
-  mutate(provincia = normalizar(provincia))
-
-mortalidad_fetal <- mortalidad_fetal %>%
-  mutate(provincia = normalizar(provincia))
-
-mortalidad_perinatal <- mortalidad_perinatal %>%
-  mutate(provincia = normalizar(provincia))
-```
-
-Para comprobrar que los nombres coinciden, aplicamos la función intersect() y verificamos que los nombres de las provincias están preparados para unirlo posteriormente.
-
-
-
-```{r}
-intersect(clima$provincia, prematuros$provincia)
-```
-
-
-
-###  6.4 Union tablas climáticas y sanitarias
-
-
-Una vez preparadas las tablas climáticas y sanitarias, se realiza su unión mediante la función left_join() de la librería dplyr. Se utiliza el nombre de la provincia como variable común, incorporando los indicadores sanitarios a la tabla climática. De esta manera, se obtiene una única tabla que reúne la información de temperatura y los indicadores sanitarios correspondientes a cada territorio.
-
+Con las tablas ya preparadas y los nombres normalizados, se unen mediante `left_join()` utilizando la provincia como clave. El resultado es una tabla, `datos_completos`, con una fila por provincia que reúne la información de temperatura y los tres indicadores sanitarios.
 
 ```{r}
 datos_completos <- clima %>%
   left_join(prematuros, by = "provincia") %>%
   left_join(mortalidad_fetal, by = "provincia") %>%
   left_join(mortalidad_perinatal, by = "provincia")
+
+View(datos_completos)
 ```
 
 El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
 
-###   6.5 Comprobación de la tabla final
+###   6.2 Comprobación de la tabla final
 
+Comprobamos que la tabla tiene una fila por provincia y se revisan los valores ausentes:
 
-Por último, se visualiza la tabla resultante para comprobar que la unión se ha realizado correctamente:
-
-
-```{r}
-View(datos_completos)
-
-head(datos_completos)
-```
-
-El número de filas correspondientes a las 52 provincias:
 
 ```{r}
 nrow(datos_completos)
-```
-
-También comprobamos la presencia de valores faltantes:
-
-```{r}
 colSums(is.na(datos_completos))
 ```
 
-Al comprobar los valores ausentes de la tabla final, se observa que las variables climáticas y el indicador de partos prematuros no presentan valores ausentes. Sin embargo, los indicadores de mortalidad fetal tardía y mortalidad perinatal presentan 3 valores NA cada uno. Estos valores indican que no se ha encontrado información disponible para todas las provincias en dichos indicadores.
+Al comprobar los valores ausentes de la tabla final, se observa que ninguna variable presentan valores ausentes.  
 
 
 
@@ -1019,7 +944,7 @@ Al comprobar los valores ausentes de la tabla final, se observa que las variable
 ### 7. Estudio de las posibles asociaciones entre temperatura y salud
 
 
-Vamos a estudiar 3 posibles asociaciones:
+Se estudian 3 posibles asociaciones:
 
     1. Temperatura media de 2024 y partos prematuros.
     2. Temperatura máxima de 2024 y mortalidad fetal tardía.
@@ -1032,71 +957,58 @@ Para ello, utilizamos gráficos de dispersión y correlaciones estadísticas com
 
 Empezamos representando la relación entre la temperatura media registrada en 2024 y el número de partos prematuros de cada provincia. Se representa mediante un diagrama de diseprsión en el cual cada punto representa una provincia.
 
-###  7.1.1 Temperatura máxima y partos prematuros
-
 ```{r}
-library(ggplot2)
+etiquetas_temp <- c(
+  tmed_2024 = "Temperatura media 2024 (°C)",
+  tmax_2024 = "Temperatura máxima 2024 (°C)",
+  tmin_2024 = "Temperatura mínima 2024 (°C)",
+  anomalia  = "Anomalía térmica (°C)"
+)
 
-ggplot(datos_completos,
-       aes(x = tmed_2024, y = partos_prematuros)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Temperatura media y partos prematuros",
-    x = "Temperatura media de 2024 (ºC)",
-    y = "Número de partos prematuros"
-  ) +
-  theme_minimal()
+grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
+  datos_completos %>%
+    select(all_of(c(names(etiquetas_temp), indicador))) %>%
+    pivot_longer(cols = all_of(names(etiquetas_temp)),
+                 names_to = "variable", values_to = "temperatura") %>%
+    mutate(variable = factor(variable,
+                             levels = names(etiquetas_temp),
+                             labels = unname(etiquetas_temp))) %>%
+    ggplot(aes(x = temperatura, y = .data[[indicador]])) +
+    geom_point(na.rm = TRUE) +
+    geom_smooth(method = "lm", formula = y ~ x, se = FALSE, na.rm = TRUE) +
+    facet_wrap(vars(variable), scales = "free_x") +
+    labs(title = titulo, x = NULL, y = etiqueta_y) +
+    theme_minimal()
+}
 ```
 
 
-En el gráfico resultante aparece una ligera tendencia positiva entre la temperatura media y el número de partos prematuros.Sin embargo, los puntos se encuentran bastante dispersos por lo que no se aprecia una relacion muy marcada. Además, se observa que hay algunas provincias con un número alto de partos prematuros.
-
-
-###  7.1.2 Temperatura máxima y mortalidad fetal tardía
-
-
-A continuación, estudiamos la relación entre la temperatura máxima de 2024 y la mortalidad fetal tardía.
-
-
+### 7.1.1 Partos prematuros
 
 ```{r}
-ggplot(datos_completos,
-       aes(x = tmax_2024, y = mortalidad_fetal)) +
-  geom_point(na.rm = TRUE) +
-  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
-  labs(
-    title = "Temperatura máxima y mortalidad fetal tardía",
-    x = "Temperatura máxima de 2024 (ºC)",
-    y = "Mortalidad fetal tardía"
-  ) +
-  theme_minimal()
-```
-
-Observamos que la línea azul es prácticamente horizontal por lo que no presenta una relación evidente de ambas variables. También vemos que los puntos se encuentran dispersos.
-
-
-### 7.1.3 Temperatura máxima 2024 y mortalidad perinatal
-
-
-Por último, vamos a comprobar si la temeratura se asocia con la última variable que es mortalidad perinatal.
-
-
-```{r}
-ggplot(datos_completos,
-       aes(x = anomalia, y = mortalidad_perinatal)) +
-  geom_point(na.rm = TRUE) +
-  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
-  labs(
-    title = "Anomalía térmica y mortalidad perinatal",
-    x = "Anomalía térmica (ºC)",
-    y = "Mortalidad perinatal"
-  ) +
-  theme_minimal()
+grafico_dispersion("partos_prematuros", "Número de partos prematuros",
+                   "Temperatura y partos prematuros por provincia")
 ```
 
 
-Este gráfico permite observar una tendencia positiva entre la anomalía termica y la mortalidad perinatal, sugiere una posible asociación que comprobaremos mas adelante mediante análisis de correlación.
+### 7.1.2 Mortalidad fetal tardía
+
+```{r}
+grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
+                   "Temperatura y mortalidad fetal tardía por provincia")
+```
+
+
+### 7.1.3 Mortalidad perinatal
+
+```{r dispersion-perinatal, fig.width=9, fig.height=6}
+grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
+                   "Temperatura y mortalidad perinatal por provincia")
+```
+
+
+
+
 
 
 ### 7.2 Correlaciones
@@ -1111,7 +1023,7 @@ Para ello, utilizaremos dos métodos:
  - Spearman: mide si hay una relación monotónica entre dos variables
  
  
-### 7.2.1 Temperatura media y partos prematuros
+### 7.2.1 Temperatura media 2024 y partos prematuros
  
 ```{r}
 #  Temperatura media y partos prematuros
@@ -1133,7 +1045,7 @@ cor.test(datos_completos$tmed_2024,
 Spearman: aparece una correlación de 0.578 y un p-value < 0.05 por lo que las temperaturas máximas si tienen relación con el mayor número de partos prematuros.
 
 
-### 7.2.2 Temperatura máxima y mortalidad fetal
+### 7.2.2 Temperatura máxima 2024 y mortalidad fetal
 
 ```{r}
 # 2. Temperatura máxima y mortalidad fetal
@@ -1156,7 +1068,7 @@ cor.test(
 Spearman: se obtiene un coeficiente de -0,0180 y un p-valor de 0,9022. El coeficiente es muy próximo  y p-value superior a 0.05 por lo que no hay evidencia significativa entre las dos variables.
 
 
-### 7.2.3. Anomalía térmica y mortalidad perinatal
+### 7.2.3. Temperatura máxima 2024 y mortalidad perinatal
 
 ```{r}
 cor.test(
