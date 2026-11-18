@@ -993,6 +993,7 @@ grafico_dispersion("partos_prematuros", "Número de partos prematuros",
 
 ### 7.1.2 Mortalidad fetal tardía
 
+
 ```{r}
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
@@ -1010,17 +1011,14 @@ grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
 
 
 
-
 ### 7.2 Correlaciones
 
+Se utilizan dos métodos:
 
-Procedemos a comprobar estadísticamente las relaciones que hemos podido observar en los gráficos anteriores.
+* **Pearson:** mide la relación lineal entre dos variables numéricas. Es sensible a valores extremos.
+* **Spearman:** mide la relación monotónica (si una variable tiende a aumentar cuando aumenta la otra) a partir de los rangos, sin exigir linealidad.
 
-Para ello, utilizaremos dos métodos:
-
- - Pearson:comprueba si existe una relación lineal entre dos variables                numéricas.
- 
- - Spearman: mide si hay una relación monotónica entre dos variables
+Una correlación positiva indica que los valores altos de una variable tienden a acompañarse de valores altos de la otra, pero **no demuestra que una cause la otra**. Cada correlación se calcula con las provincias que tienen datos en ambas variables.
  
  
 ### 7.2.1 Temperatura media 2024 y partos prematuros
