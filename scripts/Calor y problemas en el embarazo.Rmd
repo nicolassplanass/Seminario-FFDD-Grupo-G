@@ -1022,7 +1022,7 @@ cor.test(datos_completos$tmax_2024,
          datos_completos$partos_prematuros,
          method = "spearman")
 ```
-
+Mediante Pearson se obtiene una correlación positiva débil (0,264), aunque no estadísticamente significativa (p = 0,05881). Por otro lado, Spearman muestra una correlación positiva moderada (0,511) y estadísticamente significativa (p = 0,0001074). Estos resultados sugieren que las provincias con temperaturas máximas más elevadas tienden a presentar un mayor número de partos prematuros.
 
 
 **Anomalía térmica**
@@ -1040,44 +1040,137 @@ cor.test(datos_completos$anomalia,
          method = "spearman")
 ```
 
-
+En esta comparación, los dos métodos muestran resultados bastante similares. Pearson obtiene un coeficiente de 0,183, mientras que Spearman presenta un valor de 0,189. Ambos indican una correlación positiva débil. Sin embargo, sus p-valores (0,1936 y 0,1797, respectivamente) superan el nivel de significación de 0,05. Por tanto, no se puede considerar que exista una asociación estadísticamente significativa entre la anomalía térmica y el número de partos prematuros.  
 
 
 
 ### 7.2.2 Mortalidad fetal
 
 **Temperatura media**
+```{r}
+cor.test(datos_completos$tmed_2024,
+         datos_completos$mortalidad_fetal,
+         method = "pearson")
+```
+Se obtiene un coeficiente de correlación de 0,044, lo que indica una correlación positiva prácticamente nula entre la temperatura media y la mortalidad fetal tardía. Además, el p-valor es de 0,7566, superior a 0,05, por lo que no existe una asociación lineal estadísticamente significativa entre ambas variables.
+
+```{r}
+cor.test(datos_completos$tmed_2024,
+         datos_completos$mortalidad_fetal,
+         method = "spearman")
+```
+
+El coeficiente obtenido es de 0,059, lo que también refleja una correlación positiva muy débil. Su p-valor es de 0,6766, superior a 0,05. Por tanto, tampoco se encuentra una asociación monotónica estadísticamente significativa entre la temperatura media y la mortalidad fetal tardía.
 
 
 **Temperatura máxima**
+
+```{r}
+cor.test(
+  datos_completos$tmax_2024,
+  datos_completos$mortalidad_fetal,
+  method = "pearson"
+)
+```
+El resultado obtenido muestra que apenas existe una relación lineal entre la temperatura máxima y la mortalidad fetal tardía. Esto se ve reforzado por el p-valor de 0,7998, que está bastante por encima de 0,05. Por tanto, las diferencias de temperatura máxima entre provincias no parecen estar relacionadas linealmente con las diferencias en mortalidad fetal tardía
+
+
+```{r}
+cor.test(
+  datos_completos$tmax_2024,
+  datos_completos$mortalidad_fetal,
+  method = "spearman"
+)
+```
+En este caso, el coeficiente rho es de −0,036, un valor muy cercano a cero, lo que indica que tampoco se aprecia una tendencia clara entre ambas variables. Además, el p-valor es de 0,8009, por lo que el resultado no es estadísticamente significativo. En consecuencia, no encontramos evidencias de una asociación monotónica entre la temperatura máxima y la mortalidad fetal tardía.
 
 
 **Anomalía térmica**
 
 
 ```{r}
-
+cor.test(datos_completos$anomalia,
+         datos_completos$mortalidad_fetal,
+         method = "pearson")
 
 ```
-
+El coeficiente indica que la relación lineal entre la anomalía térmica y la mortalidad fetal tardía es prácticamente inexistente. Además, el p-valor es de 0,7785, muy superior a 0,05, por lo que no podemos considerar que exista una relación estadísticamente significativa entre ambas variables.
 
 
 ```{r}
-
+cor.test(datos_completos$anomalia,
+         datos_completos$mortalidad_fetal,
+         method = "spearman")
 ```
-
+Se obtiene un coeficiente rho de −0,093, que refleja una tendencia negativa muy débil. El p-valor es de 0,513, también superior a 0,05. Esto indica que tampoco se encuentra una asociación monotónica estadísticamente significativa entre la anomalía térmica y la mortalidad fetal tardía.
 
 
 
 ### 7.2.3. Mortalidad perinatal
 
-```{r}
 
+**Temperaura media **
+
+```{r}
+cor.test(
+  datos_completos$tmed_2024,
+  datos_completos$mortalidad_perinatal,
+  method = "pearson"
+)
 ```
 
 
+```{r}
+cor.test(
+  datos_completos$tmed_2024,
+  datos_completos$mortalidad_perinatal,
+  method = "spearman"
+)
+```
+Ambos métodos muestran una tendencia positiva débil, pero ninguno encuentra una asociación estadísticamente significativa entre la temperatura media y la mortalidad perinatal en las provincias analizadas.
 
+**Temperatura máxima**
 
 ```{r}
-
+cor.test(
+  datos_completos$tmax_2024,
+  datos_completos$mortalidad_perinatal,
+  method = "pearson"
+)
 ```
+Al analizar estas dos variables mediante Pearson, se obtiene un coeficiente de 0,156, lo que refleja cierta tendencia positiva, aunque bastante débil. No obstante, el p-valor (0,2679) indica que esta relación podría deberse al azar y no alcanza significación estadística.
+
+```{r}
+cor.test(
+  datos_completos$tmax_2024,
+  datos_completos$mortalidad_perinatal,
+  method = "spearman"
+)
+```
+Por su parte, Spearman presenta un coeficiente de 0,106, todavía más cercano a cero. Esto indica que tampoco se aprecia una tendencia clara entre el aumento de la temperatura máxima y la mortalidad perinatal. Además, su p-valor es de 0,4539, por lo que el resultado tampoco es significativo.
+
+
+**Anomalía térmica**
+```{r}
+cor.test(
+  datos_completos$anomalia,
+  datos_completos$mortalidad_perinatal,
+  method = "pearson"
+)
+```
+Al aplicar Pearson, se obtiene un coeficiente de 0,080, lo que refleja una relación positiva muy débil entre la anomalía térmica y la mortalidad perinatal. El p-valor es de 0,5714, por lo que no se puede considerar que exista una relación lineal estadísticamente significativa.
+
+```{r}
+cor.test(
+  datos_completos$anomalia,
+  datos_completos$mortalidad_perinatal,
+  method = "spearman"
+)
+```
+
+En cuanto a Spearman, el coeficiente obtenido es de 0,012, un valor prácticamente igual a cero. Esto indica que no se aprecia ninguna tendencia clara entre ambas variables. Además, el p-valor (0,9332) confirma que el resultado no es estadísticamente significativo.
+
+
+
+En conclusión, se ha observado una asociación entre las temperaturas media y máxima y los partos prematuros. Sin embargo, no se han encontrado relaciones estadísticamente significativas con la mortalidad fetal ni perinatal. Por tanto, los resultados sugieren una posible relación entre las temperaturas y los partos prematuros, aunque no permiten establecer una relación de causalidad.
+
