@@ -1464,4 +1464,22 @@ datos_grupos %>%
     tmax_verano_max = max(tmax_verano)
   )
 ```
+### 9.2 Valores medios de cada grupo
+
+```{r}
+datos_grupos %>%
+  group_by(grupo_calor) %>%
+  summarise(across(
+    c(partos_prematuros, mortalidad_fetal, mortalidad_perinatal),
+    ~ mean(.x, na.rm = TRUE)
+  ))
+```
+La tabla muestra que los tres indicadores no se comportan igual al pasar de las provincias frías a las calurosas.
+
+En los partos prematuros, el número medio aumenta claramente con el calor: de unos 203 partos en las provincias frías a 332 en las templadas y 569 en las calurosas, casi tres veces más que en el grupo frío. Este resultado coincide con las correlaciones de Spearman del apartado 7.2. Sin embargo, al tratarse del número total de partos y no de una tasa, la diferencia también puede deberse a que varias de las provincias calurosas son también de las más pobladas y, por tanto, registran más nacimientos.
+
+En la mortalidad fetal tardía ocurre lo contrario: la tasa media disminuye a medida que aumenta el calor, desde 2,91 defunciones por mil nacidos en las provincias frías hasta 2,09 en las calurosas. Por tanto, no se observa que las provincias con veranos más calurosos tengan una mayor mortalidad fetal tardía.
+
+En la mortalidad perinatal no aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
+
 
