@@ -1174,3 +1174,158 @@ En cuanto a Spearman, el coeficiente obtenido es de 0,012, un valor prácticamen
 
 En conclusión, se ha observado una asociación entre las temperaturas media y máxima y los partos prematuros. Sin embargo, no se han encontrado relaciones estadísticamente significativas con la mortalidad fetal ni perinatal. Por tanto, los resultados sugieren una posible relación entre las temperaturas y los partos prematuros, aunque no permiten establecer una relación de causalidad.
 
+
+
+### 7.3  Comparación por época del año: verano frente a invierno
+
+
+La temperatura máxima anual mezcla los meses cálidos y los fríos. Para acercarnos más a la idea de calor, se calcula la media de las temperaturas máximas de **verano** (junio, julio y agosto) y de **invierno** (diciembre, enero y febrero), y se comparan sus correlaciones con los tres indicadores sanitarios. Si el calor fuera relevante, cabría esperar una asociación más clara en verano que en invierno; si fuera igual en ambas estaciones, probablemente reflejaría diferencias generales entre provincias.
+
+Los indicadores sanitarios son anuales, así que no se puede asignar a cada embarazo la temperatura de los meses concretos en que ocurrió. Se compara si la asociación entre provincias cambia según la estación de la que se toma la temperatura.
+
+Primero se calculan las dos variables y se añaden a la tabla `datos_completos`:
+
+```{r}
+estacional <- TMAX_2024 %>%
+  mutate(
+    provincia     = normalizar(región),
+    tmax_verano   = (junio + julio + agosto) / 3,
+    tmax_invierno = (diciembre + enero + febrero) / 3
+  ) %>%
+  select(provincia, tmax_verano, tmax_invierno)
+
+datos_completos <- left_join(datos_completos, estacional, by = "provincia")
+
+summary(datos_completos[, c("tmax_verano", "tmax_invierno")])
+```
+Después se calculan las correlaciones de Spearman. Cada fila es una época del año y cada columna un indicador sanitario:
+
+```{r}
+indicadores_salud <- c("partos_prematuros", "mortalidad_fetal", "mortalidad_perinatal")
+
+round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
+          datos_completos[, indicadores_salud],
+          method = "spearman", use = "pairwise.complete.obs"), 2)
+```
+```{r}
+round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
+          datos_completos[, indicadores_salud],
+          method = "pearson", use = "pairwise.complete.obs"), 2)
+```
+
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+# Calcular correlaciones de Spearman
+correlaciones <- cor(
+  datos_completos[, c("tmax_verano", "tmax_invierno",
+                      "partos_prematuros", "mortalidad_fetal",
+                      "mortalidad_perinatal")],
+  method = "spearman",
+  use = "complete.obs"
+)
+
+# Seleccionar las correlaciones que nos interesan
+mapa_calor <- as.data.frame(correlaciones) %>%
+  select(partos_prematuros, mortalidad_fetal,
+         mortalidad_perinatal) %>%
+  slice(1:2)
+
+# Preparar los datos para el gráfico
+mapa_calor <- mapa_calor %>%
+  mutate(Temperatura = c("Verano", "Invierno")) %>%
+  pivot_longer(
+    cols = -Temperatura,
+    names_to = "Indicador",
+    values_to = "Correlacion"
+  )
+
+# Crear el mapa de calor
+ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
+                       fill = Correlacion)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(Correlacion, 2)), size = 5) +
+  scale_fill_gradient2(
+    low = "blue",
+    mid = "white",
+    high = "red",
+    midpoint = 0,
+    limits = c(-1, 1)
+  ) +
+  labs(
+    title = "Correlaciones entre temperatura estacional e indicadores sanitarios",
+    x = "Indicadores sanitarios",
+    y = "Estación",
+    fill = "Spearman"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+# Partos prematuros
+g1 <- ggplot(datos_completos,
+             aes(tmax_verano, partos_prematuros)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Verano - Partos prematuros",
+       x = "Temperatura máxima (ºC)",
+       y = "Partos prematuros") +
+  theme_minimal()
+
+g2 <- ggplot(datos_completos,
+             aes(tmax_invierno, partos_prematuros)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Invierno - Partos prematuros",
+       x = "Temperatura máxima (ºC)",
+       y = "Partos prematuros") +
+  theme_minimal()
+
+# Mortalidad fetal
+g3 <- ggplot(datos_completos,
+             aes(tmax_verano, mortalidad_fetal)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Verano - Mortalidad fetal",
+       x = "Temperatura máxima (ºC)",
+       y = "Mortalidad fetal") +
+  theme_minimal()
+
+g4 <- ggplot(datos_completos,
+             aes(tmax_invierno, mortalidad_fetal)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Invierno - Mortalidad fetal",
+       x = "Temperatura máxima (ºC)",
+       y = "Mortalidad fetal") +
+  theme_minimal()
+
+# Mortalidad perinatal
+g5 <- ggplot(datos_completos,
+             aes(tmax_verano, mortalidad_perinatal)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Verano - Mortalidad perinatal",
+       x = "Temperatura máxima (ºC)",
+       y = "Mortalidad perinatal") +
+  theme_minimal()
+
+g6 <- ggplot(datos_completos,
+             aes(tmax_invierno, mortalidad_perinatal)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "Invierno - Mortalidad perinatal",
+       x = "Temperatura máxima (ºC)",
+       y = "Mortalidad perinatal") +
+  theme_minimal()
+
+# Mostrar todos los gráficos juntos
+(g1 | g2) / (g3 | g4) / (g5 | g6)
+```
+
