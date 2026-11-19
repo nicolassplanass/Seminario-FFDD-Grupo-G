@@ -1434,6 +1434,34 @@ ggplot(mapa_datos) +
   ) +
   theme_void()
 ```
-La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas d emortalidad perinatal.
+La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
 
+
+## 9. Comparación entre grupos de provincias según el calor en verano
+
+Para completar el análisis, se dividen las provincias en tres grupos del mismo tamaño según su temperatura máxima media de verano (junio, julio y agosto): **frías**, **templadas** y **calurosas**. Después se comparan los indicadores sanitarios entre los tres grupos. Si el calor influyera en las complicaciones del embarazo, cabría esperar valores más altos en el grupo de provincias calurosas.
+
+### 9.1 Creación de los grupos
+
+```{r}
+datos_grupos <- datos_completos %>%
+  mutate(
+    tercil = ntile(tmax_verano, 3),
+    grupo_calor = case_when(
+      tercil == 1 ~ "Frías",
+      tercil == 2 ~ "Templadas",
+      tercil == 3 ~ "Calurosas"
+    ),
+    grupo_calor = factor(grupo_calor, levels = c("Frías", "Templadas", "Calurosas"))
+  )
+
+# Número de provincias y rango de temperatura de cada grupo
+datos_grupos %>%
+  group_by(grupo_calor) %>%
+  summarise(
+    provincias = n(),
+    tmax_verano_min = min(tmax_verano),
+    tmax_verano_max = max(tmax_verano)
+  )
+```
 
