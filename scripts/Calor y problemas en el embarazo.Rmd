@@ -1538,3 +1538,4 @@ kruskal.test(mortalidad_perinatal ~ grupo_calor, data = datos_grupos)
 Ninguna de las tres pruebas resulta estadísticamente significativa. En la tasa de partos prematuros, el p-valor es de 0,197. En la mortalidad fetal tardía, de 0,257, y en la mortalidad perinatal, de 0,708. Al ser todos superiores a 0,05, no existen diferencias significativas entre las provincias frías, templadas y calurosas en ninguno de los tres indicadores.
 
 Este resultado es coherente con lo observado en el apartado 7.3: la tasa de partos prematuros no se asocia tanto con el calor del verano, que es el criterio utilizado para formar los grupos, como con el clima general de la provincia a lo largo del año. Por este motivo, al no encontrarse diferencias significativas, no es necesario realizar comparaciones entre pares de grupos.
+## 10. Conclusión 
