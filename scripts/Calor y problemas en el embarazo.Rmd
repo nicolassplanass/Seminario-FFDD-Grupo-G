@@ -1434,7 +1434,6 @@ ggplot(mapa_datos) +
   ) +
   theme_void()
 ```
-En el mapa vemos que la tasa de mortalidad perinatal en 2024 no es igual en todas las provincias. Algunas zonas del norte y del centro de España presentan valores más altos, aunque también encontramos diferencias entre provincias cercanas. 
-Si compraramos este mapa con el de anomalías térmicas, vemos que las provincias donde más aumentó la temperatura no son necesariamente las que tienen una mayor tasa de mortalidad perinatal. Por ello, a simple vista no se aprecia una relación clara entre ambas variables, aunque sería necesario analizarlas con más detalle para sacar conclusiones.
+La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas d emortalidad perinatal.
 
 
