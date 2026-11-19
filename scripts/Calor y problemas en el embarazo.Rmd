@@ -466,6 +466,13 @@ nacimientos_ine <- read_delim(
 nacimientos_ine
 str(nacimientos_ine)
 summary(nacimientos_ine)
+# Nacimientos con los nombres de provincia normalizados
+nacimientos <- nacimientos_ine %>%
+  mutate(provincia = normalizar(provincia_ine)) %>%
+  select(provincia, nacimientos_2024)
+
+nacimientos
+
 
 ```
 
@@ -475,14 +482,16 @@ summary(nacimientos_ine)
 Antes de continuar se comprueba que ninguna provincia del clima se queda sin pareja en las tablas sanitarias, y que no hay duplicados. Si la normalización es correcta, todos los resultados deben ser `character(0)` o `0`.
 
 ```{r}
-
 list(
-  "Clima sin partos prematuros"        = setdiff(clima$provincia, prematuros$provincia),
-  "Clima sin mortalidad fetal tardía"  = setdiff(clima$provincia, mortalidad_fetal$provincia),
-  "Clima sin mortalidad perinatal"     = setdiff(clima$provincia, mortalidad_perinatal$provincia),
-  "Provincias duplicadas en el clima"  = sum(duplicated(clima$provincia)),
+  "Clima sin partos prematuros"         = setdiff(clima$provincia, prematuros$provincia),
+  "Clima sin mortalidad fetal tardía"   = setdiff(clima$provincia, mortalidad_fetal$provincia),
+  "Clima sin mortalidad perinatal"      = setdiff(clima$provincia, mortalidad_perinatal$provincia),
+  "Clima sin nacimientos"               = setdiff(clima$provincia, nacimientos$provincia),
+  "Provincias duplicadas en el clima"   = sum(duplicated(clima$provincia)),
   "Provincias duplicadas en prematuros" = sum(duplicated(prematuros$provincia))
 )
+
+
 ```
 
 
@@ -898,8 +907,9 @@ Con las tablas ya preparadas y los nombres normalizados, se unen mediante `left_
 datos_completos <- clima %>%
   left_join(prematuros, by = "provincia") %>%
   left_join(mortalidad_fetal, by = "provincia") %>%
-  left_join(mortalidad_perinatal, by = "provincia")
-
+  left_join(mortalidad_perinatal, by = "provincia") %>%
+  left_join(nacimientos, by = "provincia") %>%
+  mutate(tasa_prematuros = partos_prematuros / nacimientos_2024 * 1000)
 View(datos_completos)
 ```
 
@@ -964,7 +974,7 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 ### 7.1.1 Partos prematuros
 
 ```{r}
-grafico_dispersion("partos_prematuros", "Número de partos prematuros",
+grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
 ```
 Se observa una tendencia positiva entre el número de partos prematuros y las tres variables climáticas analizadas. Sin embargo, los puntos presentan bastante dispersión, por lo que la asociación no parece muy marcada. Además, hay que tener en cuenta que se analiza el número absoluto de partos y no una tasa ajustada al número de nacimientos.
@@ -1002,62 +1012,55 @@ Se utilizan dos métodos:
 Una correlación positiva indica que los valores altos de una variable tienden a acompañarse de valores altos de la otra, pero **no demuestra que una cause la otra**. Cada correlación se calcula con las provincias que tienen datos en ambas variables.
  
  
-### 7.2.1 Partos prematuros
+### 7.2.1 Tasa de partos prematuros
 
 **Temperatura media**
  
 ```{r}
 cor.test(datos_completos$tmed_2024,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "pearson")
 ```
 
-
 ```{r}
 cor.test(datos_completos$tmed_2024,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "spearman")
 ```
 
-
-Mediante Pearson se obtiene una correlación positiva débil (0,232), aunque no estadísticamente significativa (p = 0,09836). Por otro lado, Spearman muestra una correlación positiva moderada (0,578) y estadísticamente significativa (p = 7,224 · 10⁻⁶).
-
-Ambos métodos muestran una tendencia positiva, aunque difieren en la intensidad de la asociación y en su significación estadística. Los resultados de Spearman sugieren que las provincias con temperaturas medias más elevadas tienden a presentar un mayor número de partos prematuros.
+*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
 
 **Temperatura máxima**
 
 ```{r}
 cor.test(datos_completos$tmax_2024,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "pearson")
 ```
 
-
 ```{r}
 cor.test(datos_completos$tmax_2024,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "spearman")
 ```
-Mediante Pearson se obtiene una correlación positiva débil (0,264), aunque no estadísticamente significativa (p = 0,05881). Por otro lado, Spearman muestra una correlación positiva moderada (0,511) y estadísticamente significativa (p = 0,0001074). Estos resultados sugieren que las provincias con temperaturas máximas más elevadas tienden a presentar un mayor número de partos prematuros.
 
+*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
 
 **Anomalía térmica**
 
 ```{r}
 cor.test(datos_completos$anomalia,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "pearson")
 ```
 
-
 ```{r}
 cor.test(datos_completos$anomalia,
-         datos_completos$partos_prematuros,
+         datos_completos$tasa_prematuros,
          method = "spearman")
 ```
 
-En esta comparación, los dos métodos muestran resultados bastante similares. Pearson obtiene un coeficiente de 0,183, mientras que Spearman presenta un valor de 0,189. Ambos indican una correlación positiva débil. Sin embargo, sus p-valores (0,1936 y 0,1797, respectivamente) superan el nivel de significación de 0,05. Por tanto, no se puede considerar que exista una asociación estadísticamente significativa entre la anomalía térmica y el número de partos prematuros.  
-
+*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
 
 
 ### 7.2.2 Mortalidad fetal
@@ -1217,12 +1220,13 @@ summary(datos_completos[, c("tmax_verano", "tmax_invierno")])
 Después se calculan las correlaciones de Spearman. Cada fila es una época del año y cada columna un indicador sanitario:
 
 ```{r}
-indicadores_salud <- c("partos_prematuros", "mortalidad_fetal", "mortalidad_perinatal")
+indicadores_salud <- c("tasa_prematuros", "mortalidad_fetal", "mortalidad_perinatal")
 
 round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
           datos_completos[, indicadores_salud],
           method = "spearman", use = "pairwise.complete.obs"), 2)
 ```
+
 ```{r}
 round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
           datos_completos[, indicadores_salud],
@@ -1238,7 +1242,7 @@ library(dplyr)
 # Calcular correlaciones de Spearman
 correlaciones <- cor(
   datos_completos[, c("tmax_verano", "tmax_invierno",
-                      "partos_prematuros", "mortalidad_fetal",
+                      "tasa_prematuros", "mortalidad_fetal",
                       "mortalidad_perinatal")],
   method = "spearman",
   use = "complete.obs"
@@ -1246,7 +1250,7 @@ correlaciones <- cor(
 
 # Seleccionar las correlaciones que nos interesan
 mapa_calor <- as.data.frame(correlaciones) %>%
-  select(partos_prematuros, mortalidad_fetal,
+  select(tasa_prematuros, mortalidad_fetal,
          mortalidad_perinatal) %>%
   slice(1:2)
 
@@ -1292,16 +1296,16 @@ library(patchwork)
 
 # Partos prematuros
 g1 <- ggplot(datos_completos,
-             aes(tmax_verano, partos_prematuros)) +
+             aes(tmax_verano, tasa_prematuros)) +
   geom_point() +
   geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Verano - Partos prematuros",
+  labs(title = "Verano -  Tasa Partos prematuros",
        x = "Temperatura máxima (ºC)",
        y = "Partos prematuros") +
   theme_minimal()
 
 g2 <- ggplot(datos_completos,
-             aes(tmax_invierno, partos_prematuros)) +
+             aes(tmax_invierno, tasa_prematuros)) +
   geom_point() +
   geom_smooth(method = "loess", se = TRUE) +
   labs(title = "Invierno - Partos prematuros",
@@ -1351,13 +1355,13 @@ g6 <- ggplot(datos_completos,
 (g1 | g2) / (g3 | g4) / (g5 | g6)
 ```
 
-###8. Representación geográfica de los resultados
+## 8. Representación geográfica de los resultados
 
 En este aprtado vamos a representar las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal mediante mapas provinciales de España.
 
 El objetivo es observar como se distribuyen estos indicadores geográficamente y comprobar si existen patrones territoriales siilares entre las variables climáticas.
 
-###8.1 Preparación del mapa provincial
+### 8.1 Preparación del mapa provincial
 
 
 ```{r}
@@ -1480,29 +1484,30 @@ datos_grupos %>%
     tmax_verano_max = max(tmax_verano)
   )
 ```
+
 ### 9.2 Valores medios de cada grupo
 
 ```{r}
 datos_grupos %>%
   group_by(grupo_calor) %>%
   summarise(across(
-    c(partos_prematuros, mortalidad_fetal, mortalidad_perinatal),
+    c(tasa_prematuros, mortalidad_fetal, mortalidad_perinatal),
     ~ mean(.x, na.rm = TRUE)
   ))
 ```
 La tabla muestra que los tres indicadores no se comportan igual al pasar de las provincias frías a las calurosas.
 
-En los partos prematuros, el número medio aumenta claramente con el calor: de unos 203 partos en las provincias frías a 332 en las templadas y 569 en las calurosas, casi tres veces más que en el grupo frío. Este resultado coincide con las correlaciones de Spearman del apartado 7.2. Sin embargo, al tratarse del número total de partos y no de una tasa, la diferencia también puede deberse a que varias de las provincias calurosas son también de las más pobladas y, por tanto, registran más nacimientos.
+En la tasa de partos prematuros, las diferencias entre grupos son pequeñas y no siguen el orden del calor: las provincias calurosas presentan la tasa media más alta (61,5 por cada 1.000 nacimientos), pero las frías (59,4) superan a las templadas (57,5). La diferencia entre el grupo más alto y el más bajo es de apenas 4 partos prematuros por cada 1.000 nacimientos. Por tanto, al agrupar las provincias según el calor en verano, no se aprecia un aumento claro de la prematuridad. Esto contrasta con las correlaciones del apartado 7.2.1, que sí mostraban una asociación con la temperatura media y la máxima anual. Una posible explicación es que lo que se asocia con la prematuridad no es tanto el calor del verano como el clima general de la provincia a lo largo de todo el año.
 
-En la mortalidad fetal tardía ocurre lo contrario: la tasa media disminuye a medida que aumenta el calor, desde 2,91 defunciones por mil nacidos en las provincias frías hasta 2,09 en las calurosas. Por tanto, no se observa que las provincias con veranos más calurosos tengan una mayor mortalidad fetal tardía.
+En la mortalidad fetal tardía, la tasa media disminuye a medida que aumenta el calor, desde 2,91 defunciones por mil nacidos en las provincias frías hasta 2,09 en las calurosas. Por tanto, no se observa que las provincias con veranos más calurosos tengan una mayor mortalidad fetal tardía.
 
-En la mortalidad perinatal no aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
+En la mortalidad perinatal tampoco aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
 
 ### 9.3 Diagramas de caja por grupo
 
 ```{r, fig.width=10, fig.height=4}
 datos_grupos %>%
-  select(grupo_calor, partos_prematuros, mortalidad_fetal, mortalidad_perinatal) %>%
+  select(grupo_calor, tasa_prematuros, mortalidad_fetal, mortalidad_perinatal) %>%
   pivot_longer(
     cols = -grupo_calor,
     names_to = "Indicador",
@@ -1526,7 +1531,10 @@ datos_grupos %>%
 Para comprobar si las diferencias entre los tres grupos son reales o pueden deberse al azar, se utiliza la prueba de **Kruskal-Wallis**. Esta prueba compara tres o más grupos y no exige que los datos sigan una distribución normal. Si el p-valor es menor que 0,05, al menos uno de los grupos es diferente de los demás.
 
 ```{r}
-kruskal.test(partos_prematuros ~ grupo_calor, data = datos_grupos)
+kruskal.test(tasa_prematuros ~ grupo_calor, data = datos_grupos)
 kruskal.test(mortalidad_fetal ~ grupo_calor, data = datos_grupos)
 kruskal.test(mortalidad_perinatal ~ grupo_calor, data = datos_grupos)
 ```
+Ninguna de las tres pruebas resulta estadísticamente significativa. En la tasa de partos prematuros, el p-valor es de 0,197. En la mortalidad fetal tardía, de 0,257, y en la mortalidad perinatal, de 0,708. Al ser todos superiores a 0,05, no existen diferencias significativas entre las provincias frías, templadas y calurosas en ninguno de los tres indicadores.
+
+Este resultado es coherente con lo observado en el apartado 7.3: la tasa de partos prematuros no se asocia tanto con el calor del verano, que es el criterio utilizado para formar los grupos, como con el clima general de la provincia a lo largo del año. Por este motivo, al no encontrarse diferencias significativas, no es necesario realizar comparaciones entre pares de grupos.
