@@ -1418,4 +1418,27 @@ Al compararlo con el mapa de anomalías térmicas, no se aprecia una coincidenci
 
 
 
+### 8.4 Mapa de mortalidad perinatal
+
+Para completar el análisis geográfico, se representa la mortalidad perinatal registrada en las provincias españolas durante 2024. Este mapa permite observar las diferencias territoriales y compararlas con las anomalías térmicas y la mortalidad fetal tardía de los apartados anteriores.
+
+
+```{r}
+# Mapa de mortalidad perinatal por provincia
+ggplot(mapa_datos) +
+  geom_sf(aes(fill = mortalidad_perinatal), color = "white", linewidth = 0.2) +
+  geom_sf(data = esp_get_can_box(), fill = NA, color = "grey50") +
+  scale_fill_gradient(
+    low = "lightyellow",
+    high = "darkred",
+    name = "Tasa de moortalidad perinatal"
+  ) +
+  labs(
+    title = "Mortalidad perinatal por provincia en 2024"
+  ) +
+  theme_void()
+```
+En el mapa vemos que la tasa de mortalidad perinatal en 2024 no es igual en todas las provincias. Algunas zonas del norte y del centro de España presentan valores más altos, aunque también encontramos diferencias entre provincias cercanas. 
+Si compraramos este mapa con el de anomalías térmicas, vemos que las provincias donde más aumentó la temperatura no son necesariamente las que tienen una mayor tasa de mortalidad perinatal. Por ello, a simple vista no se aprecia una relación clara entre ambas variables, aunque sería necesario analizarlas con más detalle para sacar conclusiones.
+
 
