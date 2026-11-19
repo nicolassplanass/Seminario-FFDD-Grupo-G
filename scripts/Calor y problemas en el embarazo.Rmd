@@ -1343,67 +1343,30 @@ El objetivo es observar como se distribuyen estos indicadores geográficamente y
 
 ###8.1 Preparación del mapa provincial
 
+
 ```{r}
-# Descargamos el mapa de España
-url_mapa <- "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_20M_2021_4326_LEVL_3.geojson"
+library(mapSpain)
 
-mapa_espana <- st_read(url_mapa, quiet = TRUE)
+# Obtenemos el mapa provincial de España 
 
-# Seleccionamos los territorios españoles
+mapa_espana <- esp_get_prov()
+
+# Normalizamos los nombres de las provincias
+library(dplyr)
 mapa_espana <- mapa_espana %>%
-  filter(CNTR_CODE == "ES")
+  mutate(provincia = normalizar(ine.prov.name))
 
-# Comprobamos los datos
-names(mapa_espana)
-head(mapa_espana)
+#Comprobamos qué provincias no coinciden con nuestros datos
+
+setdiff(mapa_espana$provincia, datos_completos$provincia)
+
+# Unimos el mapa con los datos del seminario 
+mapa_datos <- mapa_espana %>%
+  left_join(datos_completos, by = "provincia" )
+
+#Comprobamos que todas las provincias tienen datos
+sum(is.na(mapa_datos$anomalia))
 ```
-
-```{r}
-# Mapa de la península y Baleares
-mapa_peninsula <- ggplot(mapa_espana) +
-  geom_sf(fill = "lightblue", color = "white", linewidth = 0.2) +
-  coord_sf(xlim = c(-10, 5), ylim = c(35, 44), expand = FALSE) +
-  theme_void()
-
-# Mapa de Canarias
-mapa_canarias <- ggplot(mapa_espana) +
-  geom_sf(fill = "lightblue", color = "white", linewidth = 0.2) +
-  coord_sf(xlim = c(-19, -13), ylim = c(27, 30), expand = FALSE) +
-  theme_void()
-
-
-
-# Colocamos Canarias abajo a la izquierda
-diseno <- "
-AAAA
-BAAA
-"
-
-# Colocamos Canarias debajo y a la izquierda
-diseno <- "
-AAAA
-B###
-"
-
-mapa_peninsula + mapa_canarias +
-  plot_layout(design = diseno, heights = c(4, 1)) +
-  plot_annotation(title = "Mapa provincial de España")
-
-
-```
-```{r}
-# Comprobar Ceuta y Melilla en los datos del seminario
-datos_completos %>%
-  filter(provincia %in% c("CEUTA", "MELILLA")) %>%
-  select(provincia, anomalia, mortalidad_fetal, mortalidad_perinatal)
-
-# Comprobar Ceuta y Melilla en el mapa
-mapa_espana %>%
-  st_drop_geometry() %>%
-  filter(grepl("Ceuta|Melilla", NUTS_NAME, ignore.case = TRUE)) %>%
-  select(NUTS_ID, NUTS_NAME)
-```
-
 ### 8.2 Mapa de anomalias térmicas
 
 
@@ -1412,77 +1375,47 @@ durante 2024, se representa la anomalía térmica de cada provincia respecto
 al periodo de referencia 1991–2020.
 
 ```{r}
-# Normalizamos los nombres de las provincias del mapa
-mapa_espana <- mapa_espana %>%
-  mutate(provincia = normalizar(NUTS_NAME))
-
-# Comprobamos qué nombres no coinciden
-setdiff(mapa_espana$provincia, datos_completos$provincia)
-```
-
-```{r}
-mapa_espana <- mapa_espana %>%
-  mutate(provincia = case_when(
-    provincia %in% c("TENERIFE", "LA GOMERA", "LA PALMA", "EL HIERRO") ~ "SANTA CRUZ DE TENERIFE",
-    provincia %in% c("GRAN CANARIA", "FUERTEVENTURA", "LANZAROTE") ~ "LAS PALMAS",
-    provincia %in% c("MALLORCA", "MENORCA", "EIVISSA Y FORMENTERA") ~ "ILLES BALEARS",
-    TRUE ~ provincia
-  ))
-```
-
-
-```{r}
-setdiff(mapa_espana$provincia, datos_completos$provincia)
-```
-```{r}
-# Unimos los datos de temperatura con el mapa
-mapa_datos <- mapa_espana %>%
-  left_join(datos_completos, by = "provincia")
-
-# Comprobamos que todas las provincias tienen datos
-mapa_datos %>%
-  st_drop_geometry() %>%
-  filter(is.na(anomalia)) %>%
-  select(provincia, anomalia)
-```
-```{r}
-# Mapa de la península y Baleares
-mapa_peninsula <- ggplot(mapa_datos) +
+# Representamos las anomalías térmicas por provincia
+ggplot(mapa_datos) +
   geom_sf(aes(fill = anomalia), color = "white", linewidth = 0.2) +
-  coord_sf(xlim = c(-10, 5), ylim = c(35, 44), expand = FALSE) +
+  geom_sf(data = esp_get_can_box(), fill = NA, color = "grey50") +
   scale_fill_gradient(
     low = "lightyellow",
     high = "red",
     name = "Anomalía (°C)"
   ) +
-  theme_void()
-
-# Mapa de Canarias
-mapa_canarias <- ggplot(mapa_datos) +
-  geom_sf(aes(fill = anomalia), color = "white", linewidth = 0.2) +
-  coord_sf(xlim = c(-19, -13), ylim = c(27, 30), expand = FALSE) +
-  scale_fill_gradient(
-    low = "lightyellow",
-    high = "red",
-    name = "Anomalía (°C)"
-  ) +
-  theme_void() +
-  theme(legend.position = "none")
-
-# Distribución de los mapas
-diseno <- "
-AAAA
-B###
-"
-
-mapa_peninsula + mapa_canarias +
-  plot_layout(design = diseno, heights = c(4, 1)) +
-  plot_annotation(
+  labs(
     title = "Anomalías térmicas por provincia en 2024",
     subtitle = "Respecto al periodo de referencia 1991-2020"
-  )
+  ) +
+  theme_void()
 ```
+El mapa muestra la distribución provincial de las anomalías térmicas registradas en España durante 2024 respecto al periodo de referencia 1991–2020. Se observa que todas las provincias presentan anomalías positivas, aunque su intensidad varía geográficamente. Los valores más elevados se concentran principalmente en el este y sureste peninsular, mientras que las provincias del norte presentan, en general, incrementos más moderados.
 
 
-El mapa muestra la distribución provincial de las anomalías térmicas registradas en España durante 2024 respecto al periodo de referencia 1991-2020. Se observa que todas las provincias presentan anomalías positivas, aunque su intensidad varía geográficamente. Los valores más elevados se concentran principalmente en el este y sureste peninsular, mientras que las provincias del norte presentan, en general, incrementos más moderados.
-Una pequeña limitación: Ceuta y Melilla no se distinguen en esta representación por el recorte geográfico utilizado, aunque sus datos sí están incorporados en mapa_datos.
+### 8.3 Mapa de mortalidad fetal tardía
+
+Para analizar la distribución geográfica de las complicaciones durante el embarazo, se representa la mortalidad fetal tardía registrada en las distintas provincias españolas durante 2024. Este mapa permite identificar las diferencias territoriales y compararlas visualmente con las anomalías térmicas del apartado anterior.
+
+```{r}
+# Mapa de mortalidad fetal tardía por provincia
+ggplot(mapa_datos) +
+  geom_sf(aes(fill = mortalidad_fetal), color = "white", linewidth = 0.2) +
+  geom_sf(data = esp_get_can_box(), fill = NA, color = "grey50") +
+  scale_fill_gradient(
+    low = "lightyellow",
+    high = "darkred",
+    name = "Defunciones por mil nacidos"
+  ) +
+  labs(
+    title = "Mortalidad fetal tardía por provincia en 2024"
+  ) +
+  theme_void()
+```
+El mapa muestra la distribución provincial de la tasa de mortalidad fetal tardía en España durante 2024, expresada en defunciones por cada 1.000 nacidos. Se observan diferencias entre provincias, con algunos de los valores más elevados en zonas del norte peninsular, mientras que otras provincias presentan tasas más bajas.
+
+Al compararlo con el mapa de anomalías térmicas, no se aprecia una coincidencia geográfica clara entre las provincias con mayores anomalías de temperatura y aquellas con mayores tasas de mortalidad fetal tardía. Sin embargo, esta comparación visual no permite establecer si existe o no una relación entre ambas variables.
+
+
+
+
