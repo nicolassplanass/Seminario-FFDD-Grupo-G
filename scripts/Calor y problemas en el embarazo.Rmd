@@ -1482,4 +1482,25 @@ En la mortalidad fetal tardía ocurre lo contrario: la tasa media disminuye a me
 
 En la mortalidad perinatal no aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
 
+### 9.3 Diagramas de caja por grupo
 
+```{r, fig.width=10, fig.height=4}
+datos_grupos %>%
+  select(grupo_calor, partos_prematuros, mortalidad_fetal, mortalidad_perinatal) %>%
+  pivot_longer(
+    cols = -grupo_calor,
+    names_to = "Indicador",
+    values_to = "Valor"
+  ) %>%
+  ggplot(data = ., aes(x = grupo_calor, y = Valor, fill = grupo_calor)) +
+  geom_boxplot(show.legend = FALSE) +
+  facet_wrap(facets = vars(Indicador), scales = "free_y") +
+  scale_fill_manual(values = c("skyblue", "khaki", "tomato")) +
+  labs(
+    x = "Grupo de provincias según el calor en verano",
+    y = "Valor",
+    title = "Indicadores sanitarios según el calor en verano",
+    subtitle = "Año 2024"
+  ) +
+  theme_minimal()
+```
