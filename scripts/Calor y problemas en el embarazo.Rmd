@@ -1212,7 +1212,7 @@ round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
           datos_completos[, indicadores_salud],
           method = "pearson", use = "pairwise.complete.obs"), 2)
 ```
-
+El mapa de calor resume los coeficientes de Spearman:
 
 ```{r}
 library(ggplot2)
@@ -1263,6 +1263,12 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
   ) +
   theme_minimal()
 ```
+
+
+
+
+Los diagramas de dispersión permiten ver la forma de cada relación. Cada punto es una provincia:
+
 
 ```{r}
 library(ggplot2)
