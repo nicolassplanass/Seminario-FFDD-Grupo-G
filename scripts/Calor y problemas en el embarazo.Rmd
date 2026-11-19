@@ -1411,10 +1411,7 @@ ggplot(mapa_datos) +
   ) +
   theme_void()
 ```
-El mapa muestra la distribución provincial de la tasa de mortalidad fetal tardía en España durante 2024, expresada en defunciones por cada 1.000 nacidos. Se observan diferencias entre provincias, con algunos de los valores más elevados en zonas del norte peninsular, mientras que otras provincias presentan tasas más bajas.
-
-Al compararlo con el mapa de anomalías térmicas, no se aprecia una coincidencia geográfica clara entre las provincias con mayores anomalías de temperatura y aquellas con mayores tasas de mortalidad fetal tardía. Sin embargo, esta comparación visual no permite establecer si existe o no una relación entre ambas variables.
-
+La tasa de mortalidad fetal tardía presenta diferencias entre provincias. Algunos de los valores más altos se encuentran en el norte de España, aunque no siguen un patrón geográfico claro. Si lo comparamos con las anomalías térmicas, vemos que las provincias con mayores aumentos de temperatura no son necesariamente las que presentan una mayor mortalidad fetal tardía.
 
 
 ### 8.4 Mapa de mortalidad perinatal
