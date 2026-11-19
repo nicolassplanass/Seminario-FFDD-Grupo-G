@@ -1404,4 +1404,85 @@ mapa_espana %>%
   select(NUTS_ID, NUTS_NAME)
 ```
 
+### 8.2 Mapa de anomalias térmicas
 
+
+Para visualizar las diferencias territoriales en el calentamiento registrado
+durante 2024, se representa la anomalía térmica de cada provincia respecto
+al periodo de referencia 1991–2020.
+
+```{r}
+# Normalizamos los nombres de las provincias del mapa
+mapa_espana <- mapa_espana %>%
+  mutate(provincia = normalizar(NUTS_NAME))
+
+# Comprobamos qué nombres no coinciden
+setdiff(mapa_espana$provincia, datos_completos$provincia)
+```
+
+```{r}
+mapa_espana <- mapa_espana %>%
+  mutate(provincia = case_when(
+    provincia %in% c("TENERIFE", "LA GOMERA", "LA PALMA", "EL HIERRO") ~ "SANTA CRUZ DE TENERIFE",
+    provincia %in% c("GRAN CANARIA", "FUERTEVENTURA", "LANZAROTE") ~ "LAS PALMAS",
+    provincia %in% c("MALLORCA", "MENORCA", "EIVISSA Y FORMENTERA") ~ "ILLES BALEARS",
+    TRUE ~ provincia
+  ))
+```
+
+
+```{r}
+setdiff(mapa_espana$provincia, datos_completos$provincia)
+```
+```{r}
+# Unimos los datos de temperatura con el mapa
+mapa_datos <- mapa_espana %>%
+  left_join(datos_completos, by = "provincia")
+
+# Comprobamos que todas las provincias tienen datos
+mapa_datos %>%
+  st_drop_geometry() %>%
+  filter(is.na(anomalia)) %>%
+  select(provincia, anomalia)
+```
+```{r}
+# Mapa de la península y Baleares
+mapa_peninsula <- ggplot(mapa_datos) +
+  geom_sf(aes(fill = anomalia), color = "white", linewidth = 0.2) +
+  coord_sf(xlim = c(-10, 5), ylim = c(35, 44), expand = FALSE) +
+  scale_fill_gradient(
+    low = "lightyellow",
+    high = "red",
+    name = "Anomalía (°C)"
+  ) +
+  theme_void()
+
+# Mapa de Canarias
+mapa_canarias <- ggplot(mapa_datos) +
+  geom_sf(aes(fill = anomalia), color = "white", linewidth = 0.2) +
+  coord_sf(xlim = c(-19, -13), ylim = c(27, 30), expand = FALSE) +
+  scale_fill_gradient(
+    low = "lightyellow",
+    high = "red",
+    name = "Anomalía (°C)"
+  ) +
+  theme_void() +
+  theme(legend.position = "none")
+
+# Distribución de los mapas
+diseno <- "
+AAAA
+B###
+"
+
+mapa_peninsula + mapa_canarias +
+  plot_layout(design = diseno, heights = c(4, 1)) +
+  plot_annotation(
+    title = "Anomalías térmicas por provincia en 2024",
+    subtitle = "Respecto al periodo de referencia 1991-2020"
+  )
+```
+
+
+El mapa muestra la distribución provincial de las anomalías térmicas registradas en España durante 2024 respecto al periodo de referencia 1991-2020. Se observa que todas las provincias presentan anomalías positivas, aunque su intensidad varía geográficamente. Los valores más elevados se concentran principalmente en el este y sureste peninsular, mientras que las provincias del norte presentan, en general, incrementos más moderados.
+Una pequeña limitación: Ceuta y Melilla no se distinguen en esta representación por el recorte geográfico utilizado, aunque sus datos sí están incorporados en mapa_datos.
