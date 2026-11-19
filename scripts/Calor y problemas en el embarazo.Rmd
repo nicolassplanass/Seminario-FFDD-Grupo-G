@@ -1369,7 +1369,6 @@ sum(is.na(mapa_datos$anomalia))
 ```
 ### 8.2 Mapa de anomalias térmicas
 
-
 Para visualizar las diferencias territoriales en el calentamiento registrado
 durante 2024, se representa la anomalía térmica de cada provincia respecto
 al periodo de referencia 1991–2020.
@@ -1390,7 +1389,7 @@ ggplot(mapa_datos) +
   ) +
   theme_void()
 ```
-El mapa muestra la distribución provincial de las anomalías térmicas registradas en España durante 2024 respecto al periodo de referencia 1991–2020. Se observa que todas las provincias presentan anomalías positivas, aunque su intensidad varía geográficamente. Los valores más elevados se concentran principalmente en el este y sureste peninsular, mientras que las provincias del norte presentan, en general, incrementos más moderados.
+En el mapa vemos que todas las provincias registraron temperaturas superiores a lo habitual durante 2024, aunque el aumento no fue igual en todas. Las anomalías más altas se concentran sobre todo en el este y sureste de España, mientras que en el norte fueron, en general, más moderadas.
 
 
 ### 8.3 Mapa de mortalidad fetal tardía
