@@ -453,6 +453,22 @@ mortalidad_perinatal <- Mortalidad_Perinatal_tabla %>%
 mortalidad_fetal
 mortalidad_perinatal
 ```
+```{r}
+# Importamos los nacimientos por provincia
+nacimientos_ine <- read_delim(
+  "../INPUT/Nacimientos_Provincias_2024.csv",
+  delim = ";",
+  escape_double = FALSE,
+  trim_ws = TRUE,
+  locale = locale(encoding = "UTF-8")
+)
+
+nacimientos_ine
+str(nacimientos_ine)
+summary(nacimientos_ine)
+
+```
+
 
 ### 4.7 Comprobación de los nombres
 
@@ -1503,4 +1519,14 @@ datos_grupos %>%
     subtitle = "Año 2024"
   ) +
   theme_minimal()
+```
+
+### 9.4 ¿Las diferencias son significativas?
+
+Para comprobar si las diferencias entre los tres grupos son reales o pueden deberse al azar, se utiliza la prueba de **Kruskal-Wallis**. Esta prueba compara tres o más grupos y no exige que los datos sigan una distribución normal. Si el p-valor es menor que 0,05, al menos uno de los grupos es diferente de los demás.
+
+```{r}
+kruskal.test(partos_prematuros ~ grupo_calor, data = datos_grupos)
+kruskal.test(mortalidad_fetal ~ grupo_calor, data = datos_grupos)
+kruskal.test(mortalidad_perinatal ~ grupo_calor, data = datos_grupos)
 ```
