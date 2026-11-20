@@ -1873,7 +1873,7 @@ View(Partos_Prematuros_Provincias_tabla)</code></pre>
 ##   ..   diciembre = col_double(),
 ##   ..   anual = col_double()
 ##   .. )
-##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002c97a4fa170&gt;</code></pre>
+##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002494e6fe350&gt;</code></pre>
 <pre class="r"><code>summary(TMAX_2024)</code></pre>
 <pre><code>##      Parámetro        región       enero          febrero          marzo      
 ##  Length   :52   Length   :52   Min.   : 9.10   Min.   :11.90   Min.   :12.30  
@@ -1971,7 +1971,7 @@ View(Partos_Prematuros_Provincias_tabla)</code></pre>
 ##   ..   diciembre = col_double(),
 ##   ..   anual = col_double()
 ##   .. )
-##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002c97a4ffb90&gt;</code></pre>
+##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002494e6ff8b0&gt;</code></pre>
 <pre class="r"><code>summary(TMIN_2024)</code></pre>
 <pre><code>##      Parámetro        región       enero           febrero      
 ##  Length   :52   Length   :52   Min.   : 0.100   Min.   : 0.900  
@@ -2069,7 +2069,7 @@ View(Partos_Prematuros_Provincias_tabla)</code></pre>
 ##   ..   diciembre = col_double(),
 ##   ..   anual = col_double()
 ##   .. )
-##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002c97a4fd820&gt;</code></pre>
+##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002494e6f9350&gt;</code></pre>
 <pre class="r"><code>summary(TMED_2024)</code></pre>
 <pre><code>##      Parámetro        región       enero           febrero     
 ##  Length   :52   Length   :52   Min.   : 4.600   Min.   : 6.40  
@@ -2170,7 +2170,7 @@ View(Partos_Prematuros_Provincias_tabla)</code></pre>
 ##   ..   diciembre = col_double(),
 ##   ..   anual = col_double()
 ##   .. )
-##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002c97a4fb850&gt;</code></pre>
+##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002494e6f9a40&gt;</code></pre>
 <pre class="r"><code>summary(TMED_1991_2020)</code></pre>
 <pre><code>##      Parámetro  periodo de referencia       región       enero       
 ##  Length   :52   Length   :52          Length   :52   Min.   : 2.900  
@@ -2372,7 +2372,7 @@ nacimientos_ine &lt;- read_delim(
 ##   ..   provincia_ine = col_character(),
 ##   ..   nacimientos_2024 = col_double()
 ##   .. )
-##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002c97a4faf20&gt;</code></pre>
+##  - attr(*, &quot;problems&quot;)=&lt;pointer: 0x000002494e6ff8d0&gt;</code></pre>
 <pre class="r"><code>summary(nacimientos_ine)</code></pre>
 <pre><code>##    provincia_ine nacimientos_2024
 ##  Length   :52    Min.   :  480   
@@ -3471,7 +3471,7 @@ entre las variables climáticas.</p>
 mapa_espana &lt;- esp_get_prov()
 
 # Normalizamos los nombres de las provincias
-library(dplyr)
+
 mapa_espana &lt;- mapa_espana %&gt;%
   mutate(provincia = normalizar(ine.prov.name))
 

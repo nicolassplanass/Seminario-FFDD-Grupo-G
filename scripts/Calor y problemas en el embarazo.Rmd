@@ -1311,7 +1311,7 @@ El objetivo es observar como se distribuyen estos indicadores geográficamente y
 mapa_espana <- esp_get_prov()
 
 # Normalizamos los nombres de las provincias
-library(dplyr)
+
 mapa_espana <- mapa_espana %>%
   mutate(provincia = normalizar(ine.prov.name))
 
