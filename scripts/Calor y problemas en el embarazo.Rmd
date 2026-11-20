@@ -15,7 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # 1. Introducción
 El aumento constante de las temperaturas globales se ha convertido en una de las amenazas más relevantes para la salud pública. Si bien los efectos del calor extremo suelen analizarse frecuentemente en poblaciones vulnerables como los adultos mayores o personas con patologías crónicas, el impacto sobre la salud materno-infantil representa un área crítica y, a menudo, menos visibilizada. El organismo materno experimenta adaptaciones fisiológicas complejas para mantener la termorregulación; sin embargo, cuando las temperaturas ambientales superan los umbrales de tolerancia (como evidencian los registros térmicos recientes), se desencadenan respuestas de estrés térmico que pueden comprometer gravemente la homeostasis del embarazo.
 
-En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, problemas congénitos en el parto, mortalidad fetal tardía, mortalidad perinatal y limitaciones en el desarrollo temprano de niños de 2 a 5 años. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
+En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, mortalidad fetal tardía y mortalidad perinatal. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
+
 
 ## 2. Objetivo General
 
@@ -28,16 +29,26 @@ En este seminario queremos analizar la relación directa entre la exposición al
 * **Caracterizar la exposición térmica provincial:** Procesar y analizar los registros de temperatura máxima (`TMAX_2024_Provincias`), media (`TMED_2024_Provincias`) y mínima (`TMIN_2024_Provincias`), calculando sus anomalías respecto a la serie histórica de referencia (`TMED_1991_2020_Provincias`).
 
 
-* **Evaluar el impacto en el parto y la prematuridad:** Analizar la relación entre los episodios de estrés térmico y la frecuencia registrada de partos prematuros (`Partos_Prematuros_Provincias.json`) y anomalías congénitas observadas durante el parto (`Problemas_Congenitos_Partos`).
+* **Evaluar el impacto en el parto y la prematuridad:** Analizar la relación entre los episodios de estrés térmico y la frecuencia registrada de partos prematuros (`Partos_Prematuros_Provincias.json`).
+
+* **Cuantificar el efecto sobre la mortalidad fetal y perinatal:** Estudiar la correlación entre la intensidad de las temperaturas extremas y los eventos de mortalidad fetal tardía (`Mortalidad_Fetal_Tardia.json`), mortalidad perinatal (`Mortalidad_Perinatal.json`) y partos prematuros (`Partos_Prematuros_Provincias.json`).
 
 
-* **Cuantificar el efecto sobre la mortalidad fetal y perinatal:** Estudiar la correlación entre la intensidad de las temperaturas extremas y los eventos de mortalidad fetal tardía (`Mortalidad_Fetal_Tardia.json`) y mortalidad perinatal (`Mortalidad_Perinatal.json`).
 
 
-* **Explorar consecuencias en el desarrollo infantil temprano:** Identificar posibles asociaciones entre la exposición intrauterina a temperaturas elevadas y la prevalencia de limitaciones en el desarrollo de niños entre 2 y 5 años (`Limitaciones_Niños_2_5_Anyos`).
 
+## 4. Ejecuciones y librerias
 
-## 4. Ejecuciones
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(patchwork)
+library(mapSpain)
+```
+
 ### 4.1 Importación datos JSON
 
 ```{r,echo=FALSE}
@@ -500,10 +511,7 @@ list(
 En este apartado representaremos las temperaturas máximas, mínimas y medias registradas durante 2024. Utilizaremos histogramas para estudiar su distribución y diagramas de caja para observar la dispersión y detectar posibles valores extremos.
 
 ### 5.1. Distribución de las temperaturas
-```{r}
-library(ggplot2)
-library(tidyverse)
-```
+
 
 ```{r}
 #DISTRIBUCIÓN TEMPERATURA MÁXIMA
@@ -614,7 +622,9 @@ Final_plot_med
 
 ```
 
+
 ### 5.2. Diagramas de Cajas
+
 Estos gráficos nos permitirán comparar la dispersión de las temperaturas y detectar posibles valores atípicos.
 ```{r}
 # Preparamos los datos: todas las columnas numéricas en una sola columna
@@ -725,7 +735,7 @@ En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provi
 Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
 
 ```{r}
-library(tidyverse)
+
 
 # Seleccionamos las 5 provincias con temperaturas más bajas
 TMAX_bajas <- TMAX_2024 %>%
@@ -935,9 +945,9 @@ Al comprobar los valores ausentes de la tabla final, se observa que ninguna vari
 
 Se estudian las asociaciones de los tres indicadores sanitarios (partos prematuros, mortalidad fetal tardía y mortalidad perinatal) con tres variables térmicas:
 
-    1. Temperatura media de 2024 y partos prematuros.
-    2. Temperatura máxima de 2024 y mortalidad fetal tardía.
-    3. Anomalía térmica y mortalidad perinatal.
+    1. Temperatura media de 2024.
+    2. Temperatura máxima de 2024.
+    3. Anomalía térmica.
     
 Para ello, utilizamos gráficos de dispersión y correlaciones estadísticas como Pearson y Spearman.
 
@@ -1235,9 +1245,7 @@ round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
 El mapa de calor resume los coeficientes de Spearman:
 
 ```{r}
-library(ggplot2)
-library(tidyr)
-library(dplyr)
+
 
 # Calcular correlaciones de Spearman
 correlaciones <- cor(
@@ -1286,75 +1294,6 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
 
 
 
-
-Los diagramas de dispersión permiten ver la forma de cada relación. Cada punto es una provincia:
-
-
-```{r}
-library(ggplot2)
-library(patchwork)
-
-# Partos prematuros
-g1 <- ggplot(datos_completos,
-             aes(tmax_verano, tasa_prematuros)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Verano -  Tasa Partos prematuros",
-       x = "Temperatura máxima (ºC)",
-       y = "Partos prematuros") +
-  theme_minimal()
-
-g2 <- ggplot(datos_completos,
-             aes(tmax_invierno, tasa_prematuros)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Invierno - Partos prematuros",
-       x = "Temperatura máxima (ºC)",
-       y = "Partos prematuros") +
-  theme_minimal()
-
-# Mortalidad fetal
-g3 <- ggplot(datos_completos,
-             aes(tmax_verano, mortalidad_fetal)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Verano - Mortalidad fetal",
-       x = "Temperatura máxima (ºC)",
-       y = "Mortalidad fetal") +
-  theme_minimal()
-
-g4 <- ggplot(datos_completos,
-             aes(tmax_invierno, mortalidad_fetal)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Invierno - Mortalidad fetal",
-       x = "Temperatura máxima (ºC)",
-       y = "Mortalidad fetal") +
-  theme_minimal()
-
-# Mortalidad perinatal
-g5 <- ggplot(datos_completos,
-             aes(tmax_verano, mortalidad_perinatal)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Verano - Mortalidad perinatal",
-       x = "Temperatura máxima (ºC)",
-       y = "Mortalidad perinatal") +
-  theme_minimal()
-
-g6 <- ggplot(datos_completos,
-             aes(tmax_invierno, mortalidad_perinatal)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = TRUE) +
-  labs(title = "Invierno - Mortalidad perinatal",
-       x = "Temperatura máxima (ºC)",
-       y = "Mortalidad perinatal") +
-  theme_minimal()
-
-# Mostrar todos los gráficos juntos
-(g1 | g2) / (g3 | g4) / (g5 | g6)
-```
-
 ## 8. Representación geográfica de los resultados
 
 En este aprtado vamos a representar las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal mediante mapas provinciales de España.
@@ -1365,7 +1304,7 @@ El objetivo es observar como se distribuyen estos indicadores geográficamente y
 
 
 ```{r}
-library(mapSpain)
+
 
 # Obtenemos el mapa provincial de España 
 
@@ -1389,9 +1328,7 @@ sum(is.na(mapa_datos$anomalia))
 ```
 ### 8.2 Mapa de anomalias térmicas
 
-Para visualizar las diferencias territoriales en el calentamiento registrado
-durante 2024, se representa la anomalía térmica de cada provincia respecto
-al periodo de referencia 1991–2020.
+Para visualizar las diferencias territoriales en el calentamiento registrado durante 2024, se representa la anomalía térmica de cada provincia respecto al periodo de referencia 1991–2020.
 
 ```{r}
 # Representamos las anomalías térmicas por provincia
@@ -1495,6 +1432,8 @@ datos_grupos %>%
     ~ mean(.x, na.rm = TRUE)
   ))
 ```
+
+
 La tabla muestra que los tres indicadores no se comportan igual al pasar de las provincias frías a las calurosas.
 
 En la tasa de partos prematuros, las diferencias entre grupos son pequeñas y no siguen el orden del calor: las provincias calurosas presentan la tasa media más alta (61,5 por cada 1.000 nacimientos), pero las frías (59,4) superan a las templadas (57,5). La diferencia entre el grupo más alto y el más bajo es de apenas 4 partos prematuros por cada 1.000 nacimientos. Por tanto, al agrupar las provincias según el calor en verano, no se aprecia un aumento claro de la prematuridad. Esto contrasta con las correlaciones del apartado 7.2.1, que sí mostraban una asociación con la temperatura media y la máxima anual. Una posible explicación es que lo que se asocia con la prematuridad no es tanto el calor del verano como el clima general de la provincia a lo largo de todo el año.
@@ -1502,6 +1441,7 @@ En la tasa de partos prematuros, las diferencias entre grupos son pequeñas y no
 En la mortalidad fetal tardía, la tasa media disminuye a medida que aumenta el calor, desde 2,91 defunciones por mil nacidos en las provincias frías hasta 2,09 en las calurosas. Por tanto, no se observa que las provincias con veranos más calurosos tengan una mayor mortalidad fetal tardía.
 
 En la mortalidad perinatal tampoco aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
+
 
 ### 9.3 Diagramas de caja por grupo
 
@@ -1538,4 +1478,6 @@ kruskal.test(mortalidad_perinatal ~ grupo_calor, data = datos_grupos)
 Ninguna de las tres pruebas resulta estadísticamente significativa. En la tasa de partos prematuros, el p-valor es de 0,197. En la mortalidad fetal tardía, de 0,257, y en la mortalidad perinatal, de 0,708. Al ser todos superiores a 0,05, no existen diferencias significativas entre las provincias frías, templadas y calurosas en ninguno de los tres indicadores.
 
 Este resultado es coherente con lo observado en el apartado 7.3: la tasa de partos prematuros no se asocia tanto con el calor del verano, que es el criterio utilizado para formar los grupos, como con el clima general de la provincia a lo largo del año. Por este motivo, al no encontrarse diferencias significativas, no es necesario realizar comparaciones entre pares de grupos.
+
+
 ## 10. Conclusión 
