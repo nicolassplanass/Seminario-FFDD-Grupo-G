@@ -37,7 +37,7 @@ En este seminario queremos analizar la relación directa entre la exposición al
 
 
 
-## 4. Ejecuciones y librerias
+## 4. Importación y preparación de los datos
 
 ```{r}
 library(ggplot2)
@@ -49,7 +49,7 @@ library(patchwork)
 library(mapSpain)
 ```
 
-### 4.1 Importación datos JSON
+### 4.1 Importación de los datos sanitarios
 
 ```{r,echo=FALSE}
 library(jsonlite)
@@ -243,7 +243,7 @@ View(Mortalidad_Fetal_Tardia_2024_total)
 ```
 
 ```{r}
-# IMPORTACIÓN DE DATOS JSON
+
 # Cargar partos prematuros por provincias
 
 library(tidyverse)
@@ -254,7 +254,7 @@ if (!file.exists("../INPUT/Partos_Prematuros_Provincias.rds") ||
     file.info("../INPUT/Partos_Prematuros_Provincias.json")$mtime >
     file.info("../INPUT/Partos_Prematuros_Provincias.rds")$mtime) {
 
-  # IMPORTACIÓN DE DATOS JSON
+
   # Cargar partos prematuros por provincias
   Partos_Prematuros_Provincias <- fromJSON(
     "../INPUT/Partos_Prematuros_Provincias.json",
@@ -315,10 +315,11 @@ View(Partos_Prematuros_Provincias_tabla)
 ```
 
 
-**Datos metereológicos**
+### 4.2 Importación de los datos meteorológicos 
 
 Temperaturas máximas de 2024
 ```{r}
+
 TMAX_2024 <- read_delim(
   "../INPUT/TMAX_2024_Provincias.csv",
   delim = ";",
@@ -385,7 +386,10 @@ str(TMED_1991_2020)
 summary(TMED_1991_2020)
 ```
 
-### 4.4 Normalización de los nombres de las provincias
+
+### 4.3 Normalización de los nombres de las provincias
+
+Como los nombres de algunas provincias aparecen escritos de forma diferente en los archivos, creamos una función para unificarlos. Eliminamos tildes, convertimos los nombres a mayúsculas y corregimos algunas denominaciones que no coinciden.
 ```{r}
 normalizar <- function(x) {
   x <- stringi::stri_trans_general(x, "Latin-ASCII")
@@ -404,7 +408,7 @@ normalizar <- function(x) {
 }
 ```
 
-### 4.5 Preparación de los datos climáticos 
+### 4.4 Preparación de los datos climáticos 
 
 Se reúne en una única tabla, con una fila por provincia, la temperatura media, máxima y mínima de 2024, la temperatura media de referencia y la anomalía térmica (diferencia entre la temperatura media de 2024 y la de referencia).
 ```{r}
@@ -431,7 +435,7 @@ clima
 ```
 
 
-### 4.6 Preparación de los indicadores sanitarios
+### 4.5 Preparación de los indicadores sanitarios
 
 Para los tres indicadores se seleccionan los registros de 2024 y se extrae el nombre de la provincia del texto de la columna `Nombre`. Se descartan las filas de «Total Nacional» y «No residente».
 
@@ -488,7 +492,7 @@ nacimientos
 ```
 
 
-### 4.7 Comprobación de los nombres
+### 4.6 Comprobación de los nombres
 
 Antes de continuar se comprueba que ninguna provincia del clima se queda sin pareja en las tablas sanitarias, y que no hay duplicados. Si la normalización es correcta, todos los resultados deben ser `character(0)` o `0`.
 
