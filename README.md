@@ -1,14 +1,15 @@
 
-<table>
+<table width="100%">
   <tr>
     <td align="left" width="50%">
-      <img src="OUTPUT/IMAGES/logo_ubu.png" width="200">
+      <img src="OUTPUT/images/logo_ubu.png" width="200">
     </td>
     <td align="right" width="50%">
-
+      <img src="OUTPUT/images/iamgen_feto.jpeg" width="200">
     </td>
   </tr>
 </table>
+
 
 
 # Temperaturas extremas y complicaciones durante el embarazo en España
