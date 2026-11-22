@@ -734,19 +734,16 @@ Box_plot_med
 
 ### 5.3. Comparación entre provinvias
 
-En el apartado 5.3 vamos a hacer la comparación de las temperaturas entre provincias. La idea es comprobar qué provincias han registrado temperaturas más altas y cuáles más bajas durante 2024.
-
-Primero, tenemos que representar las temperaturas de cada provincia mediante gráficos de barras. Haremos uno para cada tipo de temperatura: máxima, mínima y media.
+En este apartado comparamos las temperaturas máximas y medias registradas en las distintas provincias durante 2024. Para ello, seleccionamos las 5 provincias con los valores más altos y las 5 con los más bajos, y reprsentamos estos resultados mediante gráficos de barras.
 
 ```{r}
 
 
-# Seleccionamos las 5 provincias con temperaturas más bajas
+# Provincias con temperaturas máximas más bajas y más altas
 TMAX_bajas <- TMAX_2024 %>%
   arrange(anual) %>%
   slice_head(n = 5)
 
-# Seleccionamos las 5 provincias con temperaturas más altas
 TMAX_altas <- TMAX_2024 %>%
   arrange(desc(anual)) %>%
   slice_head(n = 5)
@@ -777,6 +774,8 @@ TMAX_extremos %>%
   theme_classic()
 TMAX_extremos
 ```
+Las temperaturas medias más altas de 2024 se registraron en Sevilla, Huelva y Córdoba, mientras que las más bajas se encontraron en León, Asturias y Cantabria. Las provincias del sur peninsular presentan temperaturas máximas más elevadas, mientras que las del norte registran vamlores más bajos.
+
 ```{r}
 # Seleccionamos las 5 provincias con temperaturas medias más bajas
 TMED_bajas <- TMED_2024 %>%
@@ -810,7 +809,7 @@ TMED_extremos %>%
   theme_classic()
 
 ```
-
+Las temperaturas medias más altas de 2024 se registraron en Las Palmas, Melilla y Ceuta, mientras que as más bajas se encontraron en León, Palencia y Soria. Se observa una diferencia considerable entre los territorios más cálidos y los fríos, especialmente entre las islas Canarias, el norte de África y algunas provincias del interior.
 
 ```{r}
 names(TMED_2024)
@@ -823,9 +822,11 @@ head(TMED_1991_2020)
 
 ### 5.4. Comparacion de temperaturas de 2024 con el periodo 1991-2020
 
-En este apartado se comparan las temperaturas medias de 2024 con las del periodo de referencia 1991-2020 para calcular las anomalías térmicas de cada territorio. Esto permite identificar dónde se han registrado temperaturas superiores o inferiores a los valores históricos habituales.
+En este apartado comparamos las temperaturas medias de 2024 con las del periodo 1991-2020 para calcular las anomalías térmicas de cada provincia. Así podemos identificar dónde se registraron mayores diferencias respecto a las temperaturas habituales.
 
 ```{r}
+# Comprobamos que las provincias coinciden y no hay duplicados 
+
 # Comprobamos el número de territorios
 nrow(TMED_2024)
 nrow(TMED_1991_2020)
@@ -904,9 +905,9 @@ anomalias_extremos %>%
   theme_classic()
 
 ```
-Los resultados muestran que todos los territorios analizados registraron temperaturas medias anuales superiores a las del periodo de referencia 1991-2020. Las anomalías térmicas oscilaron entre +0,6 °C y +1,6 °C, con una media territorial de aproximadamente +1,15 °C.
+Los resultados muestran que todos los territorios analizados registraron temperaturas medias anuales superiores a las del periodo de 1991-2020. Las anomalías térmicas estuvieron entre +0,6 °C y +1,6 °C, con una media aproximada de +1,15 °C.
 
-Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida registró la menor (+0,6 °C). Estos resultados permiten identificar los territorios donde las temperaturas de 2024 se desviaron más de sus valores históricos habituales.
+Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida registró la menor (+0,6 °C). Esto nos muestra que, aunque las temperaturas aumentaron en todas las provincias, las diferencias respecto al periodo de referencia no fueron iguales en todo el territorio.
 
 
 
