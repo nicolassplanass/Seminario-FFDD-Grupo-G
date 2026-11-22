@@ -52,7 +52,7 @@ library(jsonlite)
 La carga de los datos directamente desde los ficheros JSON es lento, porque R tiene que leer e interpretar todo el texto, reconocer su estructura y convertirlo en un data frame cada vez que se ejecuta el documento. Para evitarlo, lo que vamos a realizar es que una vez que leamos el JSON, lo  guardamos en formato RDS, que es el formato binario nativo de R. Este formato guarda el objeto ya procesado y comprimido, así que en las ejecuciones siguientes se carga casi al instante con `readRDS()`. 
 Además, el código compara las fechas de modificación de los dos ficheros. Si el JSON es más reciente que el RDS, por ejemplo porque se han descargado datos nuevos, el RDS se vuelve a generar automáticamente. Así ganamos velocidad sin arriesgarnos a trabajar con datos desactualizados. Aplicamos esta misma estrategia a los tres conjuntos de datos: mortalidad perinatal, muerte fetal tardía y partos prematuros.
 
-```{r,echo=FALSE}
+```{r,eval=FALSE}
 # Carga inicial de la importación de datos (antes de la mejora de tiempo con el RDS)
 # MORTALIDAD PERINATAL
 Mortalidad_Perinatal <- fromJSON(
