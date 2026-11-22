@@ -47,7 +47,7 @@ library(knitr)
 library(jsonlite)
 ```
 
-## 4.1 Importación de los datos sanitarios
+## 4.1. Importación de los datos sanitarios
 
 La carga de los datos directamente desde los ficheros JSON es lento, porque R tiene que leer e interpretar todo el texto, reconocer su estructura y convertirlo en un data frame cada vez que se ejecuta el documento. Para evitarlo, lo que vamos a realizar es que una vez que leamos el JSON, lo  guardamos en formato RDS, que es el formato binario nativo de R. Este formato guarda el objeto ya procesado y comprimido, así que en las ejecuciones siguientes se carga casi al instante con `readRDS()`. 
 Además, el código compara las fechas de modificación de los dos ficheros. Si el JSON es más reciente que el RDS, por ejemplo porque se han descargado datos nuevos, el RDS se vuelve a generar automáticamente. Así ganamos velocidad sin arriesgarnos a trabajar con datos desactualizados. Aplicamos esta misma estrategia a los tres conjuntos de datos: mortalidad perinatal, muerte fetal tardía y partos prematuros.
@@ -306,7 +306,7 @@ View(Partos_Prematuros_Provincias_tabla)
 ```
 
 
-### 4.2 Importación de los datos meteorológicos 
+### 4.2. Importación de los datos meteorológicos 
 
 Temperaturas máximas de 2024
 ```{r}
@@ -378,7 +378,7 @@ summary(TMED_1991_2020)
 ```
 
 
-## 4.3 Normalización de los nombres de las provincias
+## 4.3. Normalización de los nombres de las provincias
 
 Como los nombres de algunas provincias aparecen escritos de forma diferente en los archivos, creamos una función para unificarlos. Eliminamos tildes, convertimos los nombres a mayúsculas y corregimos algunas denominaciones que no coinciden.
 ```{r}
@@ -399,7 +399,7 @@ normalizar <- function(x) {
 }
 ```
 
-## 4.4 Preparación de los datos climáticos 
+## 4.4. Preparación de los datos climáticos 
 
 Se reúne en una única tabla, con una fila por provincia, la temperatura media, máxima y mínima de 2024, la temperatura media de referencia y la anomalía térmica (diferencia entre la temperatura media de 2024 y la de referencia).
 ```{r}
@@ -426,7 +426,7 @@ clima
 ```
 
 
-## 4.5 Preparación de los indicadores sanitarios
+## 4.5. Preparación de los indicadores sanitarios
 
 Para los tres indicadores se seleccionan los registros de 2024 y se extrae el nombre de la provincia del texto de la columna `Nombre`. Se descartan las filas de «Total Nacional» y «No residente».
 
@@ -483,7 +483,7 @@ nacimientos
 ```
 
 
-## 4.6 Comprobación de los nombres
+## 4.6. Comprobación de los nombres
 
 Antes de continuar se comprueba que ninguna provincia del clima se queda sin pareja en las tablas sanitarias, y que no hay duplicados. Si la normalización es correcta, todos los resultados deben ser `character(0)` o `0`.
 
@@ -510,7 +510,7 @@ Antes de relacionar la temperatura con las complicaciones en el embarazo, es nec
 
 En primer lugar estudiamos la distribución de cada tipo de temperatura mes a mes. Para poder representar todos los meses en un mismo gráfico, reorganizamos los datos en formato largo, con una columna que indica el mes y otra con el valor de la temperatura. Después ordenamos los meses cronológicamente, con el valor anual al final, para que los gráficos se lean en orden. Empezamos por la temperatura máxima, que es la más relevante para nuestro objetivo, ya que refleja mejor la exposición al calor.
 
-```{r}
+```{r, fig.width=12, fig.height=9}
 # DISTRIBUCIÓN TEMPERATURA MÁXIMA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMAX_largo <- pivot_longer(
@@ -545,7 +545,7 @@ Final_plot
 
 ```
 
-```{r}
+```{r, fig.width=12, fig.height=9}
 # DISTRIBUCIÓN TEMPERATURA MÍNIMA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMIN_largo <- pivot_longer(
@@ -582,7 +582,7 @@ Final_plot_min
 
 ```
 
-```{r}
+```{r, fig.width=12, fig.height=9}
 # DISTRIBUCIÓN TEMPERATURA MEDIA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMED_largo <- pivot_longer(
