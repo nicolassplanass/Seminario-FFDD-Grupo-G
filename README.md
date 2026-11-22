@@ -5,7 +5,7 @@
       <img src="OUTPUT/images/logo_ubu.png" width="200">
     </td>
     <td align="right" width="50%">
-      <img src="OUTPUT/images/iamgen_feto.jpeg" width="200">
+      <img src="OUTPUT/images/imagen_feto.jpeg" width="200">
     </td>
   </tr>
 </table>
