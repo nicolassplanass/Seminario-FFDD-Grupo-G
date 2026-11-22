@@ -47,6 +47,7 @@ library(tidyr)
 library(dplyr)
 library(patchwork)
 library(mapSpain)
+library(knitr)
 ```
 
 ### 4.1 Importación de los datos sanitarios
@@ -918,6 +919,9 @@ Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida reg
 
 Con las tablas ya preparadas y los nombres normalizados, se unen mediante `left_join()` utilizando la provincia como clave. El resultado es una tabla, `datos_completos`, con una fila por provincia que reúne la información de temperatura y los tres indicadores sanitarios.
 
+Los partos prematuros se expresan como **tasa por cada 1.000 nacimientos**, dividiendo el número de partos prematuros entre los nacimientos de 2024 de cada provincia. De este modo se evita que las provincias más pobladas aparezcan con valores más altos solo porque tienen más nacimientos. La mortalidad fetal tardía y la perinatal ya vienen expresadas como tasas por mil nacidos.
+
+
 ```{r}
 datos_completos <- clima %>%
   left_join(prematuros, by = "provincia") %>%
@@ -992,7 +996,8 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
 ```
-Se observa una tendencia positiva entre el número de partos prematuros y las tres variables climáticas analizadas. Sin embargo, los puntos presentan bastante dispersión, por lo que la asociación no parece muy marcada. Además, hay que tener en cuenta que se analiza el número absoluto de partos y no una tasa ajustada al número de nacimientos.
+
+Con la temperatura media y la máxima, los puntos suben de izquierda a derecha: las provincias más cálidas tienden a tener algo más de partos prematuros por cada 1.000 nacimientos. Con la anomalía térmica, en cambio, la línea es casi plana, así que haber tenido un año más cálido de lo normal no parece relacionarse con la prematuridad. En todos los casos los puntos están bastante dispersos, por lo que la relación no es muy fuerte.
 
 
 
@@ -1003,6 +1008,7 @@ Se observa una tendencia positiva entre el número de partos prematuros y las tr
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
 ```
+
 Los gráficos muestran una distribución dispersa de los datos y líneas de tendencia prácticamente horizontales. Se aprecia una ligera tendencia positiva con la temperatura media y negativa con la temperatura máxima y la anomalía térmica, pero no se observa una asociación visual clara.
 
 
@@ -1013,7 +1019,7 @@ grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad perinatal por provincia")
 ```
 
-Se observa una tendencia positiva entre la mortalidad perinatal y las tres variables climáticas. No obstante, los puntos presentan bastante dispersión, por lo que la relación no parece muy marcada y será necesario comprobarla mediante los análisis de correlación.
+En los tres gráficos se observa una ligera tendencia positiva entre las variables climáticas y la mortalidad perinatal. Sin embargo, los puntos presentan bastante dispersión y la tendencia es poco marcada, por lo que no parece existir una relación clara entre estas variables. Para comprobarlo, será necesario analizar los resultados de las correlaciones.
 
 
 
@@ -1027,187 +1033,104 @@ Se utilizan dos métodos:
 Una correlación positiva indica que los valores altos de una variable tienden a acompañarse de valores altos de la otra, pero **no demuestra que una cause la otra**. Cada correlación se calcula con las provincias que tienen datos en ambas variables.
  
  
-### 7.2.1 Tasa de partos prematuros
-
-**Temperatura media**
- 
-```{r}
-cor.test(datos_completos$tmed_2024,
-         datos_completos$tasa_prematuros,
-         method = "pearson")
-```
 
 ```{r}
-cor.test(datos_completos$tmed_2024,
-         datos_completos$tasa_prematuros,
-         method = "spearman")
-```
 
-*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
+variables_clima <- c("tmed_2024", "tmax_2024", "anomalia")
 
-**Temperatura máxima**
+indicadores <- c("tasa_prematuros",
+                 "mortalidad_fetal",
+                 "mortalidad_perinatal")
 
-```{r}
-cor.test(datos_completos$tmax_2024,
-         datos_completos$tasa_prematuros,
-         method = "pearson")
-```
-
-```{r}
-cor.test(datos_completos$tmax_2024,
-         datos_completos$tasa_prematuros,
-         method = "spearman")
-```
-
-*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
-
-**Anomalía térmica**
-
-```{r}
-cor.test(datos_completos$anomalia,
-         datos_completos$tasa_prematuros,
-         method = "pearson")
-```
-
-```{r}
-cor.test(datos_completos$anomalia,
-         datos_completos$tasa_prematuros,
-         method = "spearman")
-```
-
-*(Interpretación pendiente: coeficiente y p-valor de Pearson y de Spearman.)*
-
-
-### 7.2.2 Mortalidad fetal
-
-**Temperatura media**
-```{r}
-cor.test(datos_completos$tmed_2024,
-         datos_completos$mortalidad_fetal,
-         method = "pearson")
-```
-Se obtiene un coeficiente de correlación de 0,044, lo que indica una correlación positiva prácticamente nula entre la temperatura media y la mortalidad fetal tardía. Además, el p-valor es de 0,7566, superior a 0,05, por lo que no existe una asociación lineal estadísticamente significativa entre ambas variables.
-
-```{r}
-cor.test(datos_completos$tmed_2024,
-         datos_completos$mortalidad_fetal,
-         method = "spearman")
-```
-
-El coeficiente obtenido es de 0,059, lo que también refleja una correlación positiva muy débil. Su p-valor es de 0,6766, superior a 0,05. Por tanto, tampoco se encuentra una asociación monotónica estadísticamente significativa entre la temperatura media y la mortalidad fetal tardía.
-
-
-**Temperatura máxima**
-
-```{r}
-cor.test(
-  datos_completos$tmax_2024,
-  datos_completos$mortalidad_fetal,
-  method = "pearson"
+resultados <- expand.grid(
+  Clima = variables_clima,
+  Indicador = indicadores,
+  Metodo = c("pearson", "spearman")
 )
-```
-El resultado obtenido muestra que apenas existe una relación lineal entre la temperatura máxima y la mortalidad fetal tardía. Esto se ve reforzado por el p-valor de 0,7998, que está bastante por encima de 0,05. Por tanto, las diferencias de temperatura máxima entre provincias no parecen estar relacionadas linealmente con las diferencias en mortalidad fetal tardía
 
+resultados$r <- NA
+resultados$p_valor <- NA
 
-```{r}
-cor.test(
-  datos_completos$tmax_2024,
-  datos_completos$mortalidad_fetal,
-  method = "spearman"
-)
-```
-En este caso, el coeficiente rho es de −0,036, un valor muy cercano a cero, lo que indica que tampoco se aprecia una tendencia clara entre ambas variables. Además, el p-valor es de 0,8009, por lo que el resultado no es estadísticamente significativo. En consecuencia, no encontramos evidencias de una asociación monotónica entre la temperatura máxima y la mortalidad fetal tardía.
+for (i in 1:nrow(resultados)) {
 
+  x <- datos_completos[[resultados$Clima[i]]]
+  y <- datos_completos[[resultados$Indicador[i]]]
 
-**Anomalía térmica**
+  datos_validos <- complete.cases(x, y)
 
+  prueba <- cor.test(
+    x[datos_validos],
+    y[datos_validos],
+    method = as.character(resultados$Metodo[i]),
+    exact = FALSE
+  )
 
-```{r}
-cor.test(datos_completos$anomalia,
-         datos_completos$mortalidad_fetal,
-         method = "pearson")
+  resultados$r[i] <- unname(prueba$estimate)
+  resultados$p_valor[i] <- prueba$p.value
+}
 
-```
-El coeficiente indica que la relación lineal entre la anomalía térmica y la mortalidad fetal tardía es prácticamente inexistente. Además, el p-valor es de 0,7785, muy superior a 0,05, por lo que no podemos considerar que exista una relación estadísticamente significativa entre ambas variables.
+tabla_final <- resultados %>%
+  mutate(
+    Resultado = paste0(
+      round(r, 3), " (p=", format.pval(p_valor, digits = 3), ")"
+    )
+  ) %>%
+  select(Clima, Indicador, Metodo, Resultado) %>%
+  pivot_wider(
+    names_from = c(Clima, Metodo),
+    values_from = Resultado
+  )
 
+tabla_final <- resultados %>%
+  mutate(
+    Clima = recode(
+      Clima,
+      "tmed_2024" = "T. media",
+      "tmax_2024" = "T. máxima",
+      "anomalia" = "Anomalía"
+    ),
+    Metodo = recode(
+      Metodo,
+      "pearson" = "Pearson",
+      "spearman" = "Spearman"
+    ),
+    Resultado = paste0(
+      round(r, 3),
+      "<br>(p = ",
+      format.pval(p_valor, digits = 3),
+      ")"
+    ),
+    Columna = paste(Clima, Metodo, sep = " - ")
+  ) %>%
+  select(Indicador, Columna, Resultado) %>%
+  pivot_wider(
+    names_from = Columna,
+    values_from = Resultado
+  )
 
-```{r}
-cor.test(datos_completos$anomalia,
-         datos_completos$mortalidad_fetal,
-         method = "spearman")
-```
-Se obtiene un coeficiente rho de −0,093, que refleja una tendencia negativa muy débil. El p-valor es de 0,513, también superior a 0,05. Esto indica que tampoco se encuentra una asociación monotónica estadísticamente significativa entre la anomalía térmica y la mortalidad fetal tardía.
-
-
-
-### 7.2.3. Mortalidad perinatal
-
-
-**Temperaura media **
-
-```{r}
-cor.test(
-  datos_completos$tmed_2024,
-  datos_completos$mortalidad_perinatal,
-  method = "pearson"
+knitr::kable(
+  tabla_final,
+  format = "html",
+  escape = FALSE,
+  align = "lcccccc",
+  caption = "Correlaciones entre variables climáticas e indicadores sanitarios",
+  col.names = c(
+    "Indicador sanitario",
+    "Media - P",
+    "Máxima - P",
+    "Anomalía - P",
+    "Media - S",
+    "Máxima - S",
+    "Anomalía - S"
+  )
 )
 ```
 
+En conjunto, los resultados muestran que las asociaciones más destacadas se encuentran entre las temperaturas media y máxima anuales y la tasa de partos prematuros. Ambas presentan correlaciones positivas y estadísticamente significativas tanto con Pearson como con Spearman. Esto indica que las provincias con temperaturas más elevadas tienden a presentar mayores tasas de partos prematuros.
 
-```{r}
-cor.test(
-  datos_completos$tmed_2024,
-  datos_completos$mortalidad_perinatal,
-  method = "spearman"
-)
-```
-Ambos métodos muestran una tendencia positiva débil, pero ninguno encuentra una asociación estadísticamente significativa entre la temperatura media y la mortalidad perinatal en las provincias analizadas.
+En cambio, la anomalía térmica no muestra una asociación significativa con este indicador. Tampoco se observan correlaciones estadísticamente significativas entre las variables climáticas y la mortalidad fetal o perinatal, cuyos coeficientes son generalmente próximos a cero.
 
-**Temperatura máxima**
-
-```{r}
-cor.test(
-  datos_completos$tmax_2024,
-  datos_completos$mortalidad_perinatal,
-  method = "pearson"
-)
-```
-Al analizar estas dos variables mediante Pearson, se obtiene un coeficiente de 0,156, lo que refleja cierta tendencia positiva, aunque bastante débil. No obstante, el p-valor (0,2679) indica que esta relación podría deberse al azar y no alcanza significación estadística.
-
-```{r}
-cor.test(
-  datos_completos$tmax_2024,
-  datos_completos$mortalidad_perinatal,
-  method = "spearman"
-)
-```
-Por su parte, Spearman presenta un coeficiente de 0,106, todavía más cercano a cero. Esto indica que tampoco se aprecia una tendencia clara entre el aumento de la temperatura máxima y la mortalidad perinatal. Además, su p-valor es de 0,4539, por lo que el resultado tampoco es significativo.
-
-
-**Anomalía térmica**
-```{r}
-cor.test(
-  datos_completos$anomalia,
-  datos_completos$mortalidad_perinatal,
-  method = "pearson"
-)
-```
-Al aplicar Pearson, se obtiene un coeficiente de 0,080, lo que refleja una relación positiva muy débil entre la anomalía térmica y la mortalidad perinatal. El p-valor es de 0,5714, por lo que no se puede considerar que exista una relación lineal estadísticamente significativa.
-
-```{r}
-cor.test(
-  datos_completos$anomalia,
-  datos_completos$mortalidad_perinatal,
-  method = "spearman"
-)
-```
-
-En cuanto a Spearman, el coeficiente obtenido es de 0,012, un valor prácticamente igual a cero. Esto indica que no se aprecia ninguna tendencia clara entre ambas variables. Además, el p-valor (0,9332) confirma que el resultado no es estadísticamente significativo.
-
-
-
-En conclusión, se ha observado una asociación entre las temperaturas media y máxima y los partos prematuros. Sin embargo, no se han encontrado relaciones estadísticamente significativas con la mortalidad fetal ni perinatal. Por tanto, los resultados sugieren una posible relación entre las temperaturas y los partos prematuros, aunque no permiten establecer una relación de causalidad.
-
+Por tanto, los resultados sugieren una posible relación entre las temperaturas media y máxima anuales y la tasa de partos prematuros. Sin embargo, estos resultados muestran asociaciones estadísticas y no permiten establecer una relación de causalidad.
 
 
 ### 7.3  Comparación por época del año: verano frente a invierno
@@ -1232,6 +1155,9 @@ datos_completos <- left_join(datos_completos, estacional, by = "provincia")
 
 summary(datos_completos[, c("tmax_verano", "tmax_invierno")])
 ```
+Los resultados muestran diferencias claras entre ambas estaciones. La temperatura máxima media es de 29,52 °C en verano, mientras que en invierno es de 13,98 °C. Esta diferencia también se observa en los valores mínimos, máximos y medianos, lo que confirma que las temperaturas son considerablemente más elevadas durante los meses de verano.
+
+
 Después se calculan las correlaciones de Spearman. Cada fila es una época del año y cada columna un indicador sanitario:
 
 ```{r}
@@ -1247,6 +1173,13 @@ round(cor(datos_completos[, c("tmax_verano", "tmax_invierno")],
           datos_completos[, indicadores_salud],
           method = "pearson", use = "pairwise.complete.obs"), 2)
 ```
+Al comparar las correlaciones de ambas estaciones, se observa que la asociación más destacada corresponde a la tasa de partos prematuros, que presenta una correlación positiva tanto en verano como en invierno. Esta relación es más elevada durante el invierno, especialmente según Spearman (0,45), frente al valor obtenido en verano (0,21).
+
+En cuanto a la mortalidad fetal, las correlaciones son débiles y cambian ligeramente de signo entre estaciones. Para la mortalidad perinatal, los coeficientes también son bajos, aunque se observa una correlación positiva algo mayor durante el invierno.
+
+En general, las correlaciones obtenidas son más elevadas en invierno para los tres indicadores sanitarios, aunque esto no significa necesariamente que las asociaciones sean estadísticamente significativas.
+
+
 El mapa de calor resume los coeficientes de Spearman:
 
 ```{r}
@@ -1296,7 +1229,7 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
   ) +
   theme_minimal()
 ```
-
+El mapa de calor permite visualizar de forma conjunta las correlaciones de Spearman entre las temperaturas máximas estacionales y los indicadores sanitarios. Se observa que la relación más destacada es la correspondiente a la tasa de partos prematuros durante el invierno. Por el contrario, las correlaciones con la mortalidad fetal y perinatal son más débiles y próximas a cero.
 
 
 ## 8. Representación geográfica de los resultados
