@@ -1301,15 +1301,13 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
 
 ## 8. Representación geográfica de los resultados
 
-En este aprtado vamos a representar las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal mediante mapas provinciales de España.
-
-El objetivo es observar como se distribuyen estos indicadores geográficamente y comprobar si existen patrones territoriales siilares entre las variables climáticas.
+En este apartado representamos mediante mapas provinciales las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal registradas en el país en 2024. El objetivo es ver cómo se distribuyen estos indicadores y comprobar si existen patrones geográficos similares entre las temperaturas y la mortalidad.
 
 ### 8.1 Preparación del mapa provincial
 
+Usamos el paquete mapSpain para obtener el mapa de provincias españoles. Normalizamos sus nombres y los unimos con nuestra tabla de datos climáticos y sanitarios.
 
 ```{r}
-
 
 # Obtenemos el mapa provincial de España 
 
@@ -1333,7 +1331,7 @@ sum(is.na(mapa_datos$anomalia))
 ```
 ### 8.2 Mapa de anomalias térmicas
 
-Para visualizar las diferencias territoriales en el calentamiento registrado durante 2024, se representa la anomalía térmica de cada provincia respecto al periodo de referencia 1991–2020.
+En este mapa representamos las anomalías térmicas de cada provincia durante 2024, tomando como referencia las temperaturas medias del periodo 1991-2020.
 
 ```{r}
 # Representamos las anomalías térmicas por provincia
@@ -1356,7 +1354,7 @@ En el mapa vemos que todas las provincias registraron temperaturas superiores a 
 
 ### 8.3 Mapa de mortalidad fetal tardía
 
-Para analizar la distribución geográfica de las complicaciones durante el embarazo, se representa la mortalidad fetal tardía registrada en las distintas provincias españolas durante 2024. Este mapa permite identificar las diferencias territoriales y compararlas visualmente con las anomalías térmicas del apartado anterior.
+A continuación, se representa la tasa de mortalidad fetal tardía, la cual recoge los fallecimientos ocurridos antes del nacimiento en una etapa evanzada del embarazo. El mapa permite observar las diferencias entre provincias y compararlas con las anomalías térmicas.
 
 ```{r}
 # Mapa de mortalidad fetal tardía por provincia
@@ -1378,7 +1376,7 @@ La tasa de mortalidad fetal tardía presenta diferencias entre provincias. Algun
 
 ### 8.4 Mapa de mortalidad perinatal
 
-Para completar el análisis geográfico, se representa la mortalidad perinatal registrada en las provincias españolas durante 2024. Este mapa permite observar las diferencias territoriales y compararlas con las anomalías térmicas y la mortalidad fetal tardía de los apartados anteriores.
+Finalmente, representamos las tasa de mortalidad perinatal registrada en las provincias españolas en 2024. Así, podemos comparar su distribución con la mortalidad fetal tardía y las anomalías térmicas.
 
 
 ```{r}
@@ -1389,7 +1387,7 @@ ggplot(mapa_datos) +
   scale_fill_gradient(
     low = "lightyellow",
     high = "darkred",
-    name = "Tasa de moortalidad perinatal"
+    name = "Tasa de mortalidad perinatal"
   ) +
   labs(
     title = "Mortalidad perinatal por provincia en 2024"
