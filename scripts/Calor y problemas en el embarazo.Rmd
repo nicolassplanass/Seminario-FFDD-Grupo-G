@@ -18,13 +18,13 @@ El aumento constante de las temperaturas globales se ha convertido en una de las
 En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, mortalidad fetal tardía y mortalidad perinatal. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
 
 
-## 2. Objetivo General
+# 2. Objetivo General
 
 * Evaluar la asociación entre la exposición a temperaturas extremas y la incidencia de complicaciones obstétricas, mortalidad perinatal y secuelas en el desarrollo infantil a nivel provincial, mediante el cruce de registros climáticos históricos y recientes con indicadores de salud materno-infantil.
 
 
 
-## 3. Objetivos Específicos
+# 3. Objetivos Específicos
 
 * **Caracterizar la exposición térmica provincial:** Procesar y analizar los registros de temperatura máxima (`TMAX_2024_Provincias`), media (`TMED_2024_Provincias`) y mínima (`TMIN_2024_Provincias`), calculando sus anomalías respecto a la serie histórica de referencia (`TMED_1991_2020_Provincias`).
 
@@ -33,11 +33,7 @@ En este seminario queremos analizar la relación directa entre la exposición al
 
 * **Cuantificar el efecto sobre la mortalidad fetal y perinatal:** Estudiar la correlación entre la intensidad de las temperaturas extremas y los eventos de mortalidad fetal tardía (`Mortalidad_Fetal_Tardia.json`), mortalidad perinatal (`Mortalidad_Perinatal.json`) y partos prematuros (`Partos_Prematuros_Provincias.json`).
 
-
-
-
-
-## 4. Importación y preparación de los datos
+# 4. Importación y preparación de los datos
 
 ```{r}
 library(ggplot2)
@@ -48,26 +44,28 @@ library(dplyr)
 library(patchwork)
 library(mapSpain)
 library(knitr)
+library(jsonlite)
 ```
 
-### 4.1 Importación de los datos sanitarios
+## 4.1 Importación de los datos sanitarios
+
+La carga de los datos directamente desde los ficheros JSON es lento, porque R tiene que leer e interpretar todo el texto, reconocer su estructura y convertirlo en un data frame cada vez que se ejecuta el documento. Para evitarlo, lo que vamos a realizar es que una vez que leamos el JSON, lo  guardamos en formato RDS, que es el formato binario nativo de R. Este formato guarda el objeto ya procesado y comprimido, así que en las ejecuciones siguientes se carga casi al instante con `readRDS()`. 
+Además, el código compara las fechas de modificación de los dos ficheros. Si el JSON es más reciente que el RDS, por ejemplo porque se han descargado datos nuevos, el RDS se vuelve a generar automáticamente. Así ganamos velocidad sin arriesgarnos a trabajar con datos desactualizados. Aplicamos esta misma estrategia a los tres conjuntos de datos: mortalidad perinatal, muerte fetal tardía y partos prematuros.
 
 ```{r,echo=FALSE}
-library(jsonlite)
-
-#Carga inicial de la importación de datos (antes de la mejora de tiempo con el RDS)
-#MORTALIDAD PERINATAL
+# Carga inicial de la importación de datos (antes de la mejora de tiempo con el RDS)
+# MORTALIDAD PERINATAL
 Mortalidad_Perinatal <- fromJSON(
   "../INPUT/Mortalidad_Perinatal.json",
   simplifyVector = FALSE
 )
 
-#MORTALIDAD FETAL TARDÍA
+# MORTALIDAD FETAL TARDÍA
 Mortalidad_Fetal_Tardia <- fromJSON(
   "../INPUT/Mortalidad_Fetal_Tardia.json",
   simplifyVector = FALSE
 )
-#PARTOS PREMATUROS POR PROVINCIA
+# PARTOS PREMATUROS POR PROVINCIA
 Partos_Prematuros_Provincias <- fromJSON(
   "../INPUT/Partos_Prematuros_Provincias.json",
   simplifyVector = FALSE
@@ -76,25 +74,21 @@ Partos_Prematuros_Provincias <- fromJSON(
 ```
 
 
+Mortalidad Perinatal
 
 ```{r}
-#IMPORTACIÓN DE DATOS JSON
-
-library(tidyverse)
-library(jsonlite)
-
 # Comprobar si existe el RDS o si ha cambiado el JSON
 if (!file.exists("../INPUT/Mortalidad_Perinatal.rds") ||
     file.info("../INPUT/Mortalidad_Perinatal.json")$mtime >
     file.info("../INPUT/Mortalidad_Perinatal.rds")$mtime) {
 
-  # Importar el JSON original
+  # JSON original
   Mortalidad_Perinatal <- fromJSON(
     "../INPUT/Mortalidad_Perinatal.json",
     simplifyVector = FALSE
   )
 
-  # Convertir el JSON en una tabla
+  # JSON en una tabla
   Mortalidad_Perinatal_tabla <- map_dfr(
     Mortalidad_Perinatal,
     function(serie) {
@@ -150,7 +144,7 @@ if (!file.exists("../INPUT/Mortalidad_Perinatal.rds") ||
 
 }
 
-# Mostrar las tablas
+#Mostrar las tablas
 View(Mortalidad_Perinatal_tabla)
 View(Mortalidad_Perinatal_2024)
 View(Mortalidad_Perinatal_2024_Total)
@@ -159,12 +153,9 @@ View(Mortalidad_Perinatal_2024_Total)
 
 ```
 
+Mortalidad Fetal Tardía 
 
 ```{r}
-#IMPORTACIÓN DE DATOS JSON
-
-library(tidyverse)
-library(jsonlite)
 
 # Comprobar si existe el RDS o si ha cambiado el JSON
 if (!file.exists("../INPUT/Mortalidad_Fetal_Tardia.rds") ||
@@ -205,11 +196,11 @@ if (!file.exists("../INPUT/Mortalidad_Fetal_Tardia.rds") ||
     }
   )
 
-  # FILTRAR AÑO 2024
+  # Filtrar AÑO 2024
   Mortalidad_Fetal_Tardia_2024 <- Mortalidad_Fetal_Tardia_tabla %>%
     filter(Anyo == 2024)
 
-  # FILTRAR POSICIONES 1, 4, 7...
+  # Filtrar POSICIONES 1, 4, 7...
   Mortalidad_Fetal_Tardia_2024_total <- Mortalidad_Fetal_Tardia_2024 %>%
     slice(seq(1, n(), by = 3))
 
@@ -243,12 +234,11 @@ View(Mortalidad_Fetal_Tardia_2024_total)
 
 ```
 
+Partos Prematuros
+
 ```{r}
 
 # Cargar partos prematuros por provincias
-
-library(tidyverse)
-library(jsonlite)
 
 # Comprobar si existe el RDS o si ha cambiado el JSON
 if (!file.exists("../INPUT/Partos_Prematuros_Provincias.rds") ||
@@ -388,7 +378,7 @@ summary(TMED_1991_2020)
 ```
 
 
-### 4.3 Normalización de los nombres de las provincias
+## 4.3 Normalización de los nombres de las provincias
 
 Como los nombres de algunas provincias aparecen escritos de forma diferente en los archivos, creamos una función para unificarlos. Eliminamos tildes, convertimos los nombres a mayúsculas y corregimos algunas denominaciones que no coinciden.
 ```{r}
@@ -409,7 +399,7 @@ normalizar <- function(x) {
 }
 ```
 
-### 4.4 Preparación de los datos climáticos 
+## 4.4 Preparación de los datos climáticos 
 
 Se reúne en una única tabla, con una fila por provincia, la temperatura media, máxima y mínima de 2024, la temperatura media de referencia y la anomalía térmica (diferencia entre la temperatura media de 2024 y la de referencia).
 ```{r}
@@ -436,7 +426,7 @@ clima
 ```
 
 
-### 4.5 Preparación de los indicadores sanitarios
+## 4.5 Preparación de los indicadores sanitarios
 
 Para los tres indicadores se seleccionan los registros de 2024 y se extrae el nombre de la provincia del texto de la columna `Nombre`. Se descartan las filas de «Total Nacional» y «No residente».
 
@@ -493,7 +483,7 @@ nacimientos
 ```
 
 
-### 4.6 Comprobación de los nombres
+## 4.6 Comprobación de los nombres
 
 Antes de continuar se comprueba que ninguna provincia del clima se queda sin pareja en las tablas sanitarias, y que no hay duplicados. Si la normalización es correcta, todos los resultados deben ser `character(0)` o `0`.
 
@@ -511,23 +501,25 @@ list(
 ```
 
 
-## 5. Análisis descriptivo de las Temperaturas
+# 5. Análisis descriptivo de las Temperaturas
 
-En este apartado representaremos las temperaturas máximas, mínimas y medias registradas durante 2024. Utilizaremos histogramas para estudiar su distribución y diagramas de caja para observar la dispersión y detectar posibles valores extremos.
+Antes de relacionar la temperatura con las complicaciones en el embarazo, es necesario conocer cómo se comportan las variables climáticas por sí solas. En este apartado describimos las temperaturas máximas, mínimas y medias registradas durante 2024, tanto por meses como en el conjunto del año. Este análisis previo nos permite identificar los meses más cálidos, ver cuánto varía la temperatura entre unos territorios y otros, y detectar valores extremos que podrían corresponder a episodios de calor intenso. Para ello utilizamos histogramas, que muestran la forma de la distribución, y diagramas de caja, que resumen la dispersión y señalan los posibles valores atípicos.
 
-### 5.1. Distribución de las temperaturas
 
+## 5.1. Distribución de las temperaturas
+
+En primer lugar estudiamos la distribución de cada tipo de temperatura mes a mes. Para poder representar todos los meses en un mismo gráfico, reorganizamos los datos en formato largo, con una columna que indica el mes y otra con el valor de la temperatura. Después ordenamos los meses cronológicamente, con el valor anual al final, para que los gráficos se lean en orden. Empezamos por la temperatura máxima, que es la más relevante para nuestro objetivo, ya que refleja mejor la exposición al calor.
 
 ```{r}
-#DISTRIBUCIÓN TEMPERATURA MÁXIMA
-#Preparamos los datos: todas las columnas numéricas en una sola columna
+# DISTRIBUCIÓN TEMPERATURA MÁXIMA
+# Preparamos los datos: todas las columnas numéricas en una sola columna
 TMAX_largo <- pivot_longer(
   data = select(TMAX_2024, where(is.numeric)),
   cols = everything(),
   names_to = "Variable",
   values_to = "Temperatura"
 )
-#Ordenamos los meses (y "anual" al final)
+# Ordenamos los meses (y "anual" al final)
 TMAX_largo$Variable <- factor(
   TMAX_largo$Variable,
   levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
@@ -535,7 +527,7 @@ TMAX_largo$Variable <- factor(
              "diciembre", "anual")
 )
 
-#Gráfico: un histograma por cada mes
+# Gráfico: un histograma por cada mes
 Final_plot <-
   ggplot(data = TMAX_largo, aes(x = Temperatura)) +
   geom_histogram(bins = 20, fill = "tomato", colour = "black") +
@@ -548,14 +540,14 @@ Final_plot <-
   ) +
   theme_minimal()
 
-#Al imprimir el objeto se dibuja el gráfico
+# Al imprimir el objeto se dibuja el gráfico
 Final_plot
 
 ```
 
 ```{r}
-#DISTRIBUCIÓN TEMPERATURA MÍNIMA
-#Preparamos los datos: todas las columnas numéricas en una sola columna
+# DISTRIBUCIÓN TEMPERATURA MÍNIMA
+# Preparamos los datos: todas las columnas numéricas en una sola columna
 TMIN_largo <- pivot_longer(
   data = select(TMIN_2024, where(is.numeric)),
   cols = everything(),
@@ -563,7 +555,7 @@ TMIN_largo <- pivot_longer(
   values_to = "Temperatura"
 )
 
-#Ordenamos los meses (y "anual" al final)
+# Ordenamos los meses (y "anual" al final)
 TMIN_largo$Variable <- factor(
   TMIN_largo$Variable,
   levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
@@ -571,7 +563,7 @@ TMIN_largo$Variable <- factor(
              "diciembre", "anual")
 )
 
-#Gráfico: un histograma por cada mes
+# Gráfico: un histograma por cada mes
 Final_plot_min <-
   ggplot(data = TMIN_largo, aes(x = Temperatura)) +
   geom_histogram(bins = 20, fill = "skyblue", colour = "black") +
@@ -584,15 +576,15 @@ Final_plot_min <-
   ) +
   theme_minimal()
 
-#Al imprimir el objeto se dibuja el gráfico
+# Al imprimir el objeto se dibuja el gráfico
 Final_plot_min
 
 
 ```
 
 ```{r}
-#DISTRIBUCIÓN TEMPERATURA MEDIA
-#Preparamos los datos: todas las columnas numéricas en una sola columna
+# DISTRIBUCIÓN TEMPERATURA MEDIA
+# Preparamos los datos: todas las columnas numéricas en una sola columna
 TMED_largo <- pivot_longer(
   data = select(TMED_2024, where(is.numeric)),
   cols = everything(),
@@ -600,7 +592,7 @@ TMED_largo <- pivot_longer(
   values_to = "Temperatura"
 )
 
-#Ordenamos los meses (y "anual" al final)
+# Ordenamos los meses (y "anual" al final)
 TMED_largo$Variable <- factor(
   TMED_largo$Variable,
   levels = c("enero", "febrero", "marzo", "abril", "mayo", "junio",
@@ -608,7 +600,7 @@ TMED_largo$Variable <- factor(
              "diciembre", "anual")
 )
 
-#Gráfico: un histograma por cada mes
+# Gráfico: un histograma por cada mes
 Final_plot_med <-
   ggplot(data = TMED_largo, aes(x = Temperatura)) +
   geom_histogram(bins = 20, fill = "orange", colour = "black") +
@@ -621,17 +613,18 @@ Final_plot_med <-
   ) +
   theme_minimal()
 
-#Al imprimir el objeto se dibuja el gráfico
+# Al imprimir el objeto se dibuja el gráfico
 Final_plot_med
 
 
 ```
 
 
-### 5.2. Diagramas de Cajas
+## 5.2. Diagramas de Cajas
 
-Estos gráficos nos permitirán comparar la dispersión de las temperaturas y detectar posibles valores atípicos.
-```{r}
+Después de estudiar la forma de las distribuciones, utilizamos diagramas de caja para comparar las temperaturas de los distintos meses. Cada caja recoge el 50 % central de los valores, la línea interior marca la mediana y los bigotes indican el rango habitual de los datos. Los puntos que quedan fuera de los bigotes son valores atípicos. Este tipo de gráfico nos permite ver de un vistazo en qué meses las temperaturas son más altas, en cuáles varían más entre territorios y si existen valores extremos. Estos valores son especialmente importantes en nuestro estudio, ya que pueden corresponder a zonas o periodos de calor intenso con un posible efecto sobre el embarazo.
+
+```{r fig.width=11, fig.height=5}
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMAX_largo <- pivot_longer(
   data = select(TMAX_2024, where(is.numeric)),
@@ -664,8 +657,8 @@ Box_plot_max <-
 Box_plot_max
 ```
 
-```{r}
-#DIAGRAMA DE CAJA TMIN
+```{r, fig.width=11, fig.height=5}
+# DIAGRAMA DE CAJA TMIN
 TMIN_largo <- pivot_longer(
   data = select(TMIN_2024, where(is.numeric)),
   cols = everything(),
@@ -698,8 +691,8 @@ Box_plot_min
 
 ```
 
-```{r}
-#DIAGRAMA DE CAJA TMED
+```{r,fig.width=11, fig.height=5}
+# DIAGRAMA DE CAJA TMED
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMED_largo <- pivot_longer(
   data = select(TMED_2024, where(is.numeric)),
@@ -731,9 +724,9 @@ Box_plot_med <-
 # Al imprimir el objeto se dibuja el gráfico
 Box_plot_med
 ```
+Se puede observar, que la mayoría de valores atípicos se encuentran en la distribución de las temperaturas mínimas, donde estas están por encima del valor típico, es decir, corresponden a temperaturas mínimas más altas de lo habitual. Además, aparecen sobre todo en los meses fríos (enero, febrero, marzo, abril, octubre, noviembre y diciembre). Esto indica que hay territorios donde las noches son mucho más templadas que en el resto, incluso en invierno, probablemente zonas costeras o insulares. Además, las temperaturas mínimas presentan más valores atípicos altos que las máximas y las medias. Esto es relevante para nuestro estudio, ya que unas mínimas elevadas significan noches calurosas, en las que el cuerpo no llega a recuperarse del calor del día.
 
-
-### 5.3. Comparación entre provinvias
+## 5.3. Comparación entre provinvias
 
 En este apartado comparamos las temperaturas máximas y medias registradas en las distintas provincias durante 2024. Para ello, seleccionamos las 5 provincias con los valores más altos y las 5 con los más bajos, y reprsentamos estos resultados mediante gráficos de barras.
 
@@ -775,6 +768,7 @@ TMAX_extremos %>%
   theme_classic()
 TMAX_extremos
 ```
+
 Las temperaturas medias más altas de 2024 se registraron en Sevilla, Huelva y Córdoba, mientras que las más bajas se encontraron en León, Asturias y Cantabria. Las provincias del sur peninsular presentan temperaturas máximas más elevadas, mientras que las del norte registran vamlores más bajos.
 
 ```{r}
@@ -821,7 +815,7 @@ head(TMED_1991_2020)
 ```
 
 
-### 5.4. Comparacion de temperaturas de 2024 con el periodo 1991-2020
+## 5.4. Comparacion de temperaturas de 2024 con el periodo 1991-2020
 
 En este apartado comparamos las temperaturas medias de 2024 con las del periodo 1991-2020 para calcular las anomalías térmicas de cada provincia. Así podemos identificar dónde se registraron mayores diferencias respecto a las temperaturas habituales.
 
@@ -912,10 +906,10 @@ Murcia presentó la mayor anomalía térmica (+1,6 °C), mientras que Lleida reg
 
 
 
-## 6. Union de los datos climáticos y sanitarios
+# 6. Unión de los datos climáticos y sanitarios
 
 
-###   6.1 Tabla resultante
+## 6.1. Tabla resultante
 
 Con las tablas ya preparadas y los nombres normalizados, se unen mediante `left_join()` utilizando la provincia como clave. El resultado es una tabla, `datos_completos`, con una fila por provincia que reúne la información de temperatura y los tres indicadores sanitarios.
 
@@ -934,7 +928,7 @@ View(datos_completos)
 
 El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
 
-###   6.2 Comprobación de la tabla final
+## 6.2, Comprobación de la tabla final
 
 Comprobamos que la tabla tiene una fila por provincia y se revisan los valores ausentes:
 
@@ -949,7 +943,7 @@ Al comprobar los valores ausentes de la tabla final, se observa que ninguna vari
 
 
 
-### 7. Estudio de las posibles asociaciones entre temperatura y salud
+# 7. Estudio de las posibles asociaciones entre temperatura y salud
 
 
 Se estudian las asociaciones de los tres indicadores sanitarios (partos prematuros, mortalidad fetal tardía y mortalidad perinatal) con tres variables térmicas:
@@ -961,7 +955,7 @@ Se estudian las asociaciones de los tres indicadores sanitarios (partos prematur
 Para ello, utilizamos gráficos de dispersión y correlaciones estadísticas como Pearson y Spearman.
 
 
-### 7.1 Diagramas de dispersión 
+## 7.1. Diagramas de dispersión 
 
 Empezamos representando la relación entre la temperatura media registrada en 2024 y el número de partos prematuros de cada provincia. Se representa mediante un diagrama de diseprsión en el cual cada punto representa una provincia.
 
@@ -990,9 +984,9 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 ```
 
 
-### 7.1.1 Partos prematuros
+### 7.1.1. Partos prematuros
 
-```{r}
+```{r,fig.width=9, fig.height=6}
 grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
 ```
@@ -1001,10 +995,10 @@ Con la temperatura media y la máxima, los puntos suben de izquierda a derecha: 
 
 
 
-### 7.1.2 Mortalidad fetal tardía
+### 7.1.2. Mortalidad fetal tardía
 
 
-```{r}
+```{r ,fig.width=9, fig.height=6}
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
 ```
@@ -1023,7 +1017,7 @@ En los tres gráficos se observa una ligera tendencia positiva entre las variabl
 
 
 
-### 7.2 Correlaciones
+## 7.2. Correlaciones
 
 Se utilizan dos métodos:
 
@@ -1133,7 +1127,7 @@ En cambio, la anomalía térmica no muestra una asociación significativa con es
 Por tanto, los resultados sugieren una posible relación entre las temperaturas media y máxima anuales y la tasa de partos prematuros. Sin embargo, estos resultados muestran asociaciones estadísticas y no permiten establecer una relación de causalidad.
 
 
-### 7.3  Comparación por época del año: verano frente a invierno
+## 7.3.  Comparación por época del año: verano frente a invierno
 
 
 La temperatura máxima anual mezcla los meses cálidos y los fríos. Para acercarnos más a la idea de calor, se calcula la media de las temperaturas máximas de **verano** (junio, julio y agosto) y de **invierno** (diciembre, enero y febrero), y se comparan sus correlaciones con los tres indicadores sanitarios. Si el calor fuera relevante, cabría esperar una asociación más clara en verano que en invierno; si fuera igual en ambas estaciones, probablemente reflejaría diferencias generales entre provincias.
@@ -1232,11 +1226,11 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
 El mapa de calor permite visualizar de forma conjunta las correlaciones de Spearman entre las temperaturas máximas estacionales y los indicadores sanitarios. Se observa que la relación más destacada es la correspondiente a la tasa de partos prematuros durante el invierno. Por el contrario, las correlaciones con la mortalidad fetal y perinatal son más débiles y próximas a cero.
 
 
-## 8. Representación geográfica de los resultados
+# 8. Representación geográfica de los resultados
 
 En este apartado representamos mediante mapas provinciales las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal registradas en el país en 2024. El objetivo es ver cómo se distribuyen estos indicadores y comprobar si existen patrones geográficos similares entre las temperaturas y la mortalidad.
 
-### 8.1 Preparación del mapa provincial
+## 8.1. Preparación del mapa provincial
 
 Usamos el paquete mapSpain para obtener el mapa de provincias españoles. Normalizamos sus nombres y los unimos con nuestra tabla de datos climáticos y sanitarios.
 
@@ -1262,7 +1256,7 @@ mapa_datos <- mapa_espana %>%
 #Comprobamos que todas las provincias tienen datos
 sum(is.na(mapa_datos$anomalia))
 ```
-### 8.2 Mapa de anomalias térmicas
+## 8.2. Mapa de anomalias térmicas
 
 En este mapa representamos las anomalías térmicas de cada provincia durante 2024, tomando como referencia las temperaturas medias del periodo 1991-2020.
 
@@ -1285,7 +1279,7 @@ ggplot(mapa_datos) +
 En el mapa vemos que todas las provincias registraron temperaturas superiores a lo habitual durante 2024, aunque el aumento no fue igual en todas. Las anomalías más altas se concentran sobre todo en el este y sureste de España, mientras que en el norte fueron, en general, más moderadas.
 
 
-### 8.3 Mapa de mortalidad fetal tardía
+## 8.3. Mapa de mortalidad fetal tardía
 
 A continuación, se representa la tasa de mortalidad fetal tardía, la cual recoge los fallecimientos ocurridos antes del nacimiento en una etapa evanzada del embarazo. El mapa permite observar las diferencias entre provincias y compararlas con las anomalías térmicas.
 
@@ -1307,7 +1301,7 @@ ggplot(mapa_datos) +
 La tasa de mortalidad fetal tardía presenta diferencias entre provincias. Algunos de los valores más altos se encuentran en el norte de España, aunque no siguen un patrón geográfico claro. Si lo comparamos con las anomalías térmicas, vemos que las provincias con mayores aumentos de temperatura no son necesariamente las que presentan una mayor mortalidad fetal tardía.
 
 
-### 8.4 Mapa de mortalidad perinatal
+## 8.4. Mapa de mortalidad perinatal
 
 Finalmente, representamos las tasa de mortalidad perinatal registrada en las provincias españolas en 2024. Así, podemos comparar su distribución con la mortalidad fetal tardía y las anomalías térmicas.
 
