@@ -1281,7 +1281,7 @@ En el mapa vemos que todas las provincias registraron temperaturas superiores a 
 
 ## 8.3. Mapa de mortalidad fetal tardía
 
-A continuación, se representa la tasa de mortalidad fetal tardía, la cual recoge los fallecimientos ocurridos antes del nacimiento en una etapa evanzada del embarazo. El mapa permite observar las diferencias entre provincias y compararlas con las anomalías térmicas.
+A continuación, se representa la tasa de mortalidad fetal tardía, la cual recoge los fallecimientos ocurridos antes del nacimiento en una etapa avanzada del embarazo. El mapa permite observar las diferencias entre provincias y compararlas con las anomalías térmicas.
 
 ```{r}
 # Mapa de mortalidad fetal tardía por provincia
@@ -1323,12 +1323,32 @@ ggplot(mapa_datos) +
 ```
 La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
 
+## 8.4. Mapa de partos prematuros
 
-## 9. Comparación entre grupos de provincias según el calor en verano
+Por último, mostramos en el mapa la tasa de partos prematuros, es decir, el porcentaje de nacimientos que tienen lugar antes de la semana 37 de gestación. Así podemos ver qué provincias presentan valores más altos y comprobar si coinciden con las zonas donde se registraron mayores anomalías térmicas.
 
-Para completar el análisis, se dividen las provincias en tres grupos del mismo tamaño según su temperatura máxima media de verano (junio, julio y agosto): **frías**, **templadas** y **calurosas**. Después se comparan los indicadores sanitarios entre los tres grupos. Si el calor influyera en las complicaciones del embarazo, cabría esperar valores más altos en el grupo de provincias calurosas.
+```{r}
+ggplot(mapa_datos) +
+  geom_sf(aes(fill = tasa_prematuros), color = "white", linewidth = 0.2) +
+  geom_sf(data = esp_get_can_box(), fill = NA, color = "grey50") +
+  scale_fill_gradient(
+    low = "lightyellow",
+    high = "darkred",
+    name = "Tasa de partos prematuros"
+  ) +
+  labs(
+    title = "Partos prematuros por provincia en 2024"
+  ) +
+  theme_void()
+```
 
-### 9.1 Creación de los grupos
+La prematuridad es más alta en Canarias, Huelva, Albacete y parte de la costa mediterránea, y más baja en el interior norte. Las mayores anomalías térmicas, en cambio, se concentran en el sureste, sobre todo en Murcia (1,6 °C). Algunas provincias coinciden en ambos mapas, como Albacete o Valencia, pero en general no se aprecia una relación clara entre ambas variables, posiblemente porque la prematuridad depende de muchos otros factores y los datos agregados por provincia y año pueden ocultar el efecto de episodios de calor concretos.
+
+# 9. Comparación entre grupos de provincias según el calor en verano
+
+Para completar el análisis, se dividen las provincias en tres grupos del mismo tamaño según su temperatura máxima media de verano (junio, julio y agosto): **frías**, **templadas** y **calurosas**. Después se comparan los indicadores sanitarios entre los tres grupos. Este enfoque complementa el estudio de correlaciones: en lugar de tratar la temperatura como una variable continua, permite comparar directamente provincias con veranos muy distintos y comprobar si las conclusiones se mantienen con otro método. Si el calor influyera en las complicaciones del embarazo, cabría esperar valores más altos en el grupo de provincias calurosas.
+
+## 9.1. Creación de los grupos
 
 ```{r}
 datos_grupos <- datos_completos %>%
@@ -1350,30 +1370,29 @@ datos_grupos %>%
     tmax_verano_min = min(tmax_verano),
     tmax_verano_max = max(tmax_verano)
   )
+
+# Provincias que forman cada grupo
+datos_grupos %>%
+  select(provincia, tmax_verano, grupo_calor, tasa_prematuros) %>%
+  arrange(grupo_calor, tmax_verano)
 ```
 
-### 9.2 Valores medios de cada grupo
+## 9.2. Valores medios y medianos de cada grupo
 
 ```{r}
 datos_grupos %>%
   group_by(grupo_calor) %>%
   summarise(across(
     c(tasa_prematuros, mortalidad_fetal, mortalidad_perinatal),
-    ~ mean(.x, na.rm = TRUE)
+    list(
+      media = ~ mean(.x, na.rm = TRUE),
+      mediana = ~ median(.x, na.rm = TRUE)
+    )
   ))
 ```
+Ninguno de los tres indicadores aumenta de forma clara con el calor del verano. En los partos prematuros, las provincias calurosas tienen la tasa más alta (61,5 por cada 1.000 nacimientos), pero las frías (59,4) superan a las templadas (57,5), y las diferencias son pequeñas. Esto puede deberse a que la prematuridad depende más del clima de todo el año que del verano: Santa Cruz de Tenerife, por ejemplo, tiene un clima cálido pero veranos suaves, y queda en el grupo de las frías. En la mortalidad fetal tardía ocurre lo contrario de lo esperado, ya que la tasa baja de 2,91 por mil en las provincias frías a 2,09 en las calurosas, aunque al ser un suceso poco frecuente puede variar mucho por azar. En la mortalidad perinatal tampoco hay un patrón claro (4,21 en las frías, 3,63 en las templadas y 3,93 en las calurosas).
 
-
-La tabla muestra que los tres indicadores no se comportan igual al pasar de las provincias frías a las calurosas.
-
-En la tasa de partos prematuros, las diferencias entre grupos son pequeñas y no siguen el orden del calor: las provincias calurosas presentan la tasa media más alta (61,5 por cada 1.000 nacimientos), pero las frías (59,4) superan a las templadas (57,5). La diferencia entre el grupo más alto y el más bajo es de apenas 4 partos prematuros por cada 1.000 nacimientos. Por tanto, al agrupar las provincias según el calor en verano, no se aprecia un aumento claro de la prematuridad. Esto contrasta con las correlaciones del apartado 7.2.1, que sí mostraban una asociación con la temperatura media y la máxima anual. Una posible explicación es que lo que se asocia con la prematuridad no es tanto el calor del verano como el clima general de la provincia a lo largo de todo el año.
-
-En la mortalidad fetal tardía, la tasa media disminuye a medida que aumenta el calor, desde 2,91 defunciones por mil nacidos en las provincias frías hasta 2,09 en las calurosas. Por tanto, no se observa que las provincias con veranos más calurosos tengan una mayor mortalidad fetal tardía.
-
-En la mortalidad perinatal tampoco aparece un patrón claro. Las provincias frías presentan la tasa media más alta (4,21 por mil), seguidas de las calurosas (3,93) y las templadas (3,63). Las diferencias son pequeñas y no siguen el orden del calor.
-
-
-### 9.3 Diagramas de caja por grupo
+## 9.3. Diagramas de caja por grupo
 
 ```{r, fig.width=10, fig.height=4}
 datos_grupos %>%
@@ -1385,30 +1404,78 @@ datos_grupos %>%
   ) %>%
   ggplot(data = ., aes(x = grupo_calor, y = Valor, fill = grupo_calor)) +
   geom_boxplot(show.legend = FALSE) +
-  facet_wrap(facets = vars(Indicador), scales = "free_y") +
+  facet_wrap(
+    facets = vars(Indicador),
+    scales = "free_y",
+    labeller = as_labeller(c(
+      tasa_prematuros = "Partos prematuros (‰)",
+      mortalidad_fetal = "Mortalidad fetal tardía (‰)",
+      mortalidad_perinatal = "Mortalidad perinatal (‰)"
+    ))
+  ) +
   scale_fill_manual(values = c("skyblue", "khaki", "tomato")) +
   labs(
     x = "Grupo de provincias según el calor en verano",
-    y = "Valor",
+    y = "Tasa (por 1.000)",
     title = "Indicadores sanitarios según el calor en verano",
     subtitle = "Año 2024"
   ) +
   theme_minimal()
 ```
 
-### 9.4 ¿Las diferencias son significativas?
+## 9.4. ¿Las diferencias son significativas?
 
-Para comprobar si las diferencias entre los tres grupos son reales o pueden deberse al azar, se utiliza la prueba de **Kruskal-Wallis**. Esta prueba compara tres o más grupos y no exige que los datos sigan una distribución normal. Si el p-valor es menor que 0,05, al menos uno de los grupos es diferente de los demás.
+Para comprobar si las diferencias entre los tres grupos son reales o pueden deberse al azar, se utiliza la prueba de **Kruskal-Wallis**. Esta prueba compara tres o más grupos y no exige que los datos sigan una distribución normal, algo adecuado en este caso porque cada grupo tiene pocas provincias. Si el p-valor es menor que 0,05, al menos uno de los grupos es diferente de los demás.
 
 ```{r}
 kruskal.test(tasa_prematuros ~ grupo_calor, data = datos_grupos)
 kruskal.test(mortalidad_fetal ~ grupo_calor, data = datos_grupos)
 kruskal.test(mortalidad_perinatal ~ grupo_calor, data = datos_grupos)
 ```
-Ninguna de las tres pruebas resulta estadísticamente significativa. En la tasa de partos prematuros, el p-valor es de 0,197. En la mortalidad fetal tardía, de 0,257, y en la mortalidad perinatal, de 0,708. Al ser todos superiores a 0,05, no existen diferencias significativas entre las provincias frías, templadas y calurosas en ninguno de los tres indicadores.
 
-Este resultado es coherente con lo observado en el apartado 7.3: la tasa de partos prematuros no se asocia tanto con el calor del verano, que es el criterio utilizado para formar los grupos, como con el clima general de la provincia a lo largo del año. Por este motivo, al no encontrarse diferencias significativas, no es necesario realizar comparaciones entre pares de grupos.
+Ninguna de las tres pruebas resulta estadísticamente significativa. En la tasa de partos prematuros, el p-valor es de 0,197. En la mortalidad fetal tardía, de 0,257, y en la mortalidad perinatal, de 0,708. Al ser todos superiores a 0,05, no se encuentran diferencias significativas entre las provincias frías, templadas y calurosas en ninguno de los tres indicadores, por lo que no es necesario realizar comparaciones entre pares de grupos.
 
+Esto no significa necesariamente que el calor no tenga ningún efecto. Con unas 17 provincias por grupo, la prueba tiene poca capacidad para detectar diferencias pequeñas. Además, los indicadores sanitarios son anuales, mientras que los grupos se han formado solo con la temperatura del verano: muchos de los partos del año no estuvieron expuestos a ese calor, lo que puede diluir cualquier efecto.
+
+## 9.5. Comparación según la temperatura media anual
+
+Como se ha señalado, la prematuridad podría estar más relacionada con el clima general de la provincia que con el calor del verano. Para comprobarlo, se repite la agrupación usando la temperatura media anual.
+
+```{r}
+datos_grupos_anual <- datos_completos %>%
+  mutate(
+    grupo_anual = factor(
+      ntile(tmed_2024, 3),
+      labels = c("Frías", "Templadas", "Cálidas")
+    )
+  )
+
+datos_grupos_anual %>%
+  group_by(grupo_anual) %>%
+  summarise(
+    provincias = n(),
+    media_prematuros = mean(tasa_prematuros, na.rm = TRUE),
+    mediana_prematuros = median(tasa_prematuros, na.rm = TRUE)
+  )
+
+kruskal.test(tasa_prematuros ~ grupo_anual, data = datos_grupos_anual)
+```
+
+Al agrupar las provincias según su temperatura media anual, el resultado cambia. La tasa media de partos prematuros aumenta de forma progresiva: 56,2 por cada 1.000 nacimientos en las provincias frías, 59,7 en las templadas y 62,7 en las cálidas. La prueba de Kruskal-Wallis indica que estas diferencias son significativas (p-valor = 0,007).
+
+Esto confirma que la prematuridad se relaciona más con el clima general de la provincia a lo largo del año que con el calor del verano. Aun así, al tratarse de datos agregados por provincia, no puede afirmarse que la temperatura sea la causa, ya que las provincias cálidas pueden diferir también en otros factores, como la edad de las madres o la atención sanitaria.
+
+Para identificar qué grupos se diferencian, se realizan comparaciones por pares mediante la prueba de Wilcoxon, con la corrección de Holm para tener en cuenta que se hacen varias comparaciones a la vez.
+
+```{r}
+pairwise.wilcox.test(
+  datos_grupos_anual$tasa_prematuros,
+  datos_grupos_anual$grupo_anual,
+  p.adjust.method = "holm"
+)
+
+```
+La única diferencia significativa se da entre las provincias cálidas y las frías (p-valor = 0,01). Las provincias templadas no se diferencian de forma significativa ni de las frías ni de las cálidas (p-valor = 0,11 en ambos casos), ya que ocupan una posición intermedia. Por tanto, el contraste se produce entre los dos extremos: las provincias con el clima más cálido a lo largo del año presentan una tasa de partos prematuros significativamente mayor que las provincias más frías.
 
 ## 10. Conclusión
 
