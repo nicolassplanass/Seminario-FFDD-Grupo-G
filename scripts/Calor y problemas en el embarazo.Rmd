@@ -19,7 +19,7 @@ En este seminario queremos analizar la relación directa entre la exposición al
 
 ## Objetivos
 
-El objetivo general es **evaluar la asociación entre la exposición a temperaturas extremas y la incidencia de complicaciones obstétricas y mortalidad perinatal a nivel provincial**, mediante el cruce de registros climáticos históricos y recientes con indicadores de salud materno-infantil. Para ello, debemos de :
+El objetivo general es **evaluar la asociación entre la exposición a temperaturas extremas y la incidencia de complicaciones obstétricas y mortalidad perinatal a nivel provincial**, mediante el cruce de registros climáticos históricos y recientes con indicadores de salud materno-infantil. Para ello, debemos:
 
 * **Caracterizar la exposición térmica provincial:** analizar las temperaturas máxima, media y mínima de 2024 y calcular sus anomalías respecto a la serie de referencia 1991-2020.
 * **Evaluar el impacto en el parto y la prematuridad:** analizar la relación entre la temperatura y la tasa de partos prematuros.
@@ -763,9 +763,9 @@ ggsave(
 ```
 Se puede observar, que la mayoría de valores atípicos se encuentran en la distribución de las temperaturas mínimas, donde estas están por encima del valor típico, es decir, corresponden a temperaturas mínimas más altas de lo habitual. Además, aparecen sobre todo en los meses fríos (enero, febrero, marzo, abril, octubre, noviembre y diciembre). Esto indica que hay territorios donde las noches son mucho más templadas que en el resto, incluso en invierno, probablemente zonas costeras o insulares. Además, las temperaturas mínimas presentan más valores atípicos altos que las máximas y las medias. Esto es relevante para nuestro estudio, ya que unas mínimas elevadas significan noches calurosas, en las que el cuerpo no llega a recuperarse del calor del día.
 
-### Comparación entre provinvias
+### Comparación entre provincias
 
-En este apartado comparamos las temperaturas máximas y medias registradas en las distintas provincias durante 2024. Para ello, seleccionamos las 5 provincias con los valores más altos y las 5 con los más bajos, y reprsentamos estos resultados mediante gráficos de barras.
+En este apartado comparamos las temperaturas máximas y medias registradas en las distintas provincias durante 2024. Para ello, seleccionamos las 5 provincias con los valores más altos y las 5 con los más bajos, y representamos estos resultados mediante gráficos de barras.
 
 ```{r}
 
@@ -817,7 +817,7 @@ ggsave(
 )
 ```
 
-Las temperaturas medias más altas de 2024 se registraron en Sevilla, Huelva y Córdoba, mientras que las más bajas se encontraron en León, Asturias y Cantabria. Las provincias del sur peninsular presentan temperaturas máximas más elevadas, mientras que las del norte registran vamlores más bajos.
+Las temperaturas medias más altas de 2024 se registraron en Sevilla, Huelva y Córdoba, mientras que las más bajas se encontraron en León, Asturias y Cantabria. Las provincias del sur peninsular presentan temperaturas máximas más elevadas, mientras que las del norte registran valores más bajos.
 
 ```{r}
 # Seleccionamos las 5 provincias con temperaturas medias más bajas
@@ -863,7 +863,7 @@ ggsave(
 )
 
 ```
-Las temperaturas medias más altas de 2024 se registraron en Las Palmas, Melilla y Ceuta, mientras que as más bajas se encontraron en León, Palencia y Soria. Se observa una diferencia considerable entre los territorios más cálidos y los fríos, especialmente entre las islas Canarias, el norte de África y algunas provincias del interior.
+Las temperaturas medias más altas de 2024 se registraron en Las Palmas, Melilla y Ceuta, mientras que las más bajas se encontraron en León, Palencia y Soria. Se observa una diferencia considerable entre los territorios más cálidos y los fríos, especialmente entre las islas Canarias, el norte de África y algunas provincias del interior.
 
 ```{r, echo=FALSE}
 names(TMED_2024)
@@ -1007,13 +1007,12 @@ nrow(datos_completos)
 colSums(is.na(datos_completos))
 ```
 
-Al comprobar los valores ausentes de la tabla final, se observa que ninguna variable presentan valores ausentes.  
+Al comprobar los valores ausentes de la tabla final, se observa que ninguna variable presenta valores ausentes.  
 
 
 
 
 ## Estudio de las posibles asociaciones entre temperatura y salud
-
 
 Se estudian las asociaciones de los tres indicadores sanitarios (partos prematuros, mortalidad fetal tardía y mortalidad perinatal) con tres variables térmicas:
 
@@ -1026,7 +1025,8 @@ Para ello, utilizamos gráficos de dispersión y correlaciones estadísticas com
 
 ### Diagramas de dispersión 
 
-Empezamos representando la relación entre la temperatura media registrada en 2024 y el número de partos prematuros de cada provincia. Se representa mediante un diagrama de diseprsión en el cual cada punto representa una provincia.
+Representamos la relación entre las tres variables térmicas y cada indicador sanitario mediante diagramas de dispersión, en los que cada punto es una provincia.
+
 
 ```{r}
 etiquetas_temp <- c(
@@ -1056,7 +1056,7 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 
 #### Partos prematuros
 
-```{r,fig.width=9, fig.height=6}
+```{r,fig.width=9, fig.height=6,echo=FALSE}
 grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
 # Guardamos el gráfico
@@ -1347,7 +1347,7 @@ El mapa de calor permite visualizar de forma conjunta las correlaciones de Spear
 
 ## Representación geográfica de los resultados
 
-En este apartado representamos mediante mapas provinciales las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal registradas en el país en 2024. El objetivo es ver cómo se distribuyen estos indicadores y comprobar si existen patrones geográficos similares entre las temperaturas y la mortalidad.
+En este apartado representamos mediante mapas provinciales las anomalías térmicas y las tasas de mortalidad fetal tardía y perinatal registradas en el país en 2024. El objetivo es ver cómo se distribuyen estos indicadores y comprobar si existen patrones geográficos similares entre las temperaturas, la mortalidad y la tasa de partos prematuros.
 
 ### Preparación del mapa provincial
 
@@ -1473,11 +1473,11 @@ ggsave(
   dpi = 320
 )
 ```
-La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
+La mortalidad perinatal también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coincidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
 
 ### Mapa de partos prematuros
 
-Por último, mostramos en el mapa la tasa de partos prematuros, es decir, el porcentaje de nacimientos que tienen lugar antes de la semana 37 de gestación. Así podemos ver qué provincias presentan valores más altos y comprobar si coinciden con las zonas donde se registraron mayores anomalías térmicas.
+Por último, mostramos en el mapa la tasa de partos prematuros, es decir, el número de nacimientos por cada 1.000 de nacimientos que tienen lugar antes de la semana 37 de gestación. Así podemos ver qué provincias presentan valores más altos y comprobar si coinciden con las zonas donde se registraron mayores anomalías térmicas.
 
 ```{r,echo=FALSE}
 ggplot(mapa_datos) +
@@ -1557,7 +1557,7 @@ Ninguno de los tres indicadores aumenta de forma clara con el calor del verano. 
 
 ### Diagramas de caja por grupo
 
-```{r, fig.width=10, fig.height=4}
+```{r, fig.width=10, fig.height=4,echo=FALSE}
 datos_grupos %>%
   select(grupo_calor, tasa_prematuros, mortalidad_fetal, mortalidad_perinatal) %>%
   pivot_longer(
@@ -1659,7 +1659,7 @@ El resultado más destacado fue la relación entre las temperaturas medias y má
 
 En cuanto a la mortalidad fetal tardía y perinatal, no encontramos asociaciones estadísticamente significativas con las temperaturas. Esto podría deberse, en parte, a que son sucesos menos frecuentes y sus tasas pueden variar bastante entre provincias. Además, al comparar los mapas, tampoco observamos una coincidencia geográfica clara entre las provincias con mayores anomalías térmicas y las que presentaban tasas de mortalidad más elevadas.
 
-Finalmente, se debe tener en cuenta que nuestro análisis se basa en datos provinciales de un solo año, así que no podemos confirmar que las temperaturas elevadas sean la causa de una mayor prematuridad. Tampoco conocemos las temperaturas a las que estuvo expuesta cada embarazada ni otros factores que podrían influir en los resultados. Sería interesante ampliar el estudio a varios años con datos más detallados sobre el embarazo y las condiciones de cada paciente. Con todo ello tenido en cuenta, se considera improtante seguir investigando cómo puede afectar el calor a la salud materno-infantil y tener muy presentes a las embarazadas en las medidas de prevención frente a las temperaturas extremas.
+Finalmente, se debe tener en cuenta que nuestro análisis se basa en datos provinciales de un solo año, así que no podemos confirmar que las temperaturas elevadas sean la causa de una mayor prematuridad. Tampoco conocemos las temperaturas a las que estuvo expuesta cada embarazada ni otros factores que podrían influir en los resultados. Sería interesante ampliar el estudio a varios años con datos más detallados sobre el embarazo y las condiciones de cada paciente. Con todo ello tenido en cuenta, se considera importante seguir investigando cómo puede afectar el calor a la salud materno-infantil y tener muy presentes a las embarazadas en las medidas de prevención frente a las temperaturas extremas.
 
 ## Bibliografía 
 
