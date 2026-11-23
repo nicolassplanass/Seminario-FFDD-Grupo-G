@@ -8,6 +8,12 @@ output:
     toc_depth: 3
     toc_float: true
 ---
+
+
+<p align="center">
+  <img src="../OUTPUT/IMAGES/embarazada_calor.jpg" width="350">
+</p>
+
 <style> body { text-align: justify} </style>
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -998,7 +1004,7 @@ datos_completos <- clima %>%
   left_join(mortalidad_perinatal, by = "provincia") %>%
   left_join(nacimientos, by = "provincia") %>%
   mutate(tasa_prematuros = partos_prematuros / nacimientos_2024 * 1000)
-datos_completos
+head(datos_completos)
 ```
 
 El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
