@@ -22,7 +22,7 @@ Curso 2026-2027
 
 ## Descripción del seminario
 
-En este seminario analizamos las temperaturas registradas en las provincias españolas durante 2024 y exploramos su posible relación con diferentes indicadores relacionados con el embarazo como los aprtos prematuros, la mortalidad fetal tardía y la mortalidad perinatal.
+En este seminario analizamos las temperaturas registradas en las provincias españolas durante 2024 y exploramos su posible relación con diferentes indicadores relacionados con el embarazo como los partos prematuros, la mortalidad fetal tardía y la mortalidad perinatal.
 
 Para ello, utilizamos datos metereológicos y sanitarios de fuentes oficiales, los cuales han sido procesados y representados mediante el lenguaje R.
 
@@ -31,7 +31,7 @@ Para ello, utilizamos datos metereológicos y sanitarios de fuentes oficiales, l
 - Analizar las diferencias de temepratura entre las provincias españolas durante 2024.
 - Comparar las temepraturas medias de 2024 con las del periodo de 1991 a 2020.
 - Estudiar la distribución provincial de los indicadores relacionados con el embarazo.
-- Explorar posibles relaciones entre los datos sanitarios y los datos meterelógicos analziados.
+- Explorar posibles relaciones entre los datos sanitarios y los datos meterelógicos analizados.
 
 ## Resultados
 
@@ -67,7 +67,7 @@ Estos resultados deben interpretarse con precaución, ya que el análisis se lim
 
 - `INPUT/`: archivos con los datos utilizados en el análisis.
 - `OUTPUT/`: resultados y gráficos generados.
-- `scripts/`: código y documento R Markdown del seminario.
+- `scripts/`: código, documento R Markdown del seminario y documento HTML.
 - `README.md`: descripción general del proyecto.
 
 ## Autores
