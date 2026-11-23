@@ -52,6 +52,7 @@ library(mapSpain)
 library(knitr)
 library(jsonlite)
 library(kableExtra)
+library(DT)
 ```
 
 ### Importación de los datos sanitarios
@@ -1004,7 +1005,21 @@ datos_completos <- clima %>%
   left_join(mortalidad_perinatal, by = "provincia") %>%
   left_join(nacimientos, by = "provincia") %>%
   mutate(tasa_prematuros = partos_prematuros / nacimientos_2024 * 1000)
-head(datos_completos)
+```
+
+
+```{r, echo=FALSE}
+DT::datatable(
+  datos_completos,
+  filter = "top",
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE,
+    autoWidth = TRUE
+  ),
+  caption = "Tabla de datos completos por provincia"
+)
 ```
 
 El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
@@ -1356,6 +1371,9 @@ ggsave(
   dpi = 320
 )
 ```
+
+
+
 El mapa de calor permite visualizar de forma conjunta las correlaciones de Spearman entre las temperaturas máximas estacionales y los indicadores sanitarios. Se observa que la relación más destacada es la correspondiente a la tasa de partos prematuros durante el invierno. Por el contrario, las correlaciones con la mortalidad fetal y perinatal son más débiles y próximas a cero.
 
 
@@ -1420,6 +1438,9 @@ ggsave(
   dpi = 320
 )
 ```
+
+
+
 En el mapa vemos que todas las provincias registraron temperaturas superiores a lo habitual durante 2024, aunque el aumento no fue igual en todas. Las anomalías más altas se concentran sobre todo en el este y sureste de España, mientras que en el norte fueron, en general, más moderadas.
 
 
@@ -1453,6 +1474,9 @@ ggsave(
   dpi = 320
 )
 ```
+
+
+
 La tasa de mortalidad fetal tardía presenta diferencias entre provincias. Algunos de los valores más altos se encuentran en el norte de España, aunque no siguen un patrón geográfico claro. Si lo comparamos con las anomalías térmicas, vemos que las provincias con mayores aumentos de temperatura no son necesariamente las que presentan una mayor mortalidad fetal tardía.
 
 
@@ -1487,6 +1511,9 @@ ggsave(
   dpi = 320
 )
 ```
+
+
+
 La mortalidad perinatal también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coincidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
 
 ### Mapa de partos prematuros
@@ -1518,6 +1545,8 @@ ggsave(
   dpi = 320
 )
 ```
+
+
 
 La prematuridad es más alta en Canarias, Huelva, Albacete y parte de la costa mediterránea, y más baja en el interior norte. Las mayores anomalías térmicas, en cambio, se concentran en el sureste, sobre todo en Murcia (1,6 °C). Algunas provincias coinciden en ambos mapas, como Albacete o Valencia, pero en general no se aprecia una relación clara entre ambas variables, posiblemente porque la prematuridad depende de muchos otros factores y los datos agregados por provincia y año pueden ocultar el efecto de episodios de calor concretos.
 
@@ -1696,3 +1725,5 @@ Finalmente, se debe tener en cuenta que nuestro análisis se basa en datos provi
 - Vicedo-Cabrera, A. M., Iñíguez, C., Barona, C. y Ballester, F. (2014). Exposure to elevated temperatures and risk of preterm birth in Valencia, Spain. Environmental Research, 134, 210–217. https://doi.org/10.1016/j.envres.2014.07.021
 
 - Pearson, K. (1895). Notes on regression and inheritance in the case of two parents. Proceedings of the Royal Society of London, 58, 240–242. https://doi.org/10.1098/rspl.1895.0041
+
+- DT: An R interface to the DataTables library. (s. f.). https://rstudio.github.io/DT/
