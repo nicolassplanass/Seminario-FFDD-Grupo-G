@@ -45,6 +45,7 @@ library(patchwork)
 library(mapSpain)
 library(knitr)
 library(jsonlite)
+library(kableExtra)
 ```
 
 ### Importación de los datos sanitarios
@@ -997,6 +998,7 @@ datos_completos <- clima %>%
   left_join(mortalidad_perinatal, by = "provincia") %>%
   left_join(nacimientos, by = "provincia") %>%
   mutate(tasa_prematuros = partos_prematuros / nacimientos_2024 * 1000)
+datos_completos
 ```
 
 El resultado es una única tabla denominada datos_completos, que reúne la información climática y sanitaria de las provincias españolas.
@@ -1138,7 +1140,7 @@ Una correlación positiva indica que los valores altos de una variable tienden a
  
  
 
-```{r}
+```{r, echo=FALSE}
 
 variables_clima <- c("tmed_2024", "tmax_2024", "anomalia")
 
@@ -1173,43 +1175,36 @@ for (i in 1:nrow(resultados)) {
   resultados$p_valor[i] <- prueba$p.value
 }
 
-tabla_final <- resultados %>%
-  mutate(
-    Resultado = paste0(
-      round(r, 3), " (p=", format.pval(p_valor, digits = 3), ")"
-    )
-  ) %>%
-  select(Clima, Indicador, Metodo, Resultado) %>%
-  pivot_wider(
-    names_from = c(Clima, Metodo),
-    values_from = Resultado
-  )
 
 tabla_final <- resultados %>%
   mutate(
-    Clima = recode(
-      Clima,
-      "tmed_2024" = "T. media",
-      "tmax_2024" = "T. máxima",
-      "anomalia" = "Anomalía"
-    ),
-    Metodo = recode(
-      Metodo,
-      "pearson" = "Pearson",
-      "spearman" = "Spearman"
+    Indicador = recode(
+      Indicador,
+      "tasa_prematuros" = "Partos prematuros",
+      "mortalidad_fetal" = "Mortalidad fetal",
+      "mortalidad_perinatal" = "Mortalidad perinatal"
     ),
     Resultado = paste0(
-      round(r, 3),
-      "<br>(p = ",
-      format.pval(p_valor, digits = 3),
-      ")"
-    ),
-    Columna = paste(Clima, Metodo, sep = " - ")
+      "<strong>",
+      formatC(r, format = "f", digits = 3, decimal.mark = ","),
+      "</strong><br><span style='font-size: smaller; color: #666;'>p = ",
+      format.pval(p_valor, digits = 3, decimal.mark = ","),
+      "</span>"
+    )
   ) %>%
-  select(Indicador, Columna, Resultado) %>%
+  select(Indicador, Clima, Metodo, Resultado) %>%
   pivot_wider(
-    names_from = Columna,
+    names_from = c(Metodo, Clima),
     values_from = Resultado
+  ) %>%
+  select(
+    Indicador,
+    pearson_tmed_2024,
+    pearson_tmax_2024,
+    pearson_anomalia,
+    spearman_tmed_2024,
+    spearman_tmax_2024,
+    spearman_anomalia
   )
 
 knitr::kable(
@@ -1220,14 +1215,23 @@ knitr::kable(
   caption = "Correlaciones entre variables climáticas e indicadores sanitarios",
   col.names = c(
     "Indicador sanitario",
-    "Media - P",
-    "Máxima - P",
-    "Anomalía - P",
-    "Media - S",
-    "Máxima - S",
-    "Anomalía - S"
+    "Media",
+    "Máxima",
+    "Anomalía",
+    "Media",
+    "Máxima",
+    "Anomalía"
   )
-)
+) %>%
+  kableExtra::add_header_above(
+    c(" " = 1, "Pearson" = 3, "Spearman" = 3)
+  ) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  )
+
 ```
 
 
