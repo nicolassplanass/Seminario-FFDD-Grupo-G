@@ -959,7 +959,10 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 ```{r,fig.width=9, fig.height=6}
 grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
+
 ```
+
+
 
 Con la temperatura media y la máxima, los puntos suben de izquierda a derecha: las provincias más cálidas tienden a tener algo más de partos prematuros por cada 1.000 nacimientos. Con la anomalía térmica, en cambio, la línea es casi plana, así que haber tenido un año más cálido de lo normal no parece relacionarse con la prematuridad. En todos los casos los puntos están bastante dispersos, por lo que la relación no es muy fuerte.
 
@@ -1089,6 +1092,8 @@ knitr::kable(
   )
 )
 ```
+
+
 
 En conjunto, los resultados muestran que las asociaciones más destacadas se encuentran entre las temperaturas media y máxima anuales y la tasa de partos prematuros. Ambas presentan correlaciones positivas y estadísticamente significativas tanto con Pearson como con Spearman. Esto indica que las provincias con temperaturas más elevadas tienden a presentar mayores tasas de partos prematuros.
 
