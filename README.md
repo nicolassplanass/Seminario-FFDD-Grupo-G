@@ -37,10 +37,25 @@ Para ello, utilizamos datos metereológicos y sanitarios de fuentes oficiales, l
 
 Los resultados se presentan mediante gráficos y mapas que permiten visualizar las diferencias entre provincias.
 
-Anomalías térmicas en 2024
-![Anomalías térmicas](OUTPUT/Figures/Mapa_anomalias_termicas.jpeg)
-Temperatura y partos prematuros
-![Dispersión partos prematuros](OUTPUT/Figures/Dispersion_partos_prematuros.jpeg)
+<table width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <strong>Anomalías térmicas en 2024</strong>
+    </td>
+    <td align="center" width="50%">
+      <strong>Temperatura y partos prematuros</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="OUTPUT/Figures/Mapa_anomalias_termicas.jpeg" width="280">
+    </td>
+    <td align="center">
+      <img src="OUTPUT/Figures/Dispersion_partos_prematuros.jpeg" width="280">
+    </td>
+  </tr>
+</table>
+
 
 ## Conclusiones
 
