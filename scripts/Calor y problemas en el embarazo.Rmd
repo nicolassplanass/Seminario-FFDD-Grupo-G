@@ -513,6 +513,17 @@ Final_plot <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Final_plot
+# Guardamos el gráfico
+ggsave(
+  filename = "Histograma_TMAX_2024.jpeg",
+  plot = Final_plot,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 30,
+  height = 22,
+  units = "cm",
+  dpi = 320
+)
 
 ```
 
@@ -549,6 +560,17 @@ Final_plot_min <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Final_plot_min
+# Guardamos el gráfico
+ggsave(
+  filename = "Histograma_TMIN_2024.jpeg",
+  plot = Final_plot_min,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 30,
+  height = 22,
+  units = "cm",
+  dpi = 320
+)
 
 
 ```
@@ -586,6 +608,17 @@ Final_plot_med <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Final_plot_med
+# Guardamos el gráfico
+ggsave(
+  filename = "Histograma_TMED_2024.jpeg",
+  plot = Final_plot_med,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 30,
+  height = 22,
+  units = "cm",
+  dpi = 320
+)
 
 
 ```
@@ -626,6 +659,17 @@ Box_plot_max <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Box_plot_max
+# Guardamos el gráfico
+ggsave(
+  filename = "Boxplot_TMAX_2024.jpeg",
+  plot = Box_plot_max,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 28,
+  height = 13,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 ```{r, fig.width=11, fig.height=5}
@@ -659,6 +703,17 @@ Box_plot_min <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Box_plot_min
+# Guardamos el gráfico
+ggsave(
+  filename = "Boxplot_TMIN_2024.jpeg",
+  plot = Box_plot_min,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 28,
+  height = 13,
+  units = "cm",
+  dpi = 320
+)
 
 ```
 
@@ -694,6 +749,17 @@ Box_plot_med <-
 
 # Al imprimir el objeto se dibuja el gráfico
 Box_plot_med
+# Guardamos el gráfico
+ggsave(
+  filename = "Boxplot_TMED_2024.jpeg",
+  plot = Box_plot_med,
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 28,
+  height = 13,
+  units = "cm",
+  dpi = 320
+)
 ```
 Se puede observar, que la mayoría de valores atípicos se encuentran en la distribución de las temperaturas mínimas, donde estas están por encima del valor típico, es decir, corresponden a temperaturas mínimas más altas de lo habitual. Además, aparecen sobre todo en los meses fríos (enero, febrero, marzo, abril, octubre, noviembre y diciembre). Esto indica que hay territorios donde las noches son mucho más templadas que en el resto, incluso en invierno, probablemente zonas costeras o insulares. Además, las temperaturas mínimas presentan más valores atípicos altos que las máximas y las medias. Esto es relevante para nuestro estudio, ya que unas mínimas elevadas significan noches calurosas, en las que el cuerpo no llega a recuperarse del calor del día.
 
@@ -738,6 +804,17 @@ TMAX_extremos %>%
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   theme_classic()
 TMAX_extremos
+# Guardamos el gráfico
+ggsave(
+  filename = "Provincias_extremas_TMAX_2024.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 25,
+  height = 8,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 Las temperaturas medias más altas de 2024 se registraron en Sevilla, Huelva y Córdoba, mientras que las más bajas se encontraron en León, Asturias y Cantabria. Las provincias del sur peninsular presentan temperaturas máximas más elevadas, mientras que las del norte registran vamlores más bajos.
@@ -773,6 +850,17 @@ TMED_extremos %>%
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   theme_classic()
+# Guardamos el gráfico
+ggsave(
+  filename = "Provincias_extremas_TMED_2024.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 25,
+  height = 8,
+  units = "cm",
+  dpi = 320
+)
 
 ```
 Las temperaturas medias más altas de 2024 se registraron en Las Palmas, Melilla y Ceuta, mientras que as más bajas se encontraron en León, Palencia y Soria. Se observa una diferencia considerable entre los territorios más cálidos y los fríos, especialmente entre las islas Canarias, el norte de África y algunas provincias del interior.
@@ -869,6 +957,17 @@ anomalias_extremos %>%
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   theme_classic()
+# Guardamos el gráfico
+ggsave(
+  filename = "Anomalias_termicas_2024.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 25,
+  height = 8,
+  units = "cm",
+  dpi = 320
+)
 
 ```
 Los resultados muestran que todos los territorios analizados registraron temperaturas medias anuales superiores a las del periodo de 1991-2020. Las anomalías térmicas estuvieron entre +0,6 °C y +1,6 °C, con una media aproximada de +1,15 °C.
@@ -950,6 +1049,7 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
     facet_wrap(vars(variable), scales = "free_x") +
     labs(title = titulo, x = NULL, y = etiqueta_y) +
     theme_minimal()
+  
 }
 ```
 
@@ -959,6 +1059,17 @@ grafico_dispersion <- function(indicador, etiqueta_y, titulo) {
 ```{r,fig.width=9, fig.height=6}
 grafico_dispersion("tasa_prematuros", "Tasa de partos prematuros",
                    "Temperatura y partos prematuros por provincia")
+# Guardamos el gráfico
+ggsave(
+  filename = "Dispersion_partos_prematuros.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 23,
+  height = 15,
+  units = "cm",
+  dpi = 320
+)
 
 ```
 
@@ -974,6 +1085,17 @@ Con la temperatura media y la máxima, los puntos suben de izquierda a derecha: 
 ```{r ,fig.width=9, fig.height=6}
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
+# Guardamos el gráfico
+ggsave(
+  filename = "Dispersion_mortalidad_fetal.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 23,
+  height = 15,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 Los gráficos muestran una distribución dispersa de los datos y líneas de tendencia prácticamente horizontales. Se aprecia una ligera tendencia positiva con la temperatura media y negativa con la temperatura máxima y la anomalía térmica, pero no se observa una asociación visual clara.
@@ -984,6 +1106,17 @@ Los gráficos muestran una distribución dispersa de los datos y líneas de tend
 ```{r dispersion-perinatal, fig.width=9, fig.height=6}
 grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad perinatal por provincia")
+# Guardamos el gráfico
+ggsave(
+  filename = "Dispersion_mortalidad_perinatal.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 23,
+  height = 15,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 En los tres gráficos se observa una ligera tendencia positiva entre las variables climáticas y la mortalidad perinatal. Sin embargo, los puntos presentan bastante dispersión y la tendencia es poco marcada, por lo que no parece existir una relación clara entre estas variables. Para comprobarlo, será necesario analizar los resultados de las correlaciones.
@@ -1197,6 +1330,17 @@ ggplot(mapa_calor, aes(x = Indicador, y = Temperatura,
     fill = "Spearman"
   ) +
   theme_minimal()
+# Guardamos el gráfico
+ggsave(
+  filename = "Mapa_calor_correlaciones_estacionales.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 20,
+  height = 12,
+  units = "cm",
+  dpi = 320
+)
 ```
 El mapa de calor permite visualizar de forma conjunta las correlaciones de Spearman entre las temperaturas máximas estacionales y los indicadores sanitarios. Se observa que la relación más destacada es la correspondiente a la tasa de partos prematuros durante el invierno. Por el contrario, las correlaciones con la mortalidad fetal y perinatal son más débiles y próximas a cero.
 
@@ -1250,6 +1394,17 @@ ggplot(mapa_datos) +
     subtitle = "Respecto al periodo de referencia 1991-2020"
   ) +
   theme_void()
+# Guardamos el gráfico
+ggsave(
+  filename = "Mapa_anomalias_termicas.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 20,
+  height = 16,
+  units = "cm",
+  dpi = 320
+)
 ```
 En el mapa vemos que todas las provincias registraron temperaturas superiores a lo habitual durante 2024, aunque el aumento no fue igual en todas. Las anomalías más altas se concentran sobre todo en el este y sureste de España, mientras que en el norte fueron, en general, más moderadas.
 
@@ -1272,6 +1427,17 @@ ggplot(mapa_datos) +
     title = "Mortalidad fetal tardía por provincia en 2024"
   ) +
   theme_void()
+# Guardamos el gráfico
+ggsave(
+  filename = "Mapa_mortalidad_fetal.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 20,
+  height = 16,
+  units = "cm",
+  dpi = 320
+)
 ```
 La tasa de mortalidad fetal tardía presenta diferencias entre provincias. Algunos de los valores más altos se encuentran en el norte de España, aunque no siguen un patrón geográfico claro. Si lo comparamos con las anomalías térmicas, vemos que las provincias con mayores aumentos de temperatura no son necesariamente las que presentan una mayor mortalidad fetal tardía.
 
@@ -1295,6 +1461,17 @@ ggplot(mapa_datos) +
     title = "Mortalidad perinatal por provincia en 2024"
   ) +
   theme_void()
+# Guardamos el gráfico
+ggsave(
+  filename = "Mapa_mortalidad_perinatal.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 20,
+  height = 16,
+  units = "cm",
+  dpi = 320
+)
 ```
 La mortalidad perinatal también varía también varía entre provincias, con valores elevados en algunas zonas del norte y centro peninsular. Al compararla con las anomalías térmicas, tampoco se observa una coicnidencia geográifca clara entre las provincias con mayores aumentos de temperatura y las que presentan tasas más altas de mortalidad perinatal.
 
@@ -1315,6 +1492,17 @@ ggplot(mapa_datos) +
     title = "Partos prematuros por provincia en 2024"
   ) +
   theme_void()
+# Guardamos el gráfico
+ggsave(
+  filename = "Mapa_partos_prematuros.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 20,
+  height = 16,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 La prematuridad es más alta en Canarias, Huelva, Albacete y parte de la costa mediterránea, y más baja en el interior norte. Las mayores anomalías térmicas, en cambio, se concentran en el sureste, sobre todo en Murcia (1,6 °C). Algunas provincias coinciden en ambos mapas, como Albacete o Valencia, pero en general no se aprecia una relación clara entre ambas variables, posiblemente porque la prematuridad depende de muchos otros factores y los datos agregados por provincia y año pueden ocultar el efecto de episodios de calor concretos.
@@ -1396,6 +1584,17 @@ datos_grupos %>%
     subtitle = "Año 2024"
   ) +
   theme_minimal()
+# Guardamos el gráfico
+ggsave(
+  filename = "Boxplot_grupos_calor_verano.jpeg",
+  plot = last_plot(),
+  path = "../OUTPUT/Figures",
+  scale = 1,
+  width = 25,
+  height = 10,
+  units = "cm",
+  dpi = 320
+)
 ```
 
 ### ¿Las diferencias son significativas?
