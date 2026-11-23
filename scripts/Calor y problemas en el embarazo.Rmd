@@ -1653,15 +1653,13 @@ La única diferencia significativa se da entre las provincias cálidas y las fr�
 
 ##  Conclusión
 
+En este trabajo hemos estudiado la posible relación entre las temperaturas registradas durante 2024 y diferentes indicadores de salud materno-infantil en las provincias españolas. Hemos observado que todas las provincias tuvieron temperaturas superiores a las del periodo 1991-2020, aunque el aumento no fue igual en todas ellas. La anomalía media fue de +1,15 °C, un valor muy parecido al +1,1 °C registrado por la AEMET para la España peninsular (Agencia Estatal de Meteorología, 2025). Las mayores anomalías se concentraron principalmente en el este y sureste, destacando Murcia.
 
-En este trabajo se ha analizado la posible relación entre las temperaturas registradas durante 2024 y distintos indicadores de salud materno-infantil en las provincias españolas.
+El resultado más destacado fue la relación entre las temperaturas medias y máximas anuales y la tasa de partos prematuros, ya que encontramos correlaciones positivas y estadísticamente significativas. Al comparar las provincias según su temperatura media anual, vimos que las más cálidas presentaban tasas de prematuridad superiores a las más frías. Este resultado va en la misma línea que otros estudios que han encontrado una relación entre las temperaturas elevadas y el riesgo de parto prematuro (Basu et al., 2010; Chersich et al., 2020; Vicedo-Cabrera et al., 2014). Sin embargo, al analizar las temperaturas del verano, esta relación no fue tan clara y las correlaciones fueron incluso mayores durante el invierno. Por tanto, es posible que nuestros resultados reflejen más las diferencias generales de clima entre provincias que el efecto de episodios concretos de calor.
 
-Los resultados muestran una asociación positiva y estadísticamente significativa entre las temperaturas medias y máximas anuales y la tasa de partos prematuros. Sin embargo, no se han encontrado relaciones significativas con la mortalidad fetal tardía ni con la mortalidad perinatal.
+En cuanto a la mortalidad fetal tardía y perinatal, no encontramos asociaciones estadísticamente significativas con las temperaturas. Esto podría deberse, en parte, a que son sucesos menos frecuentes y sus tasas pueden variar bastante entre provincias. Además, al comparar los mapas, tampoco observamos una coincidencia geográfica clara entre las provincias con mayores anomalías térmicas y las que presentaban tasas de mortalidad más elevadas.
 
-En la comparación entre estaciones, las correlaciones con los partos prematuros fueron más elevadas en invierno que en verano, un resultado diferente al esperado inicialmente.
-
-Por último, hay que tener en cuenta que los datos son provinciales y corresponden a un único año, por lo que no permiten establecer relaciones de causalidad. Sería interesante ampliar el estudio con datos de varios años para profundizar en estas posibles asociaciones.
-
+Finalmente, se debe tener en cuenta que nuestro análisis se basa en datos provinciales de un solo año, así que no podemos confirmar que las temperaturas elevadas sean la causa de una mayor prematuridad. Tampoco conocemos las temperaturas a las que estuvo expuesta cada embarazada ni otros factores que podrían influir en los resultados. Sería interesante ampliar el estudio a varios años con datos más detallados sobre el embarazo y las condiciones de cada paciente. Con todo ello tenido en cuenta, se considera improtante seguir investigando cómo puede afectar el calor a la salud materno-infantil y tener muy presentes a las embarazadas en las medidas de prevención frente a las temperaturas extremas.
 
 ## Bibliografía 
 
