@@ -1,15 +1,10 @@
 
-<table width="100%">
-  <tr>
-    <td align="left" width="50%">
-      <img src="OUTPUT/IMAGES/logo_ubu.png" width="200">
-    </td>
-    <td align="right" width="50%">
-      <img src="OUTPUT/IMAGES/imagen_feto.jpeg" width="200">
-    </td>
-  </tr>
-</table>
+<p>
+  <img src="OUTPUT/IMAGES/logo_ubu.png" width="200" align="left">
+  <img src="OUTPUT/IMAGES/imagen_feto.jpeg" width="200" align="right">
+</p>
 
+<br clear="all">
 
 
 # Temperaturas extremas y complicaciones durante el embarazo en España
@@ -21,6 +16,7 @@
 
 
 Universidad de Burgos - Grado en Ingeniería de la Salud
+
 Curso 2026-2027
 
 
@@ -28,7 +24,7 @@ Curso 2026-2027
 
 En este seminario analizamos las temperaturas registradas en las provincias españolas durante 2024 y exploramos su posible relación con diferentes indicadores relacionados con el embarazo como los aprtos prematuros, la mortalidad fetal tardía y la mortalidad perinatal.
 
-Para ello, utilziamos datos metereológicos y sanitarios de fuente soficiales, los cuales han sido procesados y representados mediante el lenguaje R.
+Para ello, utilizamos datos metereológicos y sanitarios de fuentes oficiales, los cuales han sido procesados y representados mediante el lenguaje R.
 
 ## Objetivos
 
@@ -39,13 +35,16 @@ Para ello, utilziamos datos metereológicos y sanitarios de fuente soficiales, l
 
 ## Resultados
 
-Los resultados se presentan mediante gráficos y mapas que permiten visualizar las diferencias entre provincias
+Los resultados se presentan mediante gráficos y mapas que permiten visualizar las diferencias entre provincias.
 
-(incorporar algun gráfico de resultado)
+Anomalías térmicas en 2024
+![Anomalías térmicas](OUTPUT/Figures/Mapa_anomalias_termicas.jpeg)
+Temperatura y partos prematuros
+![Dispersión partos prematuros](OUTPUT/Figures/Dispersion_partos_prematuros.jpeg)
 
 ## Conclusiones
 
-Durante el año 2024 se observaron anomalías térmicas positivas en las provincias españolas. Sin embargo, la comparación visual con los indicadores de mortalidad fetal tardía y perinatal no muestra una coincidencia geográfica clara.
+A lo largo del año 2024 se observaron anomalías térmicas positivas en las provincias españolas. Sin embargo, la comparación visual con los indicadores de mortalidad fetal tardía y perinatal no muestra una coincidencia geográfica clara.
 
 Estos resultados deben interpretarse con precaución, ya que el análisis se limita a un año y utiliza datos agregados por provincias, por lo que no permite establecer relaciones causales.
 
