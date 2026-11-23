@@ -481,7 +481,7 @@ Antes de relacionar la temperatura con las complicaciones en el embarazo, es nec
 
 En primer lugar estudiamos la distribución de cada tipo de temperatura mes a mes. Para poder representar todos los meses en un mismo gráfico, reorganizamos los datos en formato largo, con una columna que indica el mes y otra con el valor de la temperatura. Después ordenamos los meses cronológicamente, con el valor anual al final, para que los gráficos se lean en orden. Empezamos por la temperatura máxima, que es la más relevante para nuestro objetivo, ya que refleja mejor la exposición al calor.
 
-```{r, fig.width=12, fig.height=9}
+```{r, fig.width=12, fig.height=9, echo=FALSE}
 # DISTRIBUCIÓN TEMPERATURA MÁXIMA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMAX_largo <- pivot_longer(
@@ -527,7 +527,7 @@ ggsave(
 
 ```
 
-```{r, fig.width=12, fig.height=9}
+```{r, fig.width=12, fig.height=9, echo=FALSE}
 # DISTRIBUCIÓN TEMPERATURA MÍNIMA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMIN_largo <- pivot_longer(
@@ -575,7 +575,7 @@ ggsave(
 
 ```
 
-```{r, fig.width=12, fig.height=9}
+```{r, fig.width=12, fig.height=9, echo=FALSE}
 # DISTRIBUCIÓN TEMPERATURA MEDIA
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMED_largo <- pivot_longer(
@@ -628,7 +628,7 @@ ggsave(
 
 Después de estudiar la forma de las distribuciones, utilizamos diagramas de caja para comparar las temperaturas de los distintos meses. Cada caja recoge el 50 % central de los valores, la línea interior marca la mediana y los bigotes indican el rango habitual de los datos. Los puntos que quedan fuera de los bigotes son valores atípicos. Este tipo de gráfico nos permite ver de un vistazo en qué meses las temperaturas son más altas, en cuáles varían más entre territorios y si existen valores extremos. Estos valores son especialmente importantes en nuestro estudio, ya que pueden corresponder a zonas o periodos de calor intenso con un posible efecto sobre el embarazo.
 
-```{r fig.width=11, fig.height=5}
+```{r fig.width=11, fig.height=5,echo=FALSE}
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMAX_largo <- pivot_longer(
   data = select(TMAX_2024, where(is.numeric)),
@@ -672,7 +672,7 @@ ggsave(
 )
 ```
 
-```{r, fig.width=11, fig.height=5}
+```{r, fig.width=11, fig.height=5,echo=FALSE}
 # DIAGRAMA DE CAJA TMIN
 TMIN_largo <- pivot_longer(
   data = select(TMIN_2024, where(is.numeric)),
@@ -717,7 +717,7 @@ ggsave(
 
 ```
 
-```{r,fig.width=11, fig.height=5}
+```{r,fig.width=11, fig.height=5,echo=FALSE}
 # DIAGRAMA DE CAJA TMED
 # Preparamos los datos: todas las columnas numéricas en una sola columna
 TMED_largo <- pivot_longer(
@@ -790,7 +790,7 @@ nrow(TMAX_extremos)
 ```
 
 
-```{r, fig.width=10, fig.height=3}
+```{r, fig.width=10, fig.height=3,echo=FALSE}
 TMAX_extremos %>%
   ggplot(aes(x = reorder(región, anual), y = anual)) +
   geom_bar(stat = "identity", fill = "tomato", color = "black") +
@@ -837,7 +837,7 @@ TMED_extremos <- bind_rows(TMED_bajas, TMED_altas)
 nrow(TMED_extremos)
 ```
 
-```{r, fig.width=10, fig.height=3}
+```{r, fig.width=10, fig.height=3,echo=FALSE}
 TMED_extremos %>%
   ggplot(aes(x = reorder(región, anual), y = anual)) +
   geom_bar(stat = "identity", fill = "orange", color = "black") +
@@ -944,7 +944,7 @@ nrow(anomalias_extremos)
 
 ```
 
-```{r, fig.width=10, fig.height=3}
+```{r, fig.width=10, fig.height=3,echo=FALSE}
 anomalias_extremos %>%
   ggplot(aes(x = reorder(región, anomalia), y = anomalia)) +
   geom_bar(stat = "identity", fill = "steelblue", color = "black") +
@@ -1082,7 +1082,7 @@ Con la temperatura media y la máxima, los puntos suben de izquierda a derecha: 
 #### Mortalidad fetal tardía
 
 
-```{r ,fig.width=9, fig.height=6}
+```{r ,fig.width=9, fig.height=6,echo=FALSE}
 grafico_dispersion("mortalidad_fetal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad fetal tardía por provincia")
 # Guardamos el gráfico
@@ -1103,7 +1103,7 @@ Los gráficos muestran una distribución dispersa de los datos y líneas de tend
 
 #### Mortalidad perinatal
 
-```{r dispersion-perinatal, fig.width=9, fig.height=6}
+```{r dispersion-perinatal, fig.width=9, fig.height=6,echo=FALSE}
 grafico_dispersion("mortalidad_perinatal", "Defunciones por mil nacidos",
                    "Temperatura y mortalidad perinatal por provincia")
 # Guardamos el gráfico
@@ -1284,7 +1284,7 @@ En general, las correlaciones obtenidas son más elevadas en invierno para los t
 
 El mapa de calor resume los coeficientes de Spearman:
 
-```{r}
+```{r,echo=FALSE}
 
 
 # Calcular correlaciones de Spearman
