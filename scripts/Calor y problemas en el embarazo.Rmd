@@ -12,7 +12,12 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
+## Enlace del Repositorio
+
+https://github.com/nicolassplanass/Seminario-FFDD-Grupo-G 
+
 ## Introducción
+
 El aumento constante de las temperaturas globales se ha convertido en una de las amenazas más relevantes para la salud pública. Si bien los efectos del calor extremo suelen analizarse frecuentemente en poblaciones vulnerables como los adultos mayores o personas con patologías crónicas, el impacto sobre la salud materno-infantil representa un área crítica y, a menudo, menos visibilizada. El organismo materno experimenta adaptaciones fisiológicas complejas para mantener la termorregulación; sin embargo, cuando las temperaturas ambientales superan los umbrales de tolerancia (como evidencian los registros térmicos recientes), se desencadenan respuestas de estrés térmico que pueden comprometer gravemente la homeostasis del embarazo.
 
 En este seminario queremos analizar la relación directa entre la exposición al calor extremo y una serie de desenlaces clínicos graves en la salud materno-infantil a nivel provincial. A través del cruce de indicadores climáticos con registros de salud, el trabajo examina la incidencia de partos prematuros, mortalidad fetal tardía y mortalidad perinatal. El propósito es fundamentar con datos la necesidad de implementar estrategias de prevención sociosanitaria adaptadas a las etapas gestacional y perinatal ante el escenario climático actual.
@@ -34,7 +39,6 @@ Para trabajar con ellos utilizamos las siguientes librerías:
 ```{r}
 library(ggplot2)
 library(tidyverse)
-library(ggplot2)
 library(tidyr)
 library(dplyr)
 library(patchwork)
