@@ -1661,3 +1661,26 @@ Los resultados muestran una asociación positiva y estadísticamente significati
 En la comparación entre estaciones, las correlaciones con los partos prematuros fueron más elevadas en invierno que en verano, un resultado diferente al esperado inicialmente.
 
 Por último, hay que tener en cuenta que los datos son provinciales y corresponden a un único año, por lo que no permiten establecer relaciones de causalidad. Sería interesante ampliar el estudio con datos de varios años para profundizar en estas posibles asociaciones.
+
+
+## Bibliografía 
+
+- Agencia Estatal de Meteorología. (2025a). Avance climatológico nacional del año 2024. https://www.aemet.es/documentos/es/noticias/2025/01/resumen_clima_2024.pdf
+
+- Basu, R., Malig, B. y Ostro, B. (2010). High ambient temperature and the risk of preterm delivery. American Journal of Epidemiology, 172(10), 1108–1117. https://doi.org/10.1093/aje/kwq170
+
+- Chersich, M. F., Pham, M. D., Areal, A., Haghighi, M. M., Manyuchi, A., Swift, C. P., Wernecke, B., Robinson, M., Hetem, R., Boeckmann, M. y Hajat, S. (2020). Associations between high temperatures in pregnancy and risk of preterm birth, low birth weight, and stillbirths: Systematic review and meta-analysis. BMJ, 371, m3811. https://doi.org/10.1136/bmj.m3811
+
+- Instituto Nacional de Estadística. (s. f.). INEbase. Recuperado el 23 de noviembre de 2026, de https://www.ine.es/
+
+- Hernangómez, D. (2024). mapSpain: Administrative boundaries of Spain (Versión 0.9.0) [Paquete de R]. https://doi.org/10.5281/zenodo.5366622
+
+- Kruskal, W. H. y Wallis, W. A. (1952). Use of ranks in one-criterion variance analysis. Journal of the American Statistical Association, 47(260), 583–621. https://doi.org/10.1080/01621459.1952.10483441
+
+- Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and R objects [Preprint]. arXiv. https://doi.org/10.48550/arXiv.1403.2805
+
+- Spearman, C. (1904). The proof and measurement of association between two things. The American Journal of Psychology, 15(1), 72–101. https://doi.org/10.2307/1412159
+
+- Vicedo-Cabrera, A. M., Iñíguez, C., Barona, C. y Ballester, F. (2014). Exposure to elevated temperatures and risk of preterm birth in Valencia, Spain. Environmental Research, 134, 210–217. https://doi.org/10.1016/j.envres.2014.07.021
+
+- Pearson, K. (1895). Notes on regression and inheritance in the case of two parents. Proceedings of the Royal Society of London, 58, 240–242. https://doi.org/10.1098/rspl.1895.0041
